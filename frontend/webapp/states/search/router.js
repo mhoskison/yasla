@@ -15,7 +15,7 @@ angular.module("ttt").config(function ($stateProvider) {
                             awaiting_results: false,
                             results:          []
                         };
-                        ToolbarService.title.set("Search for products (" + $stateParams.list_id + ")");
+                        ToolbarService.title.set("Search for products");
                     }
                 }
             }

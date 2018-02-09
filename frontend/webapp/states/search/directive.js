@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state) {
+angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
     return {
         templateUrl: "states/search/template.html",
         controller:  function ($scope) {
@@ -42,6 +42,11 @@ angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialo
                     }
                 }
             };
+        },
+        link:        function ($scope) {
+            $timeout(function () {
+                $(".autofocus").focus();
+            }, 100);
         }
     };
 });
