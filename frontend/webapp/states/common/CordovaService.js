@@ -1,4 +1,4 @@
-angular.module("ttt").service("CordovaService", function ($http, $q) {
+angular.module("yasla").service("CordovaService", function ($http, $q) {
     return {
         version: function () {
             var q = $q.defer();

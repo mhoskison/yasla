@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttListsEdit", function (ListsService) {
+angular.module("yasla").directive("yaslaListsEdit", function (ListsService) {
     return {
         templateUrl: "states/lists/lists.edit/template.html",
         controller:  function ($scope) {

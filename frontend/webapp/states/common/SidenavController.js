@@ -1,4 +1,4 @@
-angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdSidenav, $log) {
+angular.module("yasla").controller("SidenavCtrl", function ($scope, $timeout, $mdSidenav, $log) {
     $scope.toggleLeft = buildToggler("left");
     $scope.toggleRight = buildToggler("right");
     $scope.isOpenRight = function () {

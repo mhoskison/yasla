@@ -1,5 +1,5 @@
 angular
-    .module("ttt", [
+    .module("yasla", [
         "ngMaterial", "ngMessages", "ngResource", "ngAnimate",
         "ui.router", "ui", "LocalStorageModule"
     ])
@@ -13,11 +13,11 @@ angular
             views: {
                 main:    {},
                 sbLeft:  {
-                    template: "<ttt-sidenav-left></ttt-sidenav-left>"
+                    template: "<yasla-sidenav-left></yasla-sidenav-left>"
                 },
 
                 sbRight: {
-                    template: "<ttt-sidenav-right></ttt-sidenav-right>"
+                    template: "<yasla-sidenav-right></yasla-sidenav-right>"
                 }
 
             }
@@ -62,14 +62,14 @@ angular
         $transitions.onSuccess({}, function ($transitions$) {
             console.log("%cSTATE: [" + $transitions$.to().name + "]", "border:1px solid #000;background: #ccc;padding: 3px;color:#222");
             $mdSidenav("left").close();
-            $mdSidenav("right").close();
+            //$mdSidenav("right").close();
         });
     });
 var api_url="http://dev.api.yasla.co.uk";
 var apiroot = api_url + "/api";
 var authroot = api_url;
 
-angular.module("ttt").directive("tttAbout", function (CordovaService) {
+angular.module("yasla").directive("yaslaAbout", function (CordovaService) {
     return {
         templateUrl: "states/about/template.html",
         controller:  function ($scope) {
@@ -83,13 +83,13 @@ angular.module("ttt").directive("tttAbout", function (CordovaService) {
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.about", {
             url:   "^/about",
             views: {
                 "main@": {
-                    template: "<ttt-about></ttt-about>",
+                    template: "<yasla-about></yasla-about>",
                     controller: function(ToolbarService) {
                         ToolbarService.title.set("About");
                     }
@@ -97,7 +97,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
+angular.module("yasla").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
     var AuthService = {
 
         ping: function () {
@@ -192,13 +192,33 @@ angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $
 
     return AuthService;
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth", {
             abstract: true
         });
 });
-angular.module("ttt").service("api", function ($http, $q) {
+angular.module("yasla").directive("yaslaHome", function () {
+    return {
+        templateUrl: "states/home/template.html"
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.home", {
+            url:   "^/home",
+            auth:  true,
+            views: {
+                "main@": {
+                    template: "<yasla-home></yasla-home>",
+                    controller: function(ToolbarService) {
+                        ToolbarService.title.set("Home");
+                    }
+                }
+            }
+        });
+});
+angular.module("yasla").service("api", function ($http, $q) {
     return {
         misc: {
             ping: function () {
@@ -208,7 +228,7 @@ angular.module("ttt").service("api", function ($http, $q) {
         }
     };
 });
-angular.module("ttt").service("CordovaService", function ($http, $q) {
+angular.module("yasla").service("CordovaService", function ($http, $q) {
     return {
         version: function () {
             var q = $q.defer();
@@ -229,7 +249,7 @@ angular.module("ttt").service("CordovaService", function ($http, $q) {
         }
     };
 });
-angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdSidenav, $log) {
+angular.module("yasla").controller("SidenavCtrl", function ($scope, $timeout, $mdSidenav, $log) {
     $scope.toggleLeft = buildToggler("left");
     $scope.toggleRight = buildToggler("right");
     $scope.isOpenRight = function () {
@@ -267,7 +287,7 @@ angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdS
         };
     });
 
-angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, $q) {
+angular.module("yasla").service("ListsDialogService", function ($mdDialog, $http, $q) {
     var ListDialogService = {
         ShoppingListSelector: {
             show:       function () {
@@ -317,7 +337,7 @@ angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, 
     };
     return ListDialogService;
 });
-angular.module("ttt").service("ListsService", function ($http, $q) {
+angular.module("yasla").service("ListsService", function ($http, $q) {
     var ListsService = {
 
         product:   {
@@ -366,13 +386,13 @@ angular.module("ttt").service("ListsService", function ($http, $q) {
     };
     return ListsService;
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists", {
             url:   "^/lists",
             views: {
                 "main@":    {
-                    template:   "<ttt-lists></ttt-lists>",
+                    template:   "<yasla-lists></yasla-lists>",
                     controller: function ($scope, ListsService, ToolbarService) {
                         ListsService.get().then(function (data) {
                             ToolbarService.title.set("Shopping lists");
@@ -381,32 +401,12 @@ angular.module("ttt").config(function ($stateProvider) {
                     }
                 },
                 "sbRight@": {
-                    template: "<ttt-lists-sbright></ttt-lists-sbright>"
+                    template: "<yasla-lists-sbright></yasla-lists-sbright>"
                 }
             }
         });
 });
-angular.module("ttt").directive("tttHome", function () {
-    return {
-        templateUrl: "states/home/template.html"
-    };
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.home", {
-            url:   "^/home",
-            auth:  true,
-            views: {
-                "main@": {
-                    template: "<ttt-home></ttt-home>",
-                    controller: function(ToolbarService) {
-                        ToolbarService.title.set("Home");
-                    }
-                }
-            }
-        });
-});
-angular.module("ttt").service("SearchService", function ($http, $q, ListsService, ListsDialogService) {
+angular.module("yasla").service("SearchService", function ($http, $q, ListsService, ListsDialogService) {
     return {
 
         search: function (term) {
@@ -457,7 +457,7 @@ angular.module("ttt").service("SearchService", function ($http, $q, ListsService
         }
     };
 });
-angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
+angular.module("yasla").directive("yaslaSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
     return {
         templateUrl: "states/search/template.html",
         controller:  function ($scope) {
@@ -492,7 +492,7 @@ angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialo
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.search", {
             url:    "^/search",
@@ -501,7 +501,7 @@ angular.module("ttt").config(function ($stateProvider) {
             },
             views:  {
                 "main@": {
-                    template:   "<ttt-search></ttt-search>",
+                    template:   "<yasla-search></yasla-search>",
                     controller: function (ToolbarService, $stateParams, $scope) {
                         $scope.data = {
                             list_id:          $stateParams.list_id,
@@ -515,7 +515,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").service("UserService", function ($http, $q, localStorageService) {
+angular.module("yasla").service("UserService", function ($http, $q, localStorageService) {
     return {
         profile: function () {
             var q = $q.defer();
@@ -533,31 +533,14 @@ angular.module("ttt").service("UserService", function ($http, $q, localStorageSe
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.user", {
             url:      "^/user",
             abstract: true
         });
 });
-angular.module("ttt").directive("tttAuthLoggedOut", function () {
-    return {
-        templateUrl: "states/auth/loggedout/template.html"
-    };
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth.loggedout", {
-            unauthenticated: true,
-            url:             "^/auth/loggedout",
-            views:           {
-                "main@": {
-                    template: "<ttt-auth-logged-out></ttt-auth-logged-out>"
-                }
-            }
-        });
-});
-angular.module("ttt").directive("tttAuthLogout", function ($state, AuthService) {
+angular.module("yasla").directive("yaslaAuthLogout", function ($state, AuthService) {
     return {
         templateUrl: "states/auth/logout/template.html",
         controller:  function ($scope) {
@@ -568,33 +551,37 @@ angular.module("ttt").directive("tttAuthLogout", function ($state, AuthService) 
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.logout", {
             url:   "^/auth/logout",
             views: {
                 "main@": {
-                    template:   "<ttt-auth-logout></ttt-auth-logout>",
+                    template:   "<yasla-auth-logout></yasla-auth-logout>",
                     controller: function ($scope) {
                     }
                 }
             }
         });
 });
-angular.module("ttt").directive("tttBtnAddProduct", function ($stateParams) {
+angular.module("yasla").directive("yaslaAuthLoggedOut", function () {
     return {
-        templateUrl: "states/common/btn-add-product/template.html",
-        controller:  function ($scope) {
-        },
-        link:        function ($scope) {
-            $(".btn-add-product").detach().appendTo("body");
-            $scope.$on("$destroy", function () {
-                $(".btn-add-product").remove();
-            });
-        }
+        templateUrl: "states/auth/loggedout/template.html"
     };
 });
-angular.module("ttt").directive("tttBtnAddShoppingList", function () {
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth.loggedout", {
+            unauthenticated: true,
+            url:             "^/auth/loggedout",
+            views:           {
+                "main@": {
+                    template: "<yasla-auth-logged-out></yasla-auth-logged-out>"
+                }
+            }
+        });
+});
+angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
     return {
         templateUrl: "states/common/btn-add-shopping-list/template.html",
         controller:  function ($scope) {
@@ -608,7 +595,20 @@ angular.module("ttt").directive("tttBtnAddShoppingList", function () {
         }
     };
 });
-angular.module("ttt").directive("tttMenu", function () {
+angular.module("yasla").directive("yaslaBtnAddProduct", function ($stateParams) {
+    return {
+        templateUrl: "states/common/btn-add-product/template.html",
+        controller:  function ($scope) {
+        },
+        link:        function ($scope) {
+            $(".btn-add-product").detach().appendTo("body");
+            $scope.$on("$destroy", function () {
+                $(".btn-add-product").remove();
+            });
+        }
+    };
+});
+angular.module("yasla").directive("yaslaMenu", function () {
     return {
         templateUrl: "states/common/menu/template.html",
         controller:  function ($scope) {
@@ -616,17 +616,17 @@ angular.module("ttt").directive("tttMenu", function () {
         }
     };
 });
-angular.module("ttt").directive("tttSidenavRight", function () {
-    return {
-        templateUrl: "states/common/sidenav-right/template.html"
-    };
-});
-angular.module("ttt").directive("tttSidenavLeft", function (UserService) {
+angular.module("yasla").directive("yaslaSidenavLeft", function (UserService) {
     return {
         templateUrl: "states/common/sidenav-left/template.html"
     };
 });
-angular.module("ttt").service("ToolbarService", function ($rootScope) {
+angular.module("yasla").directive("yaslaSidenavRight", function () {
+    return {
+        templateUrl: "states/common/sidenav-right/template.html"
+    };
+});
+angular.module("yasla").service("ToolbarService", function ($rootScope) {
     return {
         title: {
             set: function (label) {
@@ -635,7 +635,7 @@ angular.module("ttt").service("ToolbarService", function ($rootScope) {
         }
     };
 });
-angular.module("ttt").directive("tttToolbar", function (AuthService) {
+angular.module("yasla").directive("yaslaToolbar", function (AuthService) {
     return {
         templateUrl: "states/common/toolbar/template.html",
 
@@ -648,7 +648,17 @@ angular.module("ttt").directive("tttToolbar", function (AuthService) {
         }
     };
 });
-angular.module("ttt").directive("tttListsDelete", function ($state, ListsService) {
+angular.module("yasla").directive("yaslaLists", function ($state) {
+    return {
+        templateUrl: "states/lists/lists.default/template.html",
+        controller:  function ($scope) {
+
+        },
+        link:        function ($scope) {
+        }
+    };
+});
+angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
     return {
         templateUrl: "states/lists/lists.delete/template.html",
         controller:  function ($scope) {
@@ -664,13 +674,13 @@ angular.module("ttt").directive("tttListsDelete", function ($state, ListsService
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists.delete", {
             url:   "/delete/{id}",
             views: {
                 "main@": {
-                    template: "<ttt-lists-delete></ttt-lists-delete>",
+                    template: "<yasla-lists-delete></yasla-lists-delete>",
 
                     controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
                         var id = $stateParams.id;
@@ -685,17 +695,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttLists", function ($state) {
-    return {
-        templateUrl: "states/lists/lists.default/template.html",
-        controller:  function ($scope) {
-
-        },
-        link:        function ($scope) {
-        }
-    };
-});
-angular.module("ttt").directive("tttListsEdit", function (ListsService) {
+angular.module("yasla").directive("yaslaListsEdit", function (ListsService) {
     return {
         templateUrl: "states/lists/lists.edit/template.html",
         controller:  function ($scope) {
@@ -729,13 +729,13 @@ angular.module("ttt").directive("tttListsEdit", function (ListsService) {
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists.edit", {
             url:     "/edit/{id}",
             views:   {
                 "main@": {
-                    template:   "<ttt-lists-edit></ttt-lists-edit>",
+                    template:   "<yasla-lists-edit></yasla-lists-edit>",
                     controller: function ($scope, ToolbarService, $stateParams, $state, listinfo) {
                         var id = $stateParams.id;
                         if (!id) $state.go("shopping.lists");
@@ -751,7 +751,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttListsNew", function (ListsService, $state, $timeout) {
+angular.module("yasla").directive("yaslaListsNew", function (ListsService, $state, $timeout) {
     return {
         templateUrl: "states/lists/lists.new/template.html",
         controller:  function ($scope) {
@@ -773,13 +773,13 @@ angular.module("ttt").directive("tttListsNew", function (ListsService, $state, $
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists.new", {
             url:   "/new",
             views: {
                 "main@": {
-                    template: "<ttt-lists-new></ttt-lists-new>",
+                    template: "<yasla-lists-new></yasla-lists-new>",
 
                     controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
                         ToolbarService.title.set("Create shopping list");
@@ -788,14 +788,14 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttListsSbright", function () {
+angular.module("yasla").directive("yaslaListsSbright", function () {
     return {
         templateUrl: "states/lists/sb-right/template.html",
         controller:  function ($scope) {
         }
     };
 });
-angular.module("ttt").directive("tttAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
+angular.module("yasla").directive("yaslaAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
     return {
         templateUrl: "states/unauthenticated/intro/template.html",
         controller:  function ($scope) {
@@ -847,14 +847,14 @@ angular.module("ttt").directive("tttAuthIntro", function (AuthService, $state, C
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.intro", {
             unauthenticated: true,
             url:             "^/auth/intro",
             views:           {
                 "main@": {
-                    template:   "<ttt-auth-intro></ttt-auth-intro>",
+                    template:   "<yasla-auth-intro></yasla-auth-intro>",
                     controller: function ($scope, ToolbarService, AuthService, $state) {
 
                         // ---- Ensure the API is talking to us
@@ -880,7 +880,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
+angular.module("yasla").directive("yaslaAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
     return {
         templateUrl: "states/unauthenticated/login/template.html",
         controller:  function ($scope) {
@@ -948,14 +948,14 @@ angular.module("ttt").directive("tttAuthLogin", function (AuthService, $state, C
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.login", {
             unauthenticated: true,
             url:             "^/auth/login",
             views:           {
                 "main@": {
-                    template:   "<ttt-auth-login></ttt-auth-login>",
+                    template:   "<yasla-auth-login></yasla-auth-login>",
                     controller: function (ToolbarService, AuthService, $state) {
 
                         // ---- Check if the user is already authenticated
@@ -971,7 +971,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttUserRegister", function (AuthService, $state) {
+angular.module("yasla").directive("yaslaUserRegister", function (AuthService, $state) {
     return {
         templateUrl: "states/unauthenticated/register/template.html",
         controller:  function ($scope) {
@@ -1006,14 +1006,14 @@ angular.module("ttt").directive("tttUserRegister", function (AuthService, $state
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.register", {
             unauthenticated: true,
             url:             "/register",
             views:           {
                 "main@": {
-                    template:   "<ttt-user-register></ttt-user-register>",
+                    template:   "<yasla-user-register></yasla-user-register>",
                     controller: function (ToolbarService) {
                         ToolbarService.title.set("Register");
                     }
@@ -1021,7 +1021,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttUserProfile", function () {
+angular.module("yasla").directive("yaslaUserProfile", function () {
     return {
         templateUrl: "states/user/profile/template.html",
         controller:  function ($scope) {
@@ -1029,13 +1029,13 @@ angular.module("ttt").directive("tttUserProfile", function () {
         }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.user.profile", {
             url:   "/profile",
             views: {
                 "main@": {
-                    template:   "<ttt-user-profile></ttt-user-profile>",
+                    template:   "<yasla-user-profile></yasla-user-profile>",
                     controller: function ($scope, UserService, ToolbarService) {
                         ToolbarService.title.set("Profile");
                         UserService.profile().then(function (data) {
@@ -1046,7 +1046,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttDuplicateEmail", function (AuthService) {
+angular.module("yasla").directive("yaslaDuplicateEmail", function (AuthService) {
     /**
      * Custom validator to ensure the user's email address is unique
      *
@@ -1067,7 +1067,7 @@ angular.module("ttt").directive("tttDuplicateEmail", function (AuthService) {
         }
     };
 });
-angular.module("ttt").directive("tttMatchPassword", function () {
+angular.module("yasla").directive("yaslaMatchPassword", function () {
     /**
      * Custom validator to ensure the user's password meets a minimum complexity standard
      */
@@ -1087,7 +1087,7 @@ angular.module("ttt").directive("tttMatchPassword", function () {
         }
     };
 });
-angular.module("ttt").directive("tttValidatePassword", function () {
+angular.module("yasla").directive("yaslaValidatePassword", function () {
     /**
      * Custom validator to ensure the user's password meets a minimum complexity standard
      */

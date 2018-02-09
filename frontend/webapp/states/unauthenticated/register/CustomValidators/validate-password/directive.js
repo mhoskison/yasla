@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttValidatePassword", function () {
+angular.module("yasla").directive("yaslaValidatePassword", function () {
     /**
      * Custom validator to ensure the user's password meets a minimum complexity standard
      */

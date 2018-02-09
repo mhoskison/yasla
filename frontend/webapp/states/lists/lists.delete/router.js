@@ -1,10 +1,10 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists.delete", {
             url:   "/delete/{id}",
             views: {
                 "main@": {
-                    template: "<ttt-lists-delete></ttt-lists-delete>",
+                    template: "<yasla-lists-delete></yasla-lists-delete>",
 
                     controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
                         var id = $stateParams.id;

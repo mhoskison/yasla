@@ -1,4 +1,4 @@
-angular.module("ttt").service("UserService", function ($http, $q, localStorageService) {
+angular.module("yasla").service("UserService", function ($http, $q, localStorageService) {
     return {
         profile: function () {
             var q = $q.defer();

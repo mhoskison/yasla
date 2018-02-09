@@ -1,4 +1,4 @@
-angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, $q) {
+angular.module("yasla").service("ListsDialogService", function ($mdDialog, $http, $q) {
     var ListDialogService = {
         ShoppingListSelector: {
             show:       function () {

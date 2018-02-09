@@ -1,4 +1,4 @@
-angular.module("ttt").service("SearchService", function ($http, $q, ListsService, ListsDialogService) {
+angular.module("yasla").service("SearchService", function ($http, $q, ListsService, ListsDialogService) {
     return {
 
         search: function (term) {

@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttBtnAddShoppingList", function () {
+angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
     return {
         templateUrl: "states/common/btn-add-shopping-list/template.html",
         controller:  function ($scope) {

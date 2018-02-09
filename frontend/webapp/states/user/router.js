@@ -1,4 +1,4 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.user", {
             url:      "^/user",

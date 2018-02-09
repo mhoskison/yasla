@@ -19433,7 +19433,6 @@ md-card.jumbo md-card-content {
   min-width: 40px;
 }
 
-
 md-sidenav {
   min-width: 250px;
   max-width: 250px;
@@ -19475,6 +19474,7 @@ md-sidenav {
 .md-sidenav-right .user-email {
   padding: 12px;
 }
+
 
 
 .logo {
@@ -19638,6 +19638,75 @@ md-sidenav {
 }
 
 
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  color: red;
+  text-align: right;
+}
+
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  color: red;
+  text-align: right;
+}
+
+.state-lists-edit .custom-card {
+  background: #fff;
+  margin: 8px;
+  padding: 1em;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+}
+.state-lists-edit .custom-card .item-name {
+  color: #000;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.state-lists-edit .custom-card .item-cost {
+  color: #555;
+  margin-bottom: 8px;
+}
+.state-lists-edit .custom-card .item-weight {
+  color: #555;
+  margin-bottom: 8px;
+}
+.state-lists-edit .custom-card .item-pic {
+  max-width: 90px;
+  margin-right: 1em;
+}
+.state-lists-edit .custom-card .quantity-container {
+  border: 1px solid #aaa;
+  background: #eee;
+}
+.state-lists-edit .custom-card .quantity-container .label {
+  margin: 8px;
+}
+.state-lists-edit .custom-card .quantity-container .btn-small {
+  max-width: 32px;
+  width: 32px;
+  min-width: 32px;
+}
+.state-lists-edit .custom-card .quantity-container .input-quantity {
+  max-width: 75px;
+  text-align: center;
+  border: none;
+  height: 32px;
+  line-height: 32px;
+  margin-left: 0.6em;
+}
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  color: red;
+  text-align: right;
+}
+
+
 .state-auth-intro .logo-container .logo {
   display: block;
   height: auto;
@@ -19747,75 +19816,6 @@ md-sidenav {
 .state-register .strength-meter .bar-red {
   background: red;
 }
-
-.state-lists-edit .custom-card {
-  background: #fff;
-  margin: 8px;
-  padding: 1em;
-  margin-bottom: 0.6em;
-  margin-top: 0.6em;
-}
-.state-lists-edit .custom-card .item-name {
-  color: #000;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-.state-lists-edit .custom-card .item-cost {
-  color: #555;
-  margin-bottom: 8px;
-}
-.state-lists-edit .custom-card .item-weight {
-  color: #555;
-  margin-bottom: 8px;
-}
-.state-lists-edit .custom-card .item-pic {
-  max-width: 90px;
-  margin-right: 1em;
-}
-.state-lists-edit .custom-card .quantity-container {
-  border: 1px solid #aaa;
-  background: #eee;
-}
-.state-lists-edit .custom-card .quantity-container .label {
-  margin: 8px;
-}
-.state-lists-edit .custom-card .quantity-container .btn-small {
-  max-width: 32px;
-  width: 32px;
-  min-width: 32px;
-}
-.state-lists-edit .custom-card .quantity-container .input-quantity {
-  max-width: 75px;
-  text-align: center;
-  border: none;
-  height: 32px;
-  line-height: 32px;
-  margin-left: 0.6em;
-}
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  color: red;
-  text-align: right;
-}
-
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  color: red;
-  text-align: right;
-}
-
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  color: red;
-  text-align: right;
-}
-
 
 .logo {
   background-image: url("/dist/assets/logo.jpg");

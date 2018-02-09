@@ -1,5 +1,5 @@
 angular
-    .module("ttt", [
+    .module("yasla", [
         "ngMaterial", "ngMessages", "ngResource", "ngAnimate",
         "ui.router", "ui", "LocalStorageModule"
     ])
@@ -13,11 +13,11 @@ angular
             views: {
                 main:    {},
                 sbLeft:  {
-                    template: "<ttt-sidenav-left></ttt-sidenav-left>"
+                    template: "<yasla-sidenav-left></yasla-sidenav-left>"
                 },
 
                 sbRight: {
-                    template: "<ttt-sidenav-right></ttt-sidenav-right>"
+                    template: "<yasla-sidenav-right></yasla-sidenav-right>"
                 }
 
             }
@@ -62,7 +62,7 @@ angular
         $transitions.onSuccess({}, function ($transitions$) {
             console.log("%cSTATE: [" + $transitions$.to().name + "]", "border:1px solid #000;background: #ccc;padding: 3px;color:#222");
             $mdSidenav("left").close();
-            $mdSidenav("right").close();
+            //$mdSidenav("right").close();
         });
     });
 // ---- REPLACE: API_URL

@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttAbout", function (CordovaService) {
+angular.module("yasla").directive("yaslaAbout", function (CordovaService) {
     return {
         templateUrl: "states/about/template.html",
         controller:  function ($scope) {

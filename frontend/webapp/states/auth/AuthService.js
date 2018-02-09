@@ -1,4 +1,4 @@
-angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
+angular.module("yasla").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
     var AuthService = {
 
         ping: function () {

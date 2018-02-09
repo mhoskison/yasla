@@ -1,10 +1,10 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.about", {
             url:   "^/about",
             views: {
                 "main@": {
-                    template: "<ttt-about></ttt-about>",
+                    template: "<yasla-about></yasla-about>",
                     controller: function(ToolbarService) {
                         ToolbarService.title.set("About");
                     }

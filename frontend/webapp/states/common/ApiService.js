@@ -1,4 +1,4 @@
-angular.module("ttt").service("api", function ($http, $q) {
+angular.module("yasla").service("api", function ($http, $q) {
     return {
         misc: {
             ping: function () {

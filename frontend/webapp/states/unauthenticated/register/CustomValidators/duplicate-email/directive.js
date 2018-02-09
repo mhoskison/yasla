@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttDuplicateEmail", function (AuthService) {
+angular.module("yasla").directive("yaslaDuplicateEmail", function (AuthService) {
     /**
      * Custom validator to ensure the user's email address is unique
      *

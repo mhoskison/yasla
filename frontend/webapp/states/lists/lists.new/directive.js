@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttListsNew", function (ListsService, $state, $timeout) {
+angular.module("yasla").directive("yaslaListsNew", function (ListsService, $state, $timeout) {
     return {
         templateUrl: "states/lists/lists.new/template.html",
         controller:  function ($scope) {

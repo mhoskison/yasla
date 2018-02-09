@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
+angular.module("yasla").directive("yaslaAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
     return {
         templateUrl: "states/unauthenticated/intro/template.html",
         controller:  function ($scope) {

@@ -1,11 +1,11 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.login", {
             unauthenticated: true,
             url:             "^/auth/login",
             views:           {
                 "main@": {
-                    template:   "<ttt-auth-login></ttt-auth-login>",
+                    template:   "<yasla-auth-login></yasla-auth-login>",
                     controller: function (ToolbarService, AuthService, $state) {
 
                         // ---- Check if the user is already authenticated

@@ -1,10 +1,10 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists", {
             url:   "^/lists",
             views: {
                 "main@":    {
-                    template:   "<ttt-lists></ttt-lists>",
+                    template:   "<yasla-lists></yasla-lists>",
                     controller: function ($scope, ListsService, ToolbarService) {
                         ListsService.get().then(function (data) {
                             ToolbarService.title.set("Shopping lists");
@@ -13,7 +13,7 @@ angular.module("ttt").config(function ($stateProvider) {
                     }
                 },
                 "sbRight@": {
-                    template: "<ttt-lists-sbright></ttt-lists-sbright>"
+                    template: "<yasla-lists-sbright></yasla-lists-sbright>"
                 }
             }
         });

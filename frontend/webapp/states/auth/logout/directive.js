@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttAuthLogout", function ($state, AuthService) {
+angular.module("yasla").directive("yaslaAuthLogout", function ($state, AuthService) {
     return {
         templateUrl: "states/auth/logout/template.html",
         controller:  function ($scope) {

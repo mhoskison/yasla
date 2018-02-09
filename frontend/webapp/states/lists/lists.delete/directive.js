@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttListsDelete", function ($state, ListsService) {
+angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
     return {
         templateUrl: "states/lists/lists.delete/template.html",
         controller:  function ($scope) {

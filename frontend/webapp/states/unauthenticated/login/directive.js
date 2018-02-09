@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
+angular.module("yasla").directive("yaslaAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
     return {
         templateUrl: "states/unauthenticated/login/template.html",
         controller:  function ($scope) {

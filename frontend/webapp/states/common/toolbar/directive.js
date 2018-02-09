@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttToolbar", function (AuthService) {
+angular.module("yasla").directive("yaslaToolbar", function (AuthService) {
     return {
         templateUrl: "states/common/toolbar/template.html",
 

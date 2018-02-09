@@ -1,4 +1,4 @@
-angular.module("ttt").service("ToolbarService", function ($rootScope) {
+angular.module("yasla").service("ToolbarService", function ($rootScope) {
     return {
         title: {
             set: function (label) {

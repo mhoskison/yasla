@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttBtnAddProduct", function ($stateParams) {
+angular.module("yasla").directive("yaslaBtnAddProduct", function ($stateParams) {
     return {
         templateUrl: "states/common/btn-add-product/template.html",
         controller:  function ($scope) {

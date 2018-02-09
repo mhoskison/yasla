@@ -1,11 +1,11 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.intro", {
             unauthenticated: true,
             url:             "^/auth/intro",
             views:           {
                 "main@": {
-                    template:   "<ttt-auth-intro></ttt-auth-intro>",
+                    template:   "<yasla-auth-intro></yasla-auth-intro>",
                     controller: function ($scope, ToolbarService, AuthService, $state) {
 
                         // ---- Ensure the API is talking to us

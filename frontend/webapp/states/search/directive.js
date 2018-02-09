@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
+angular.module("yasla").directive("yaslaSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
     return {
         templateUrl: "states/search/template.html",
         controller:  function ($scope) {

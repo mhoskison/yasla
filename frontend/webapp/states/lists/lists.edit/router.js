@@ -1,10 +1,10 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.lists.edit", {
             url:     "/edit/{id}",
             views:   {
                 "main@": {
-                    template:   "<ttt-lists-edit></ttt-lists-edit>",
+                    template:   "<yasla-lists-edit></yasla-lists-edit>",
                     controller: function ($scope, ToolbarService, $stateParams, $state, listinfo) {
                         var id = $stateParams.id;
                         if (!id) $state.go("shopping.lists");

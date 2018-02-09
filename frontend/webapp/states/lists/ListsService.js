@@ -1,4 +1,4 @@
-angular.module("ttt").service("ListsService", function ($http, $q) {
+angular.module("yasla").service("ListsService", function ($http, $q) {
     var ListsService = {
 
         product:   {

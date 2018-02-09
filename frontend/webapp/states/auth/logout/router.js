@@ -1,10 +1,10 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth.logout", {
             url:   "^/auth/logout",
             views: {
                 "main@": {
-                    template:   "<ttt-auth-logout></ttt-auth-logout>",
+                    template:   "<yasla-auth-logout></yasla-auth-logout>",
                     controller: function ($scope) {
                     }
                 }

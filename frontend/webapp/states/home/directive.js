@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttHome", function () {
+angular.module("yasla").directive("yaslaHome", function () {
     return {
         templateUrl: "states/home/template.html"
     };

@@ -1,4 +1,4 @@
-angular.module("ttt").config(function ($stateProvider) {
+angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.search", {
             url:    "^/search",
@@ -7,7 +7,7 @@ angular.module("ttt").config(function ($stateProvider) {
             },
             views:  {
                 "main@": {
-                    template:   "<ttt-search></ttt-search>",
+                    template:   "<yasla-search></yasla-search>",
                     controller: function (ToolbarService, $stateParams, $scope) {
                         $scope.data = {
                             list_id:          $stateParams.list_id,
