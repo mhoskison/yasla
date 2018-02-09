@@ -50,6 +50,7 @@ angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $
             var url = authroot + "/oauth/token";
             $http.post(url, args).then(
                 function success(response) {
+                    console.log("Doing it here");
                     var access_token = response.data.access_token;
                     var refresh_token = response.data.refresh_token;
                     localStorageService.set("access_token", access_token);

@@ -147,6 +147,7 @@ angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $
             var url = authroot + "/oauth/token";
             $http.post(url, args).then(
                 function success(response) {
+                    console.log("Doing it here");
                     var access_token = response.data.access_token;
                     var refresh_token = response.data.refresh_token;
                     localStorageService.set("access_token", access_token);
@@ -193,26 +194,6 @@ angular.module("ttt").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth", {
             abstract: true
-        });
-});
-angular.module("ttt").directive("tttHome", function () {
-    return {
-        templateUrl: "states/home/template.html"
-    };
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.home", {
-            url:   "^/home",
-            auth:  true,
-            views: {
-                "main@": {
-                    template: "<ttt-home></ttt-home>",
-                    controller: function(ToolbarService) {
-                        ToolbarService.title.set("Home");
-                    }
-                }
-            }
         });
 });
 angular.module("ttt").service("api", function ($http, $q) {
@@ -284,6 +265,26 @@ angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdS
         };
     });
 
+angular.module("ttt").directive("tttHome", function () {
+    return {
+        templateUrl: "states/home/template.html"
+    };
+});
+angular.module("ttt").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.home", {
+            url:   "^/home",
+            auth:  true,
+            views: {
+                "main@": {
+                    template: "<ttt-home></ttt-home>",
+                    controller: function(ToolbarService) {
+                        ToolbarService.title.set("Home");
+                    }
+                }
+            }
+        });
+});
 angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, $q) {
     var ListDialogService = {
         ShoppingListSelector: {
@@ -561,13 +562,7 @@ angular.module("ttt").directive("tttMenu", function () {
 });
 angular.module("ttt").directive("tttSidenavLeft", function (UserService) {
     return {
-        templateUrl: "states/common/sidenav-left/template.html",
-        controller: function($scope) {
-            UserService.profile().then(function(user) {
-                $scope.user = user;
-            });
-
-        }
+        templateUrl: "states/common/sidenav-left/template.html"
     };
 });
 angular.module("ttt").directive("tttSidenavRight", function () {

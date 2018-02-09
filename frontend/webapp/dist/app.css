@@ -19426,6 +19426,48 @@ md-card.jumbo md-card-content {
 
 
 
+.state-search .search-card {
+  margin-top: 0px;
+  -webkit-transition: width 2s, height 4s;
+  /* For Safari 3.1 to 6.0 */
+  transition: width 2s, height 4s;
+}
+.state-search .search-card .mini-search-button {
+  display: none;
+}
+.state-search .search-card .search-input {
+  width: auto;
+}
+.state-search .search-card.rolledup {
+  background: #fff;
+  z-index: 20;
+  height: 70px !important;
+  overflow: hidden;
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  top: 56px;
+}
+.state-search .search-card.rolledup .mini-search-button {
+  display: block;
+}
+.state-search .search-card.rolledup .card-header {
+  display: none;
+}
+.state-search .search-card.rolledup .search-card-text {
+  display: none;
+}
+.state-search .search-card.rolledup .search-input {
+  margin-top: 0px;
+}
+.state-search .results-card.first {
+  margin-top: 70px;
+}
+.state-search .results-card {
+  width: 90%;
+  margin: auto auto 1em;
+}
+
 md-sidenav {
   min-width: 250px;
   max-width: 250px;
@@ -19493,48 +19535,6 @@ md-sidenav {
   margin: 0;
   text-transform: none;
   font-size: 1em;
-}
-
-.state-search .search-card {
-  margin-top: 0px;
-  -webkit-transition: width 2s, height 4s;
-  /* For Safari 3.1 to 6.0 */
-  transition: width 2s, height 4s;
-}
-.state-search .search-card .mini-search-button {
-  display: none;
-}
-.state-search .search-card .search-input {
-  width: auto;
-}
-.state-search .search-card.rolledup {
-  background: #fff;
-  z-index: 20;
-  height: 70px !important;
-  overflow: hidden;
-  position: fixed;
-  left: 16px;
-  right: 16px;
-  top: 56px;
-}
-.state-search .search-card.rolledup .mini-search-button {
-  display: block;
-}
-.state-search .search-card.rolledup .card-header {
-  display: none;
-}
-.state-search .search-card.rolledup .search-card-text {
-  display: none;
-}
-.state-search .search-card.rolledup .search-input {
-  margin-top: 0px;
-}
-.state-search .results-card.first {
-  margin-top: 70px;
-}
-.state-search .results-card {
-  width: 90%;
-  margin: auto auto 1em;
 }
 
 .logo {
@@ -19629,14 +19629,6 @@ md-sidenav {
 }
 
 
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  color: red;
-  text-align: right;
-}
-
 .state-lists-edit .custom-card {
   background: #fff;
   margin: 8px;
@@ -19681,6 +19673,14 @@ md-sidenav {
   line-height: 32px;
   margin-left: 0.6em;
 }
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  color: red;
+  text-align: right;
+}
+
 .state-lists-edit .item .quantity {
   text-align: right;
 }
