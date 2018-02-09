@@ -16,30 +16,13 @@ angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialo
                 },
 
                 add: function (product) {
-                    if ($scope.data.list_id === null) {
-                        ListsDialogService.ShoppingListSelector.show().then(
-                            function (list) {
-                                if (list.set_default) {
-                                    $scope.data.list_id = list.list_id;
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        ListsService.product.add($scope.data.list_id, product).then(
-                            function success() {
-                                if ($scope.data.list_id) {
-                                    $state.go("shopping.lists.edit", {id: $scope.data.list_id});
-                                }
-                                else {
-                                    $mdToast.show($mdToast.simple().textContent("Added!").hideDelay(1000));
-                                }
-                            },
-                            function failure() {
-                                $mdToast.show($mdToast.simple().textContent("Something went wrong").hideDelay(1000));
-                            }
-                        );
-                    }
+                    SearchService.addToList($scope.data.list_id, product).then(
+                        function (list_id) {
+                            console.log("Got back from SearchService");
+                            $timeout(function() {
+                                $state.go("shopping.lists.edit", {id: list_id}, {reload: true});
+                            }, 550);
+                        });
                 }
             };
         },
