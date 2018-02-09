@@ -15,9 +15,11 @@ angular
                 sbLeft:  {
                     template: "<ttt-sidenav-left></ttt-sidenav-left>"
                 },
+
                 sbRight: {
                     template: "<ttt-sidenav-right></ttt-sidenav-right>"
                 }
+
             }
         });
     })

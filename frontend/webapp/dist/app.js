@@ -15,9 +15,11 @@ angular
                 sbLeft:  {
                     template: "<ttt-sidenav-left></ttt-sidenav-left>"
                 },
+
                 sbRight: {
                     template: "<ttt-sidenav-right></ttt-sidenav-right>"
                 }
+
             }
         });
     })
@@ -63,30 +65,10 @@ angular
             $mdSidenav("right").close();
         });
     });
-var api_url="https://api.yasla.co.uk";
+var api_url="http://dev.api.yasla.co.uk";
 var apiroot = api_url + "/api";
 var authroot = api_url;
 
-angular.module("ttt").directive("tttHome", function () {
-    return {
-        templateUrl: "states/home/template.html"
-    };
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.home", {
-            url:   "^/home",
-            auth:  true,
-            views: {
-                "main@": {
-                    template: "<ttt-home></ttt-home>",
-                    controller: function(ToolbarService) {
-                        ToolbarService.title.set("Home");
-                    }
-                }
-            }
-        });
-});
 angular.module("ttt").directive("tttAbout", function (CordovaService) {
     return {
         templateUrl: "states/about/template.html",
@@ -113,6 +95,107 @@ angular.module("ttt").config(function ($stateProvider) {
                     }
                 }
             }
+        });
+});
+angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
+    var AuthService = {
+
+        ping: function () {
+            return $http.get(apiroot + "/ping");
+        },
+
+        /**
+         * Ensure the user is authenticated, redirect to login otherwise
+         */
+        ensureAuthenticated: function () {
+            if (AuthService.isAuthenticated()) return;
+            $state.go("shopping.auth.intro");
+        },
+
+        /**
+         * Check if the user is authenticated
+         *
+         * @returns {boolean}
+         */
+        isAuthenticated: function () {
+            var ret = false;
+            var token = localStorageService.get("access_token");
+
+            if (token) ret = true;
+            return ret;
+        },
+
+        logout: function () {
+            localStorageService.remove("access_token");
+            localStorageService.remove("refresh_token");
+            localStorageService.remove("user");
+        },
+
+        /**
+         * Attempt to authenticate the user
+         */
+        login: function (username, password) {
+            var q = $q.defer();
+
+            var args = {
+                client_id:     "2",
+                client_secret: "HhqX7ofnL7XWYW5ROIELXnL7BTSvZ5KB6RGQ7YUW",
+                grant_type:    "password",
+                username:      username,
+                password:      password,
+                scope:         "*"
+            };
+
+            var url = authroot + "/oauth/token";
+            $http.post(url, args).then(
+                function success(response) {
+                    console.log("Doing it here");
+                    var access_token = response.data.access_token;
+                    var refresh_token = response.data.refresh_token;
+                    localStorageService.set("access_token", access_token);
+                    localStorageService.set("refresh_token", refresh_token);
+                    UserService.profile();
+                    q.resolve();
+                },
+                function error(a) {
+                    q.reject();
+                });
+
+            return q.promise;
+        },
+
+        register: function (data) {
+            var q = $q.defer();
+            $http.post(apiroot + "/user/register", {data: data}).then(
+                function success(response) {
+                    q.resolve(response.data);
+                },
+                function failure(error) {
+                    q.reject(error);
+                });
+            return q.promise;
+        },
+
+        validateEmail: function (value) {
+            var q = $q.defer();
+            $http.post(apiroot + "/user/validate-email", {email: value}).then(
+                function success(response) {
+                    if (response.data === 0) q.resolve();
+                    else q.reject();
+                },
+                function failure(error) {
+                    q.reject(error);
+                });
+            return q.promise;
+        }
+    };
+
+    return AuthService;
+});
+angular.module("ttt").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth", {
+            abstract: true
         });
 });
 angular.module("ttt").service("api", function ($http, $q) {
@@ -184,107 +267,6 @@ angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdS
         };
     });
 
-angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
-    var AuthService = {
-
-        ping: function () {
-            return $http.get(apiroot + "/ping");
-        },
-
-        /**
-         * Ensure the user is authenticated, redirect to login otherwise
-         */
-        ensureAuthenticated: function () {
-            if (AuthService.isAuthenticated()) return;
-            $state.go("shopping.auth.intro");
-        },
-
-        /**
-         * Check if the user is authenticated
-         *
-         * @returns {boolean}
-         */
-        isAuthenticated: function () {
-            var ret = false;
-            var token = localStorageService.get("access_token");
-
-            if (token) ret = true;
-            return ret;
-        },
-
-        logout: function () {
-            localStorageService.remove("access_token");
-            localStorageService.remove("refresh_token");
-            localStorageService.remove("user");
-        },
-
-        /**
-         * Attempt to authenticate the user
-         */
-        login: function (username, password) {
-            var q = $q.defer();
-
-            var args = {
-                client_id:     "1",
-                client_secret: "TQF7BYvWUWdCw3DOB0w1govvYfpO6riuKl20luK9",
-                grant_type:    "password",
-                username:      username,
-                password:      password,
-                scope:         "*"
-            };
-
-            var url = authroot + "/oauth/token";
-            $http.post(url, args).then(
-                function success(response) {
-                    console.log("Doing it here");
-                    var access_token = response.data.access_token;
-                    var refresh_token = response.data.refresh_token;
-                    localStorageService.set("access_token", access_token);
-                    localStorageService.set("refresh_token", refresh_token);
-                    UserService.profile();
-                    q.resolve();
-                },
-                function error(a) {
-                    q.reject();
-                });
-
-            return q.promise;
-        },
-
-        register: function (data) {
-            var q = $q.defer();
-            $http.post(apiroot + "/user/register", {data: data}).then(
-                function success(response) {
-                    q.resolve(response.data);
-                },
-                function failure(error) {
-                    q.reject(error);
-                });
-            return q.promise;
-        },
-
-        validateEmail: function (value) {
-            var q = $q.defer();
-            $http.post(apiroot + "/user/validate-email", {email: value}).then(
-                function success(response) {
-                    if (response.data === 0) q.resolve();
-                    else q.reject();
-                },
-                function failure(error) {
-                    q.reject(error);
-                });
-            return q.promise;
-        }
-    };
-
-    return AuthService;
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth", {
-            abstract: true
-        });
-});
 angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, $q) {
     var ListDialogService = {
         ShoppingListSelector: {
@@ -404,7 +386,27 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").service("SearchService", function ($http, $q) {
+angular.module("ttt").directive("tttHome", function () {
+    return {
+        templateUrl: "states/home/template.html"
+    };
+});
+angular.module("ttt").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.home", {
+            url:   "^/home",
+            auth:  true,
+            views: {
+                "main@": {
+                    template: "<ttt-home></ttt-home>",
+                    controller: function(ToolbarService) {
+                        ToolbarService.title.set("Home");
+                    }
+                }
+            }
+        });
+});
+angular.module("ttt").service("SearchService", function ($http, $q, ListsService, ListsDialogService) {
     return {
 
         search: function (term) {
@@ -413,10 +415,49 @@ angular.module("ttt").service("SearchService", function ($http, $q) {
                 q.resolve(response.data);
             });
             return q.promise;
+        },
+
+        addToList: function (list_id, product) {
+            var q = $q.defer();
+
+            // ---- If no list_id, we need to determine which shopping list to add the product to.
+            //      If there's only one list, add it to that
+            //          otherwise, show the list selection dialog and let the use choose
+            //
+            if (!list_id) {
+                ListsService.get().then(function (lists) {
+                    if (lists.length === 1) {
+                        list_id = lists[0].id;
+                        console.log("Only one list, so using list ID [%s]", list_id);
+                        ListsService.product.add(list_id, product);
+                        q.resolve(list_id);
+                        console.log("Got here 1");
+                    }
+                    else {
+                        ListsDialogService.ShoppingListSelector.show().then(function (foo) {
+                            var list_id = foo.list_id;
+                            var set_default = foo.set_default;
+                            console.log("Going to use list ID [%s] from the dialog", list_id);
+                            ListsService.product.add(list_id, product);
+                            q.resolve(list_id);
+                            console.log("Got here 2");
+                        });
+                    }
+                });
+            }
+            else {
+                console.log("Using user specified list [%s]", list_id);
+                ListsService.product.add(list_id, product);
+                q.resolve(list_id);
+                console.log("Got here 3");
+            }
+
+            return q.promise;
+
         }
     };
 });
-angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state) {
+angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
     return {
         templateUrl: "states/search/template.html",
         controller:  function ($scope) {
@@ -434,32 +475,20 @@ angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialo
                 },
 
                 add: function (product) {
-                    if ($scope.data.list_id === null) {
-                        ListsDialogService.ShoppingListSelector.show().then(
-                            function (list) {
-                                if (list.set_default) {
-                                    $scope.data.list_id = list.list_id;
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        ListsService.product.add($scope.data.list_id, product).then(
-                            function success() {
-                                if ($scope.data.list_id) {
-                                    $state.go("shopping.lists.edit", {id: $scope.data.list_id});
-                                }
-                                else {
-                                    $mdToast.show($mdToast.simple().textContent("Added!").hideDelay(1000));
-                                }
-                            },
-                            function failure() {
-                                $mdToast.show($mdToast.simple().textContent("Something went wrong").hideDelay(1000));
-                            }
-                        );
-                    }
+                    SearchService.addToList($scope.data.list_id, product).then(
+                        function (list_id) {
+                            console.log("Got back from SearchService");
+                            $timeout(function() {
+                                $state.go("shopping.lists.edit", {id: list_id}, {reload: true});
+                            }, 550);
+                        });
                 }
             };
+        },
+        link:        function ($scope) {
+            $timeout(function () {
+                $(".autofocus").focus();
+            }, 100);
         }
     };
 });
@@ -480,7 +509,7 @@ angular.module("ttt").config(function ($stateProvider) {
                             awaiting_results: false,
                             results:          []
                         };
-                        ToolbarService.title.set("Search for products (" + $stateParams.list_id + ")");
+                        ToolbarService.title.set("Search for products");
                     }
                 }
             }
@@ -510,44 +539,6 @@ angular.module("ttt").config(function ($stateProvider) {
             url:      "^/user",
             abstract: true
         });
-});
-angular.module("ttt").directive("tttMenu", function () {
-    return {
-        templateUrl: "states/common/menu/template.html",
-        controller:  function ($scope) {
-
-        }
-    };
-});
-angular.module("ttt").directive("tttSidenavLeft", function (UserService) {
-    return {
-        templateUrl: "states/common/sidenav-left/template.html"
-    };
-});
-angular.module("ttt").directive("tttSidenavRight", function () {
-    return {
-        templateUrl: "states/common/sidenav-right/template.html"
-    };
-});
-angular.module("ttt").service("ToolbarService", function ($rootScope) {
-    return {
-        title: {
-            set: function (label) {
-                $rootScope.title = label;
-            }
-        }
-    };
-});
-angular.module("ttt").directive("tttToolbar", function (AuthService) {
-    return {
-        templateUrl: "states/common/toolbar/template.html",
-
-        link: function ($scope) {
-            $scope.isAuthenticated = function () {
-                return AuthService.isAuthenticated();
-            };
-        }
-    };
 });
 angular.module("ttt").directive("tttAuthLoggedOut", function () {
     return {
@@ -590,10 +581,70 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttLists", function ($state) {
+angular.module("ttt").directive("tttBtnAddProduct", function ($stateParams) {
     return {
-        templateUrl: "states/lists/lists.default/template.html",
+        templateUrl: "states/common/btn-add-product/template.html",
         controller:  function ($scope) {
+        },
+        link:        function ($scope) {
+            $(".btn-add-product").detach().appendTo("body");
+            $scope.$on("$destroy", function () {
+                $(".btn-add-product").remove();
+            });
+        }
+    };
+});
+angular.module("ttt").directive("tttBtnAddShoppingList", function () {
+    return {
+        templateUrl: "states/common/btn-add-shopping-list/template.html",
+        controller:  function ($scope) {
+
+        },
+        link:        function ($scope) {
+            $(".btn-add-shopping-list").detach().appendTo("body");
+            $scope.$on("$destroy", function () {
+                $(".btn-add-shopping-list").remove();
+            });
+        }
+    };
+});
+angular.module("ttt").directive("tttMenu", function () {
+    return {
+        templateUrl: "states/common/menu/template.html",
+        controller:  function ($scope) {
+
+        }
+    };
+});
+angular.module("ttt").directive("tttSidenavRight", function () {
+    return {
+        templateUrl: "states/common/sidenav-right/template.html"
+    };
+});
+angular.module("ttt").directive("tttSidenavLeft", function (UserService) {
+    return {
+        templateUrl: "states/common/sidenav-left/template.html"
+    };
+});
+angular.module("ttt").service("ToolbarService", function ($rootScope) {
+    return {
+        title: {
+            set: function (label) {
+                $rootScope.title = label;
+            }
+        }
+    };
+});
+angular.module("ttt").directive("tttToolbar", function (AuthService) {
+    return {
+        templateUrl: "states/common/toolbar/template.html",
+
+        controller: function ($scope) {
+            $scope.isAuthenticated = function () {
+                return AuthService.isAuthenticated();
+            };
+            $scope.show_left = true;
+            $scope.show_right = false;
         }
     };
 });
@@ -633,6 +684,16 @@ angular.module("ttt").config(function ($stateProvider) {
                 }
             }
         });
+});
+angular.module("ttt").directive("tttLists", function ($state) {
+    return {
+        templateUrl: "states/lists/lists.default/template.html",
+        controller:  function ($scope) {
+
+        },
+        link:        function ($scope) {
+        }
+    };
 });
 angular.module("ttt").directive("tttListsEdit", function (ListsService) {
     return {

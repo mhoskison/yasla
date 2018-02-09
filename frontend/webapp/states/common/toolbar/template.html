@@ -1,7 +1,7 @@
 <md-toolbar class="md-toolbar-tools">
     <div layout="row" layout-fill layout-align="space-between center">
         <div layout="row" layout-align="start center">
-            <md-icon ng-show="isAuthenticated()"
+            <md-icon ng-show="isAuthenticated() && show_left"
                      ng-controller="SidenavCtrl"
                      ng-click="toggleLeft()"
                      style="margin-right:1em">menu
@@ -9,7 +9,7 @@
             <span flex>{{$root.title}}</span>
         </div>
         <div layout="row" layout-align="end center">
-            <md-icon ng-show="isAuthenticated()"
+            <md-icon ng-show="isAuthenticated() && show_right"
                      ng-controller="SidenavCtrl"
                      ng-click="toggleRight()"
                      style="margin-left:1em">gamepad
