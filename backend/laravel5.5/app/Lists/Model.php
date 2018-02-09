@@ -63,18 +63,14 @@ class ListService extends Model
     public function get_shopping_list_items($list_id)
     {
         $sql = "SELECT
-  l.label,
-  p.name,
-  p.price,
-  p.image,
-  pv.quantity,
-  p.id
-FROM
-  tblList l
-  LEFT JOIN tblListProduct pv ON pv.list_id=l.id
-  LEFT JOIN tblProduct p ON p.id=pv.product_id
-
-WHERE l.id=?";
+                  p.name,
+                  p.price,
+                  p.image,
+                  pv.quantity,
+                  p.id
+                FROM tblListProduct pv
+                LEFT JOIN tblProduct p ON p.id=pv.product_id
+                WHERE pv.list_id=?";
         $rst = \DB::select($sql, [$list_id]);
         return $rst;
     }
