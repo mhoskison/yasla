@@ -67,6 +67,26 @@ var api_url="https://api.yasla.co.uk";
 var apiroot = api_url + "/api";
 var authroot = api_url;
 
+angular.module("ttt").directive("tttHome", function () {
+    return {
+        templateUrl: "states/home/template.html"
+    };
+});
+angular.module("ttt").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.home", {
+            url:   "^/home",
+            auth:  true,
+            views: {
+                "main@": {
+                    template: "<ttt-home></ttt-home>",
+                    controller: function(ToolbarService) {
+                        ToolbarService.title.set("Home");
+                    }
+                }
+            }
+        });
+});
 angular.module("ttt").directive("tttAbout", function (CordovaService) {
     return {
         templateUrl: "states/about/template.html",
@@ -95,26 +115,75 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttHome", function () {
+angular.module("ttt").service("api", function ($http, $q) {
     return {
-        templateUrl: "states/home/template.html"
+        misc: {
+            ping: function () {
+                $http.get(apiroot + "/ping").then(function (response) {
+                });
+            }
+        }
     };
 });
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.home", {
-            url:   "^/home",
-            auth:  true,
-            views: {
-                "main@": {
-                    template: "<ttt-home></ttt-home>",
-                    controller: function(ToolbarService) {
-                        ToolbarService.title.set("Home");
-                    }
-                }
+angular.module("ttt").service("CordovaService", function ($http, $q) {
+    return {
+        version: function () {
+            var q = $q.defer();
+            q.resolve("");
+            return q.promise;
+            if (typeof cordova !== "undefined") {
+                cordova.getAppVersion.getVersionNumber().then(function (version) {
+                    q.resolve(version);
+                });
             }
-        });
+            else {
+                q.reject();
+            }
+
+            return q.promise;
+
+
+        }
+    };
 });
+angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdSidenav, $log) {
+    $scope.toggleLeft = buildToggler("left");
+    $scope.toggleRight = buildToggler("right");
+    $scope.isOpenRight = function () {
+        return $mdSidenav("right").isOpen();
+    };
+
+    function buildToggler(navID) {
+        return function () {
+            // Component lookup should always be available since we are not using `ng-if`
+            $mdSidenav(navID)
+                .toggle()
+                .then(function () {
+                    $log.debug("toggle " + navID + " is done");
+                });
+        };
+    }
+})
+    .controller("LeftCtrl", function ($scope, $timeout, $mdSidenav, $log) {
+        $scope.close = function () {
+            // Component lookup should always be available since we are not using `ng-if`
+            $mdSidenav("left").close()
+                .then(function () {
+                    $log.debug("close LEFT is done");
+                });
+
+        };
+    })
+    .controller("RightCtrl", function ($scope, $timeout, $mdSidenav, $log) {
+        $scope.close = function () {
+            // Component lookup should always be available since we are not using `ng-if`
+            $mdSidenav("right").close()
+                .then(function () {
+                    $log.debug("close RIGHT is done");
+                });
+        };
+    });
+
 angular.module("ttt").service("AuthService", function ($rootScope, $state, $q, $http, localStorageService, UserService) {
     var AuthService = {
 
@@ -214,157 +283,6 @@ angular.module("ttt").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth", {
             abstract: true
-        });
-});
-angular.module("ttt").service("api", function ($http, $q) {
-    return {
-        misc: {
-            ping: function () {
-                $http.get(apiroot + "/ping").then(function (response) {
-                });
-            }
-        }
-    };
-});
-angular.module("ttt").service("CordovaService", function ($http, $q) {
-    return {
-        version: function () {
-            var q = $q.defer();
-            q.resolve("");
-            return q.promise;
-            if (typeof cordova !== "undefined") {
-                cordova.getAppVersion.getVersionNumber().then(function (version) {
-                    q.resolve(version);
-                });
-            }
-            else {
-                q.reject();
-            }
-
-            return q.promise;
-
-
-        }
-    };
-});
-angular.module("ttt").controller("SidenavCtrl", function ($scope, $timeout, $mdSidenav, $log) {
-    $scope.toggleLeft = buildToggler("left");
-    $scope.toggleRight = buildToggler("right");
-    $scope.isOpenRight = function () {
-        return $mdSidenav("right").isOpen();
-    };
-
-    function buildToggler(navID) {
-        return function () {
-            // Component lookup should always be available since we are not using `ng-if`
-            $mdSidenav(navID)
-                .toggle()
-                .then(function () {
-                    $log.debug("toggle " + navID + " is done");
-                });
-        };
-    }
-})
-    .controller("LeftCtrl", function ($scope, $timeout, $mdSidenav, $log) {
-        $scope.close = function () {
-            // Component lookup should always be available since we are not using `ng-if`
-            $mdSidenav("left").close()
-                .then(function () {
-                    $log.debug("close LEFT is done");
-                });
-
-        };
-    })
-    .controller("RightCtrl", function ($scope, $timeout, $mdSidenav, $log) {
-        $scope.close = function () {
-            // Component lookup should always be available since we are not using `ng-if`
-            $mdSidenav("right").close()
-                .then(function () {
-                    $log.debug("close RIGHT is done");
-                });
-        };
-    });
-
-angular.module("ttt").service("SearchService", function ($http, $q) {
-    return {
-
-        search: function (term) {
-            var q = $q.defer();
-            $http.post(apiroot + "/search", {term: term}).then(function (response) {
-                q.resolve(response.data);
-            });
-            return q.promise;
-        }
-    };
-});
-angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state) {
-    return {
-        templateUrl: "states/search/template.html",
-        controller:  function ($scope) {
-
-            $scope.ui = {
-                search: function () {
-                    var term = $scope.data.term;
-                    $scope.data.results = [];
-                    $scope.data.awaiting_results = true;
-                    SearchService.search(term).then(function (results) {
-                        $scope.data.awaiting_results = false;
-                        $(".search-card").addClass("rolledup");
-                        $scope.data.results = results;
-                    });
-                },
-
-                add: function (product) {
-                    if ($scope.data.list_id === null) {
-                        ListsDialogService.ShoppingListSelector.show().then(
-                            function (list) {
-                                if (list.set_default) {
-                                    $scope.data.list_id = list.list_id;
-                                }
-                            }
-                        );
-                    }
-                    else {
-                        ListsService.product.add($scope.data.list_id, product).then(
-                            function success() {
-                                if ($scope.data.list_id) {
-                                    $state.go("shopping.lists.edit", {id: $scope.data.list_id});
-                                }
-                                else {
-                                    $mdToast.show($mdToast.simple().textContent("Added!").hideDelay(1000));
-                                }
-                            },
-                            function failure() {
-                                $mdToast.show($mdToast.simple().textContent("Something went wrong").hideDelay(1000));
-                            }
-                        );
-                    }
-                }
-            };
-        }
-    };
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.search", {
-            url:    "^/search",
-            params: {
-                list_id: null
-            },
-            views:  {
-                "main@": {
-                    template:   "<ttt-search></ttt-search>",
-                    controller: function (ToolbarService, $stateParams, $scope) {
-                        $scope.data = {
-                            list_id:          $stateParams.list_id,
-                            term:             null,
-                            awaiting_results: false,
-                            results:          []
-                        };
-                        ToolbarService.title.set("Search for products (" + $stateParams.list_id + ")");
-                    }
-                }
-            }
         });
 });
 angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, $q) {
@@ -486,6 +404,88 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
+angular.module("ttt").service("SearchService", function ($http, $q) {
+    return {
+
+        search: function (term) {
+            var q = $q.defer();
+            $http.post(apiroot + "/search", {term: term}).then(function (response) {
+                q.resolve(response.data);
+            });
+            return q.promise;
+        }
+    };
+});
+angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state) {
+    return {
+        templateUrl: "states/search/template.html",
+        controller:  function ($scope) {
+
+            $scope.ui = {
+                search: function () {
+                    var term = $scope.data.term;
+                    $scope.data.results = [];
+                    $scope.data.awaiting_results = true;
+                    SearchService.search(term).then(function (results) {
+                        $scope.data.awaiting_results = false;
+                        $(".search-card").addClass("rolledup");
+                        $scope.data.results = results;
+                    });
+                },
+
+                add: function (product) {
+                    if ($scope.data.list_id === null) {
+                        ListsDialogService.ShoppingListSelector.show().then(
+                            function (list) {
+                                if (list.set_default) {
+                                    $scope.data.list_id = list.list_id;
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        ListsService.product.add($scope.data.list_id, product).then(
+                            function success() {
+                                if ($scope.data.list_id) {
+                                    $state.go("shopping.lists.edit", {id: $scope.data.list_id});
+                                }
+                                else {
+                                    $mdToast.show($mdToast.simple().textContent("Added!").hideDelay(1000));
+                                }
+                            },
+                            function failure() {
+                                $mdToast.show($mdToast.simple().textContent("Something went wrong").hideDelay(1000));
+                            }
+                        );
+                    }
+                }
+            };
+        }
+    };
+});
+angular.module("ttt").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.search", {
+            url:    "^/search",
+            params: {
+                list_id: null
+            },
+            views:  {
+                "main@": {
+                    template:   "<ttt-search></ttt-search>",
+                    controller: function (ToolbarService, $stateParams, $scope) {
+                        $scope.data = {
+                            list_id:          $stateParams.list_id,
+                            term:             null,
+                            awaiting_results: false,
+                            results:          []
+                        };
+                        ToolbarService.title.set("Search for products (" + $stateParams.list_id + ")");
+                    }
+                }
+            }
+        });
+});
 angular.module("ttt").service("UserService", function ($http, $q, localStorageService) {
     return {
         profile: function () {
@@ -510,6 +510,44 @@ angular.module("ttt").config(function ($stateProvider) {
             url:      "^/user",
             abstract: true
         });
+});
+angular.module("ttt").directive("tttMenu", function () {
+    return {
+        templateUrl: "states/common/menu/template.html",
+        controller:  function ($scope) {
+
+        }
+    };
+});
+angular.module("ttt").directive("tttSidenavLeft", function (UserService) {
+    return {
+        templateUrl: "states/common/sidenav-left/template.html"
+    };
+});
+angular.module("ttt").directive("tttSidenavRight", function () {
+    return {
+        templateUrl: "states/common/sidenav-right/template.html"
+    };
+});
+angular.module("ttt").service("ToolbarService", function ($rootScope) {
+    return {
+        title: {
+            set: function (label) {
+                $rootScope.title = label;
+            }
+        }
+    };
+});
+angular.module("ttt").directive("tttToolbar", function (AuthService) {
+    return {
+        templateUrl: "states/common/toolbar/template.html",
+
+        link: function ($scope) {
+            $scope.isAuthenticated = function () {
+                return AuthService.isAuthenticated();
+            };
+        }
+    };
 });
 angular.module("ttt").directive("tttAuthLoggedOut", function () {
     return {
@@ -551,44 +589,6 @@ angular.module("ttt").config(function ($stateProvider) {
                 }
             }
         });
-});
-angular.module("ttt").directive("tttMenu", function () {
-    return {
-        templateUrl: "states/common/menu/template.html",
-        controller:  function ($scope) {
-
-        }
-    };
-});
-angular.module("ttt").directive("tttSidenavLeft", function (UserService) {
-    return {
-        templateUrl: "states/common/sidenav-left/template.html"
-    };
-});
-angular.module("ttt").directive("tttSidenavRight", function () {
-    return {
-        templateUrl: "states/common/sidenav-right/template.html"
-    };
-});
-angular.module("ttt").service("ToolbarService", function ($rootScope) {
-    return {
-        title: {
-            set: function (label) {
-                $rootScope.title = label;
-            }
-        }
-    };
-});
-angular.module("ttt").directive("tttToolbar", function (AuthService) {
-    return {
-        templateUrl: "states/common/toolbar/template.html",
-
-        link: function ($scope) {
-            $scope.isAuthenticated = function () {
-                return AuthService.isAuthenticated();
-            };
-        }
-    };
 });
 angular.module("ttt").directive("tttLists", function ($state) {
     return {
@@ -819,56 +819,6 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttUserRegister", function (AuthService, $state) {
-    return {
-        templateUrl: "states/unauthenticated/register/template.html",
-        controller:  function ($scope) {
-
-            $scope.data = {
-                firstname: "",
-                lastname:  "",
-                username:  "",
-                password1: "",
-                password2: ""
-            };
-            $scope.ui = {
-
-                register: function () {
-                    AuthService.register($scope.data).then(
-                        function success(id) {
-                            if (id > 0) {
-                                $state.go("shopping.auth.login");
-                            }
-                            switch (id) {
-                                case -1: // Duplicate email
-                                    $scope.data.error = 1;
-                                    break;
-                            }
-                        },
-                        function failure(e) {
-                        }
-                    );
-                }
-            };
-
-        }
-    };
-});
-angular.module("ttt").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth.register", {
-            unauthenticated: true,
-            url:             "/register",
-            views:           {
-                "main@": {
-                    template:   "<ttt-user-register></ttt-user-register>",
-                    controller: function (ToolbarService) {
-                        ToolbarService.title.set("Register");
-                    }
-                }
-            }
-        });
-});
 angular.module("ttt").directive("tttAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
     return {
         templateUrl: "states/unauthenticated/login/template.html",
@@ -960,6 +910,56 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
+angular.module("ttt").directive("tttUserRegister", function (AuthService, $state) {
+    return {
+        templateUrl: "states/unauthenticated/register/template.html",
+        controller:  function ($scope) {
+
+            $scope.data = {
+                firstname: "",
+                lastname:  "",
+                username:  "",
+                password1: "",
+                password2: ""
+            };
+            $scope.ui = {
+
+                register: function () {
+                    AuthService.register($scope.data).then(
+                        function success(id) {
+                            if (id > 0) {
+                                $state.go("shopping.auth.login");
+                            }
+                            switch (id) {
+                                case -1: // Duplicate email
+                                    $scope.data.error = 1;
+                                    break;
+                            }
+                        },
+                        function failure(e) {
+                        }
+                    );
+                }
+            };
+
+        }
+    };
+});
+angular.module("ttt").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth.register", {
+            unauthenticated: true,
+            url:             "/register",
+            views:           {
+                "main@": {
+                    template:   "<ttt-user-register></ttt-user-register>",
+                    controller: function (ToolbarService) {
+                        ToolbarService.title.set("Register");
+                    }
+                }
+            }
+        });
+});
 angular.module("ttt").directive("tttUserProfile", function () {
     return {
         templateUrl: "states/user/profile/template.html",
@@ -985,26 +985,6 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttMatchPassword", function () {
-    /**
-     * Custom validator to ensure the user's password meets a minimum complexity standard
-     */
-    return {
-        require: "ngModel",
-        link:    function ($scope, $element, $attrs, $ctrl) {
-            $ctrl.$parsers.push(function (ngModelValue) {
-                var pw1 = $scope.data.password1;
-                if (pw1 == ngModelValue) {
-                    $ctrl.$setValidity("passwordMismatch", true);
-                }
-                else {
-                    $ctrl.$setValidity("passwordMismatch", false);
-                }
-                return ngModelValue;
-            });
-        }
-    };
-});
 angular.module("ttt").directive("tttDuplicateEmail", function (AuthService) {
     /**
      * Custom validator to ensure the user's email address is unique
@@ -1021,6 +1001,26 @@ angular.module("ttt").directive("tttDuplicateEmail", function (AuthService) {
                     }, function is_not_unique() {
                         $ctrl.$setValidity("duplicateEmail", false);
                     });
+                return ngModelValue;
+            });
+        }
+    };
+});
+angular.module("ttt").directive("tttMatchPassword", function () {
+    /**
+     * Custom validator to ensure the user's password meets a minimum complexity standard
+     */
+    return {
+        require: "ngModel",
+        link:    function ($scope, $element, $attrs, $ctrl) {
+            $ctrl.$parsers.push(function (ngModelValue) {
+                var pw1 = $scope.data.password1;
+                if (pw1 == ngModelValue) {
+                    $ctrl.$setValidity("passwordMismatch", true);
+                }
+                else {
+                    $ctrl.$setValidity("passwordMismatch", false);
+                }
                 return ngModelValue;
             });
         }

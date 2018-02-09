@@ -19468,6 +19468,33 @@ md-sidenav {
   padding: 12px;
 }
 
+.logo {
+  background-image: url("/dist/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.menu ul {
+  margin: 0;
+  padding: 1em;
+}
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  margin-left: 0.6em;
+}
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
+}
+
 .state-search .search-card {
   margin-top: 0px;
   -webkit-transition: width 2s, height 4s;
@@ -19536,87 +19563,6 @@ md-sidenav {
   text-transform: none;
   font-size: 1em;
 }
-
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
-}
-
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
-}
-
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
-}
 @media (max-width: 640px) {
   .logo {
     display: none;
@@ -19628,6 +19574,60 @@ md-sidenav {
   }
 }
 
+
+.logo {
+  background-image: url("/dist/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.menu ul {
+  margin: 0;
+  padding: 1em;
+}
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  margin-left: 0.6em;
+}
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
+}
+
+.logo {
+  background-image: url("/dist/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.menu ul {
+  margin: 0;
+  padding: 1em;
+}
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  margin-left: 0.6em;
+}
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
+}
 
 .state-lists-edit .item .quantity {
   text-align: right;
@@ -19711,43 +19711,6 @@ md-sidenav {
   line-height: 76px;
 }
 
-.state-register .form {
-  margin-top: 0em;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 12px;
-  background: #fff;
-  margin-bottom: 200px;
-}
-.state-register .error {
-  color: red;
-  background: #ffdada;
-  padding: 12px;
-  border: 1px solid red;
-  border-radius: 3px;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-.state-register .strength-meter .bar {
-  height: 15px;
-  margin: 3px;
-}
-.state-register .strength-meter .bar-outline-red {
-  border: 3px solid red;
-}
-.state-register .strength-meter .bar-outline-green {
-  border: 3px solid green;
-}
-.state-register .strength-meter .bar-grey {
-  background: #ccc;
-}
-.state-register .strength-meter .bar-green {
-  background: green;
-}
-.state-register .strength-meter .bar-red {
-  background: red;
-}
-
 .state-auth-login .waiting {
   position: absolute;
   left: 10%;
@@ -19806,6 +19769,43 @@ md-sidenav {
   border-radius: 3px;
   margin-top: 0;
   margin-bottom: 12px;
+}
+
+.state-register .form {
+  margin-top: 0em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  background: #fff;
+  margin-bottom: 200px;
+}
+.state-register .error {
+  color: red;
+  background: #ffdada;
+  padding: 12px;
+  border: 1px solid red;
+  border-radius: 3px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+.state-register .strength-meter .bar {
+  height: 15px;
+  margin: 3px;
+}
+.state-register .strength-meter .bar-outline-red {
+  border: 3px solid red;
+}
+.state-register .strength-meter .bar-outline-green {
+  border: 3px solid green;
+}
+.state-register .strength-meter .bar-grey {
+  background: #ccc;
+}
+.state-register .strength-meter .bar-green {
+  background: green;
+}
+.state-register .strength-meter .bar-red {
+  background: red;
 }
 
 .logo {
