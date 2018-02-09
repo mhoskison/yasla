@@ -54,6 +54,12 @@ class ListService extends Model
         return TRUE;
     }
 
+    public function update_quantity($list_id, $product_id, $new_quantity)
+    {
+        \DB::update("UPDATE tblListProduct SET quantity=? WHERE list_id=? AND product_id=?", [$new_quantity, $list_id, $product_id]);
+        return TRUE;
+    }
+
     public function get_shopping_list_items($list_id)
     {
         $sql = "SELECT
@@ -61,7 +67,8 @@ class ListService extends Model
   p.name,
   p.price,
   p.image,
-  pv.quantity
+  pv.quantity,
+  p.id
 FROM
   tblList l
   LEFT JOIN tblListProduct pv ON pv.list_id=l.id
@@ -99,7 +106,6 @@ WHERE l.id=?";
 
     public function get_products($list_id)
     {
-        $obj  = new \App\Product\Controller();
         $info = self::get_info($list_id);
 
         return [

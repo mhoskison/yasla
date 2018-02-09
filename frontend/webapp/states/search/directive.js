@@ -26,7 +26,7 @@ angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialo
                         );
                     }
                     else {
-                        ListsService.addProduct($scope.data.list_id, product).then(
+                        ListsService.product.add($scope.data.list_id, product).then(
                             function success() {
                                 if ($scope.data.list_id) {
                                     $state.go("shopping.lists.edit", {id: $scope.data.list_id});

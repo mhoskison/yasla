@@ -337,18 +337,24 @@ angular.module("ttt").service("ListsDialogService", function ($mdDialog, $http, 
 });
 angular.module("ttt").service("ListsService", function ($http, $q) {
     var ListsService = {
-        get: function () {
+
+        product:   {
+            add:            function (list_id, product) {
+                return $http.post(apiroot + "/product/add-to-list/" + list_id, {data: product});
+            },
+            updateQuantity: function (list_id, product_id, quantity) {
+                var url = apiroot + "/list/" + list_id + "/product/" + product_id + "/update-quantity/" + quantity;
+                console.log(url);
+                return $http.post(apiroot + "/list/" + list_id + "/product/" + product_id + "/update-quantity/" + quantity);
+            }
+        },
+        get:       function () {
             var q = $q.defer();
             $http.get(apiroot + "/lists/get").then(function (response) {
                 q.resolve(response.data);
             });
             return q.promise;
         },
-
-        addProduct: function (list_id, product) {
-            return $http.post(apiroot + "/product/add-to-list/" + list_id, {data:product});
-        },
-
         basicInfo: function (list_id) {
             var q = $q.defer();
 
@@ -357,8 +363,7 @@ angular.module("ttt").service("ListsService", function ($http, $q) {
             });
             return q.promise;
         },
-
-        info:    function (list_id) {
+        info:      function (list_id) {
             var q = $q.defer();
 
             $http.get(apiroot + "/lists/" + list_id + "/products").then(function (response) {
@@ -366,20 +371,15 @@ angular.module("ttt").service("ListsService", function ($http, $q) {
             });
             return q.promise;
         },
-        create:  function (data) {
+        create:    function (data) {
             var q = $q.defer();
             $http.post(apiroot + "/lists/create", data).then(function (response) {
                 q.resolve(response.data);
             });
             return q.promise;
         },
-        delete:  function (list_id) {
+        delete:    function (list_id) {
             return $http.post(apiroot + "/lists/" + list_id + "/delete");
-        },
-        product: {
-            add: function (list_id, product_id) {
-
-            }
         }
     };
     return ListsService;
@@ -444,7 +444,7 @@ angular.module("ttt").directive("tttSearch", function (SearchService, ListsDialo
                         );
                     }
                     else {
-                        ListsService.addProduct($scope.data.list_id, product).then(
+                        ListsService.product.add($scope.data.list_id, product).then(
                             function success() {
                                 if ($scope.data.list_id) {
                                     $state.go("shopping.lists.edit", {id: $scope.data.list_id});
@@ -634,7 +634,7 @@ angular.module("ttt").config(function ($stateProvider) {
             }
         });
 });
-angular.module("ttt").directive("tttListsEdit", function ($mdToast) {
+angular.module("ttt").directive("tttListsEdit", function (ListsService) {
     return {
         templateUrl: "states/lists/lists.edit/template.html",
         controller:  function ($scope) {
@@ -650,18 +650,17 @@ angular.module("ttt").directive("tttListsEdit", function ($mdToast) {
                     if (do_toast) $scope.ui.toast();
                 },
                 toast:     function () {
-                    return;
-                    $mdToast.show($mdToast.simple().textContent("Shopping list updated: New total £" + $scope.data.total).hideDelay(1000));
                 },
                 quantity:  {
                     up: function (item) {
-                        var list_id = $scope.data.list.id;
                         item.quantity++;
                         $scope.ui.calculate(true);
+                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
                     },
                     dn: function (item) {
                         item.quantity--;
                         $scope.ui.calculate(true);
+                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
                     }
                 }
             };

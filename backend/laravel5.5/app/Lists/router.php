@@ -55,5 +55,13 @@ class Router extends \App\RouterBase
             return response()->json($ret);
         });
 
+        /**
+         * Update the quantity of a product on a shopping list
+         */
+        \Route::post("list/{list_id}/product/{product_id}/update-quantity/{quantity}", function ($list_id, $product_id, $quantity) {
+            $ret = $this->controller->update_quantity($list_id, $product_id, $quantity);
+            return response()->json($ret);
+        });
+
     }
 }

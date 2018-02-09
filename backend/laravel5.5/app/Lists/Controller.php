@@ -114,6 +114,15 @@ class Controller extends \App\Http\Controllers\Controller
         return $data;
     }
 
+    public function update_quantity($list_id, $product_id, $quantity)
+    {
+        $this->ProtectController();
+
+        $status = $this->model->update_quantity($list_id, $product_id, $quantity);
+        return $status;
+    }
+
+
     public function purge()
     {
         $this->ProtectController();

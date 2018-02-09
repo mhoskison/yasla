@@ -1,4 +1,4 @@
-angular.module("ttt").directive("tttListsEdit", function ($mdToast) {
+angular.module("ttt").directive("tttListsEdit", function (ListsService) {
     return {
         templateUrl: "states/lists/lists.edit/template.html",
         controller:  function ($scope) {
@@ -14,18 +14,17 @@ angular.module("ttt").directive("tttListsEdit", function ($mdToast) {
                     if (do_toast) $scope.ui.toast();
                 },
                 toast:     function () {
-                    return;
-                    $mdToast.show($mdToast.simple().textContent("Shopping list updated: New total £" + $scope.data.total).hideDelay(1000));
                 },
                 quantity:  {
                     up: function (item) {
-                        var list_id = $scope.data.list.id;
                         item.quantity++;
                         $scope.ui.calculate(true);
+                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
                     },
                     dn: function (item) {
                         item.quantity--;
                         $scope.ui.calculate(true);
+                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
                     }
                 }
             };
