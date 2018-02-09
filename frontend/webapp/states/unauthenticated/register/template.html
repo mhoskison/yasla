@@ -1,0 +1,79 @@
+<div class="state state-register">
+
+    <form layout="column" class="form" name="form">
+
+        <md-input-container>
+            <label>First name</label>
+            <input name="firstname" ng-model="data.firstname"
+                   required ng-minlength="3" ng-maxlength="255"
+                   type="text" md-autofocus>
+            <div ng-messages="form.firstname.$error" ng-show="form.firstname.$touched">
+                <p ng-message="minlength">Please enter at least 3 characters</p>
+                <p ng-message="maxlength">Too many characters entered</p>
+            </div>
+        </md-input-container>
+
+        <md-input-container>
+            <label>Last name</label>
+            <input name="lastname" ng-model="data.lastname"
+                   required ng-minlength="3" ng-maxlength="255"
+                   type="text" md-autofocus>
+            <div ng-messages="form.lastname.$error" ng-show="form.lastname.$touched">
+                <p ng-message="minlength">Please enter at least 3 characters</p>
+                <p ng-message="maxlength">Too many characters entered</p>
+            </div>
+        </md-input-container>
+        <md-input-container>
+            <label>Email address</label>
+            <input name="username" ng-model="data.username"
+                   required ttt-duplicate-email
+                   type="email" placeholder="Your email address will be your username">
+            <div ng-messages="form.username.$error" ng-show="1">
+                <p ng-message="email">Please enter a valid email address.</p>
+                <p ng-message="duplicateEmail">This email address is already registered.</p>
+            </div>
+        </md-input-container>
+        <md-input-container>
+            <label>Password</label>
+
+            <div layout="column">
+                <div>
+                    <input name="password1" ng-model="data.password1"
+                           required ng-minlength="8" ng-maxlength="255" ttt-validate-password
+                           type="password" placeholder="Please enter a strong password">
+                </div>
+                <div layout="row" layout-align="space-between center" class="strength-meter">
+                    <div flex="20" class="bar bar-0 bar-outline-red bar-grey"></div>
+                    <div flex="20" class="bar bar-1 bar-outline-red bar-grey"></div>
+                    <div flex="20" class="bar bar-2 bar-outline-red bar-grey"></div>
+                    <div flex="20" class="bar bar-3 bar-outline-green bar-grey"></div>
+                    <div flex="20" class="bar bar-4 bar-outline-green bar-grey"></div>
+                </div>
+                <div ng-messages="form.password1.$error" ng-show="1">
+                    <p ng-message="strongEnough">Password isn't sufficiently complex</p>
+                </div>
+            </div>
+        </md-input-container>
+        <md-input-container>
+            <label for="password2">Confirm password</label>
+            <input id="password2" name="password2" type="password" ng-model="data.password2" ttt-match-password>
+            <div ng-messages="form.password2.$error" ng-show="1">
+                <p ng-message="passwordMismatch">Passwords don't match</p>
+            </div>
+        </md-input-container>
+
+        <div layout="row" layout-fill layout-align="space-between center">
+            <div>
+                <md-button ui-sref="shopping.auth.intro">Back</md-button>
+            </div>
+            <div>
+                <button class="md-button md-raised md-primary" type="submit"
+                        ng-disabled="form.$invalid"
+                        ng-click="ui.register()">
+                    Register
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

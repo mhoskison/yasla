@@ -1,0 +1,71 @@
+body, html {
+    height: 100%;
+}
+
+body {
+    width:       100%;
+    padding:     0;
+    margin:      0;
+    box-sizing:  border-box;
+    font-family: 'Roboto Condensed', sans-serif;
+    background:  #eee;
+}
+
+md-content.md-default-theme, md-content {
+    background: inherit;
+}
+
+md-card > h2 {
+    padding-left: 15px;
+}
+
+.bg {
+    height:          100%;
+    background:      url(assets/bg.jpg) no-repeat center;
+    background-size: cover;
+    width:           100%;
+    z-index:         -1;
+    position:        fixed;
+    top:             0;
+}
+
+// ---- Sticky toolbar
+//
+md-toolbar {
+    position: fixed;
+}
+
+// ---- Add space to offset the sticky toolbar
+//
+.sticky-toolbar {
+    margin-top: 52px;
+}
+
+.state {
+    h1 {
+        color:       white;
+        font-weight: 700;
+    }
+}
+
+.icon-btn {
+    min-width: auto;
+}
+
+md-card.jumbo {
+    margin-bottom: 2em;
+    md-card-avatar {
+        md-icon {
+            color:      #aaa;
+            background: rgb(63, 81, 181);
+        }
+    }
+    md-card-header-text {
+        font-weight: 300;
+        font-size:   150%;
+        margin-top:  6px;
+    }
+    md-card-content {
+        font-weight: 300;
+    }
+}

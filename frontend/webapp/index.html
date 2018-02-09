@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="manifest.json">
+    <title>My Shopping List</title>
+    <script src="dist/bower.js"></script>
+    <script src="dist/app.js"></script>
+    <link rel="stylesheet" href="dist/app.css">
+</head>
+<body ng-app="ttt" ng-cloak>
+<md-toast></md-toast>
+<ttt-toolbar></ttt-toolbar>
+
+<div layout="column" ng-cloak>
+    <section layout="row" flex>
+        <div ui-view="sbLeft"></div>
+        <md-content flex layout-padding>
+            <div class="sticky-toolbar" ui-view="main"></div>
+        </md-content>
+        <div ui-view="sbRight"></div>
+    </section>
+</div>
+<div ng-if="0" class="bg"></div>
+
+<script type="text/javascript" src="cordova.js"></script>
+</body>
+</html>

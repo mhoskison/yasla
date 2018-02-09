@@ -1,0 +1,36 @@
+<div class="state state-about">
+    <md-card class="md-whiteframe-8dp jumbo">
+        <md-card-header>
+            <md-card-avatar>
+                <md-icon>info</md-icon>
+            </md-card-avatar>
+            <md-card-header-text>
+                YASLA
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <p><strong>Yet Another Shopping List App!</strong></p>
+            <p> This is my playground to explore technology that I don't get to play with in my day to day life. Hopefully, it's also a useful app!</p>
+
+                <md-list-item class="md-2-line" layout="column" layout-align="space-between center">
+                    <p>Author</p>
+                    <h4>Matt Hoskison &lt;matt@hoskison.co.uk&gt;</h4>
+                </md-list-item>
+                <md-list-item class="md-2-line" layout="column" layout-align="space-between center">
+                    <p>App version</p>
+                    <h4>{{data.version||"Not available"}}</h4>
+                </md-list-item>
+
+
+
+        </md-card-content>
+        <md-card-controls layout="row" class="md-padding">
+            <div flex></div>
+            <md-button class="" ui-sref="shopping.home">
+                <md-icon>home</md-icon>
+                Home
+            </md-button>
+        </md-card-controls>
+    </md-card>
+
+</div>

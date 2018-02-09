@@ -1,0 +1,15 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-8dp" md-component-id="right">
+    <md-toolbar class="md-theme-light">
+        <h1 class="md-toolbar-tools">
+            <div layout="row" layout-align="start center">
+                <md-icon style="margin-right: 0.6em" ng-controller="RightCtrl" ng-click="close()">close</md-icon>
+                Options
+            </div>
+        </h1>
+    </md-toolbar>
+    <md-content ng-controller="RightCtrl" layout-padding style="margin-top:52px">
+        <a ui-sref="shopping.lists.new" class="md-button">
+            <md-icon>create</md-icon>
+            New shopping list</a>
+    </md-content>
+</md-sidenav>

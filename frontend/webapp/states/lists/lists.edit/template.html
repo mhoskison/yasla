@@ -1,0 +1,70 @@
+<div class="state state-lists-edit">
+    <md-card class="md-whiteframe-8dp">
+        <md-card-header>
+            <md-card-header-text>
+                <div layout="row" layout-align="space-between start">
+                    <div layout="column" layout-align="start start">
+                        <span class="md-title">{{data.list.label}}</span>
+                        <span class="md-subhead">Last used {{data.list.lastused|date}}</span>
+                        <span class="md-subhead">{{data.products.length||0}} products in shopping list</span>
+                    </div>
+                    <div layout="column" layout-align="end end">
+                        <span class="md-headline">£{{data.total|number:2}}</span>
+                        <md-button ui-sref="shopping.lists.delete({id:data.list.id})" class="icon-btn">
+                            <md-icon>delete</md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </md-card-header-text>
+        </md-card-header>
+
+        <md-card-actions layout="row" layout="space-between center">
+
+            <div flex layout="row" layout-align="start center">
+                <md-button ui-sref="shopping.search({list_id:data.list.id})" class="icon-btn">
+                    <md-icon>add</md-icon>
+                </md-button>
+
+            </div>
+            <div>
+                <md-button ui-sref="shopping.lists.go(item.id)" class="md-raised md-accent">Go</md-button>
+            </div>
+        </md-card-actions>
+    </md-card>
+
+    <div ng-repeat="item in data.products"
+         class="md-whiteframe-4dp custom-card md-padding">
+        <div class="item-name">{{item.name}}</div>
+        <div layout="row" layout-align="space-between center">
+            <div class="item-cost">&pound;{{item.price||0|number:2}} each</div>
+            <div class="item-weight">450gm pack</div>
+        </div>
+        <div layout="row">
+            <div layout="column">
+                <img class="item-pic" ng-src="{{item.image}}">
+            </div>
+
+            <div class="quantity-container">
+
+                    <div layout="column">
+                        <div class="label">Quantity:</div>
+                        <div layout="row" layout-align="space-between center">
+
+
+
+                            <input class="input-quantity" ng-model="item.quantity" style="" flex="50">
+                            <md-button class="btn-small" ng-click="ui.quantity.up(item)">
+                                <md-icon>arrow_drop_up</md-icon>
+                            </md-button>
+                            <md-button class="btn-small" ng-click="ui.quantity.dn(item)" ng-disabled="item.quantity<1">
+                                <md-icon>arrow_drop_down</md-icon>
+                            </md-button>
+
+                        </div>
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>

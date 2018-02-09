@@ -1,0 +1,64 @@
+.state-auth-login {
+
+    .waiting {
+        position: absolute;
+        left:     10%;
+        top:      70px;
+        bottom:   0;
+        right:    10%;
+        .bar {
+            position:  absolute;
+            top:       50%;
+            left:      50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    }
+    .username, .password {
+        border:        1px solid #00000030;
+        background:    rgba(6, 132, 6, 0.5);
+        padding:       1em;
+        border-radius: 3px;
+        margin-top:    0;
+        box-shadow:    1px 3px 9px 0px #00000085;
+
+        .icon {
+            margin-right: 1em;
+        }
+        input {
+            border:     none;
+            background: white !important;
+        }
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px white inset;
+            border-radius:      3px;
+        }
+        .md-input-message-animation {
+            margin:        1em;
+            margin-left:   3.6em;
+            background:    red;
+            padding:       1em;
+            margin-right:  0;
+            color:         black;
+            margin-bottom: 0;
+        }
+    }
+
+    .form {
+        margin-top: 0em;
+        //border:        1px solid #ccc;
+        //border-radius: 6px;
+        //background:    #fff;
+
+        padding:    12px;
+    }
+    .error {
+        color:         red;
+        background:    rgb(255, 218, 218);
+        padding:       12px;
+        border:        1px solid red;
+        border-radius: 3px;
+        margin-top:    0;
+        margin-bottom: 12px;
+    }
+
+}

@@ -1,0 +1,62 @@
+<div class="state state-auth-login">
+
+    <form layout="column" class="form" name="form">
+
+        <p>
+            Please enter your username and passsword:
+        </p>
+
+        <md-input-container class="username" layout="column">
+            <div layout="row">
+                <div class="icon">
+                    <md-icon>person</md-icon>
+                </div>
+                <input name="username" ng-model="data.username"
+                       required aria-label="Username"
+                       class="autofocus"
+                       type="email">
+            </div>
+            <div ng-messages="form.username.$error" ng-show="1">
+                <p ng-message="email">Please enter a valid email address.</p>
+            </div>
+        </md-input-container>
+
+        <md-input-container class="password" layout="column">
+            <div layout="row">
+                <div class="icon">
+                    <md-icon>lock</md-icon>
+                </div>
+                <input id="password" name="password" type="password" aria-label="Password" ng-model="data.password" ng-focus="ui.reset()" required>
+
+            </div>
+
+        </md-input-container>
+
+
+        <div ng-show="data.error">
+            <div class="error" ng-show="data.error===2">
+                Cannot communicate with the API. Please try again later.
+            </div>
+            <div class="error" ng-show="data.error===1">
+                Your username or password was not recognised. Please try again.
+            </div>
+        </div>
+
+        <div layout="row" layout-fill layout-align="space-between center">
+            <div>
+                <md-button ui-sref="shopping.auth.intro">Back</md-button>
+            </div>
+            <div>
+                <button class="md-button md-primary md-raised" type="submit" ng-click="ui.login()" ng-disabled="form.$invalid || data.waiting">Login</button>
+            </div>
+        </div>
+
+
+    </form>
+
+    <div ng-show="data.waiting" class="waiting">
+        <md-progress-circular class="bar" md-mode="indeterminate"></md-progress-circular>
+
+
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="state state-lists-new">
+    <md-card>
+        <form>
+            <md-card-content>
+                <md-input-container style="width:100%">
+                    <label>Shopping list name</label>
+                    <input ng-model="data.list_name" type="text" class="autofocus">
+                </md-input-container>
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="space-between center">
+                <div flex></div>
+                <md-button ng-click="ui.save()" type="submit" ng-disabled="!data.list_name">Save</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+</div>

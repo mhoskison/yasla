@@ -1,0 +1,17 @@
+<div class="state state-lists-edit">
+    <md-card>
+        <md-card-title>
+            <div layout="column">
+                <h2> {{data.label}}</h2>
+            </div>
+        </md-card-title>
+        <md-card-content>
+            Are you sure you want to delete this shopping list?
+        </md-card-content>
+        <md-card-controls layout="row">
+            <md-button ng-click="ui.confirm()">Yes</md-button>
+            <div flex></div>
+            <md-button ng-click="ui.cancel()">No</md-button>
+        </md-card-controls>
+    </md-card>
+</div>

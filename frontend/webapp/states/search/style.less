@@ -1,0 +1,47 @@
+.state-search {
+
+    .search-card {
+        margin-top:         0px;
+        -webkit-transition: width 2s, height 4s; /* For Safari 3.1 to 6.0 */
+        transition:         width 2s, height 4s;
+        .mini-search-button {
+            display: none;
+        }
+        .search-input {
+            width: auto;
+        }
+        &.rolledup {
+            background: #fff;
+            z-index:    20;
+            height:     70px !important;
+            overflow:   hidden;
+            position:   fixed;
+            left:       16px;
+            right:      16px;
+            top:        56px;
+
+            .mini-search-button {
+                display: block;
+            }
+
+            .card-header {
+                display: none;
+            }
+            .search-card-text {
+                display: none;
+            }
+            .search-input {
+                margin-top: 0px;
+            }
+        }
+    }
+
+    .results-card.first {
+        margin-top: 70px;
+    }
+    .results-card {
+        width:  90%;
+        margin: auto auto 1em;
+    }
+
+}

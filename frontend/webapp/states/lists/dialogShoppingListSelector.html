@@ -1,0 +1,44 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Select shopping list</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="ui.close()">
+                    <md-icon aria-label="Close dialog">close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content" style="margin-top:52px">
+               <p style="font-size: 18px">
+                   Select which shopping list to save this item on:
+               </p>
+
+                <md-input-container style="width:100%">
+                    <label>Shopping list</label>
+                    <md-select ng-model="data.list_id">
+                        <md-option ng-repeat="item in list" ng-value="item.id">
+                            {{item.label}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-switch ng-model="data.set_default" aria-label="Use as default" class="md-warn" ng-true-value="1" ng-false-value="0">
+                   Use this list as default
+                </md-switch>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row" style="position: absolute;bottom:0;left:0;right:0;width:100%">
+            <md-button ng-click="ui.close()">
+                Cancel
+            </md-button>
+            <div flex></div>
+            <md-button ng-disabled="!data.list_id" class="md-raised md-default md-primary" ng-click="ui.save()">
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

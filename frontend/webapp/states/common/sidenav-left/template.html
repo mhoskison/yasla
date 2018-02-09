@@ -1,0 +1,67 @@
+<md-sidenav
+
+        class="md-sidenav-left"
+        md-component-id="left"
+        md-whiteframe="8">
+
+    <md-toolbar class="md-theme-indigo" ng-controller="LeftCtrl">
+
+        <h1 class="md-toolbar-tools">
+            <div layout="row" layout-align="start center">
+                <a class="sb-closer md-button" ng-click="close()">
+                    <md-icon>close</md-icon>
+                </a>
+                Main Menu
+            </div>
+        </h1>
+    </md-toolbar>
+
+    <md-content ng-controller="LeftCtrl">
+        <div layout="row" layout-fill layout-align="space-between start">
+            <div layout="column" layout-fill>
+
+
+
+                <a class="md-button" ui-sref="shopping.home">
+                    <md-icon>home</md-icon>
+                    Home
+                </a>
+
+                <a class="md-button" ui-sref="shopping.lists">
+                    <md-icon>list</md-icon>
+                    Shopping lists
+                </a>
+
+                <a class="md-button" ui-sref="shopping.search">
+                    <md-icon>search</md-icon>
+                    Product search
+                </a>
+
+                <md-divider></md-divider>
+
+                <div class="user-email"><strong>{{user.name}}</strong></div>
+
+                <a class="md-button" ui-sref="shopping.user.profile">
+                    <md-icon>person</md-icon>
+                    Profile
+                </a>
+                <a class="md-button" ui-sref="shopping.auth.logout">
+                    <md-icon>exit_to_app</md-icon>
+                    Log out
+                </a>
+
+                <md-divider></md-divider>
+                <a class="md-button" ui-sref="shopping.about">
+                    <md-icon>info</md-icon>
+                    About this app
+                </a>
+
+            </div>
+        </div>
+
+    </md-content>
+
+</md-sidenav>
+
+
+

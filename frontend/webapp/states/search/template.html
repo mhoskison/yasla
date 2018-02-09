@@ -1,0 +1,63 @@
+<div class="state state-search">
+
+    <md-card class="md-whiteframe-8dp jumbo search-card">
+        <form autocomplete="off">
+            <md-card-header class="card-header">
+                <md-card-avatar>
+                    <md-icon>search</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                    Search for products
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content class="search-card-content">
+                <p class="search-card-text"> Enter your search term here:</p>
+
+                <div layout="row" layout-align="space-between start">
+                    <div flex>
+                        <md-input-container class="search-input">
+                            <md-icon>search</md-icon>
+                            <label for="search">Search</label>
+                            <input type="text" id="search" ng-model="data.term" md-autofocus>
+                        </md-input-container>
+                    </div>
+
+                    <div class="mini-search-button">
+                        <md-button type="submit" ng-click="ui.search()" class="md-raised md-accent" ng-disabled="!data.term || data.awaiting_results">Search</md-button>
+                    </div>
+                </div>
+
+            </md-card-content>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button type="submit" ng-click="ui.search()" class="md-raised md-accent" ng-disabled="!data.term || data.awaiting_results">Search</md-button>
+            </md-card-actions>
+        </form>
+    </md-card>
+
+    <md-card ng-show="data.awaiting_results">
+        <md-card-header>
+            Searching ...
+        </md-card-header>
+    </md-card>
+
+    <md-card ng-repeat="item in data.results" class="results-card" ng-class="{'first':$index===0}">
+        <md-card-header>
+            <md-card-avatar>
+                <img ng-src="{{item.image}}">
+            </md-card-avatar>
+            <md-card-header-text>
+                <strong>&pound;{{item.price|number:2}}</strong>
+                {{item.name}}
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <div ng-repeat="desc in item.description">
+                {{desc}}
+            </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button ng-click="ui.add(item)">Add ...</md-button>
+        </md-card-actions>
+    </md-card>
+
+</div>
