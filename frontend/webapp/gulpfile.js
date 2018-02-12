@@ -7,7 +7,10 @@ var gulp      = require("gulp"),
     concat_to = require("gulp-concat"),
     clean     = require("gulp-clean"),
     replace   = require("gulp-replace"),
-    watcher   = require("gulp-watch");
+    util      = require("gulp-util"),
+    watcher   = require("gulp-watch"),
+    bump      = require("gulp-bump"),
+    pkg       = require("./package.json");
 
 var bower_paths = [
     "bower_components/jquery/dist/jquery.min.js",
@@ -26,69 +29,56 @@ var bower_paths = [
     "bower_components/angular-ui/build/angular-ui.min.js",
     "bower_components/zxcvbn/dist/zxcvbn.js"
 ];
+var source_paths = ["app/src/**/*.js"];
+var style_paths = [
+    "bower_components/angular-material/angular-material.min.css",
+    "bower_components/angular-material-icons/angular-material-icons.css",
+    "app/src/**/*.less"
+];
+var dist = "app/dist";
 
-gulp.task("clean-build", function (done) {
-    return gulp.src("build", {
-        read:       false,
-        allowEmpty: true
-    })
-        .pipe(clean());
+gulp.task("default", sequence("build-bower", "build-css", "build-code", ["watch-code", "watch-css"]));
+gulp.task("watch-code", function (done) {
+    console.log("Code watchers are running!!");
+    return gulp.watch(source_paths, ["build-code"]);
+});
+gulp.task("watch-css", function (done) {
+    console.log("Style watchers are running.");
+    return gulp.watch(style_paths, ["build-css"]);
 });
 
-// ---- Transpile the LESS styles into plain CSS
-//
-gulp.task("concat-less", function (done) {
-    return gulp.src
-    ([
-         "bower_components/angular-material/angular-material.min.css",
-         "app.less",
-         "states/**/*.less"
-     ])
-        .pipe(less())
-        .pipe(concat_to("app.css"))
-        .pipe(gulp.dest("dist/"));
-
-});
-gulp.task("jshint", function () {
-    return gulp.src("states/**/*.js")
-        .pipe(jshint())
-        .pipe(jshint.reporter("jshint-stylish"));
-});
-gulp.task("concat-bower", function (done) {
+gulp.task("build-bower", function (done) {
     return gulp.src(bower_paths)
         .pipe(concat_to("bower.js"))
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest(dist));
 });
-gulp.task("concat-code-dev", function (done) {
-    return gulp.src(["app.js", "states/**/*.js"])
-        .pipe(replace("// ---- REPLACE: API_URL", "var api_url=\"http://dev.api.yasla.co.uk\";"))
+gulp.task("build-code", function (done) {
+    return gulp.src(source_paths)
+        .pipe(replace("// ---- REPLACE: APP_VERSION", pkg.version))
+        .pipe(replace("// ---- REPLACE: API_URL", "http://dev.api.yasla.co.uk/api"))
+        .pipe(replace("// ---- REPLACE: AUTH_URL", "http://dev.api.yasla.co.uk"))
         .pipe(replace("// ---- REPLACE: OAUTH_CLIENT_ID", "2"))
         .pipe(replace("// ---- REPLACE: OAUTH_CLIENT_SECRET", "HhqX7ofnL7XWYW5ROIELXnL7BTSvZ5KB6RGQ7YUW"))
         .pipe(concat_to("app.js"))
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest(dist));
 });
-gulp.task("concat-code-demo", function (done) {
-    return gulp.src(["app.js", "states/**/*.js"])
-        .pipe(replace("// ---- REPLACE: API_URL", "var api_url=\"https://api.yasla.co.uk\";"))
-        .pipe(replace("// ---- REPLACE: OAUTH_CLIENT_ID", "1"))
-        .pipe(replace("// ---- REPLACE: OAUTH_CLIENT_SECRET", "TQF7BYvWUWdCw3DOB0w1govvYfpO6riuKl20luK9"))
-        .pipe(concat_to("app.js"))
-        .pipe(gulp.dest("dist"));
+gulp.task("build-css", function (done) {
+    return gulp.src(style_paths)
+        .pipe(less())
+        .pipe(concat_to("app.css"))
+        .pipe(gulp.dest(dist));
 });
-gulp.task("build-dev", ["clean-build", "concat-less", "concat-bower", "concat-code-dev"]);
-gulp.task("build-demo", ["clean-build", "concat-less", "concat-bower", "concat-code-demo"]);
+gulp.task("bump-build-number", function (done) {
+    console.log("*** Starting bump-version");
+    gulp.src(["./package.json"])
+        .pipe(bump({type: "prerelease"}))
+        .pipe(gulp.dest("./"));
+    console.log("*** Finished bump-version");
 
-gulp.task("watch-less", function () {
-    return gulp.watch(["app.less", "states/**/*.less"], ["concat-less"]);
-});
-gulp.task("watch-code", function () {
-    return gulp.watch(["app.js", "states/**/*.js"], ["concat-code-dev"]);
+    var p = require("./package.json");
+    console.log("*** New version: [%s]", p.version);
+    done();
 });
 
-/**
- *  Default task
- *  ------------
- *
- *  The default gulp task keeps everything working in the development environment.
- */
-gulp.task("default", ["build-dev", "watch-less", "watch-code"]);
+
+

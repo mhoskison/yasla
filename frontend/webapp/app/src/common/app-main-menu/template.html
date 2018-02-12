@@ -1,0 +1,63 @@
+<md-sidenav class="app-sidebar md-sidenav-left" md-component-id="left" md-whiteframe="4">
+
+    <md-toolbar class="sidebar-theme-01">
+        <div class="header" layout-padding layout="column" layout-align="space-around">
+            <div class="top-line">
+                <div class="title">YASLA</div>
+                <div class="version">Version {{state.version}}</div>
+            </div>
+            <div class="bottom-line" layout="row" layout-align="space-between center"
+                 ng-click="sidenav.switchMode()">
+                <div flex>
+                    <div class="profile-name">Matt Hoskison</div>
+                    <div class="profile-email">matt@hoskison.co.uk</div>
+                </div>
+                <div>
+                    <md-button class="md-fab md-mini">
+                        <md-icon class="state-btn">arrow_drop_up</md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-toolbar>
+
+    <md-content class="sidenav-body" layout-padding>
+        <div layout-padding ng-show="state.mode==0" layout="column">
+            <h2>Main menu</h2>
+            <md-divider></md-divider>
+            <md-button ui-sref="shopping.lists">
+                <md-icon>home</md-icon>
+                Home
+            </md-button>
+            <md-button>
+                <md-icon>grade</md-icon>
+                Option 1
+            </md-button>
+            <md-button>
+                <md-icon>label</md-icon>
+                Option 2
+            </md-button>
+        </div>
+
+        <div layout-padding ng-show="state.mode==1" layout="column">
+            <h2>Settings</h2>
+            <md-divider></md-divider>
+
+            <md-button ui-sref="shopping.user.profile">
+                <md-icon>menu</md-icon>
+                Profile
+            </md-button>
+            <md-button>
+                <md-icon>security</md-icon>
+                Change password
+            </md-button>
+            <md-button ui-sref="shopping.auth.logout">
+                <md-icon>exit_to_app</md-icon>
+                Log out
+            </md-button>
+
+        </div>
+    </md-content>
+
+
+</md-sidenav>
