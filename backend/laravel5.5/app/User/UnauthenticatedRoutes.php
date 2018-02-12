@@ -6,7 +6,7 @@
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
 
-class Router extends \App\RouterBase
+class UnauthenticatedRoutes extends \App\RouterBase
 {
     public function __construct()
     {
@@ -38,7 +38,5 @@ class Router extends \App\RouterBase
             $ret        = $controller->validateEmail($email);
             return response()->json($ret);
         });
-
-
     }
 }

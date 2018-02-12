@@ -52,6 +52,23 @@ angular.module("yasla", [
         });
     })
 
+    .config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme("theme01").primaryPalette("red");
+        $mdThemingProvider.theme("theme02").primaryPalette("pink");
+        $mdThemingProvider.theme("theme03").primaryPalette("purple");
+        $mdThemingProvider.theme("theme04").primaryPalette("deep-purple");
+        $mdThemingProvider.theme("theme05").primaryPalette("indigo");
+        $mdThemingProvider.theme("theme06").primaryPalette("blue");
+        $mdThemingProvider.theme("theme07").primaryPalette("light-blue");
+        $mdThemingProvider.theme("theme08").primaryPalette("cyan");
+        $mdThemingProvider.theme("theme09").primaryPalette("teal");
+        $mdThemingProvider.theme("theme10").primaryPalette("green");
+        $mdThemingProvider.alwaysWatchTheme(true);
+    })
+    .run(function($rootScope) {
+        $rootScope.theme = "theme10";
+    })
+
     /**
      * Listen for state change events to ensure protected states remain protected
      */
@@ -143,7 +160,7 @@ angular.module("yasla", [
                 });
         };
     });
-angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION) {
+angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state) {
     return {
         templateUrl: "src/common/app-main-menu/template.html",
         controller:  function ($scope) {
@@ -152,6 +169,11 @@ angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSI
                 version: APP_VERSION
             };
             $scope.sidenav = {
+
+                goto: function (state) {
+                    $scope.sidenav.closeMenu();
+                    $state.go(state);
+                },
 
                 closeMenu:  function () {
                     $mdSidenav("left").close();
@@ -286,107 +308,6 @@ angular.module("yasla").directive("tiles2", function () {
         }
     };
 });
-angular.module("yasla").service("AuthService",
-                                function (API_URL, AUTH_URL, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, $rootScope, $state, $q, $http, localStorageService, UserService) {
-                                    var AuthService = {
-
-                                        ping: function () {
-                                            return $http.get(API_URL + "/ping");
-                                        },
-
-                                        /**
-                                         * Ensure the user is authenticated, redirect to login otherwise
-                                         */
-                                        ensureAuthenticated: function () {
-                                            if (AuthService.isAuthenticated()) return;
-                                            $state.go("shopping.auth.intro");
-                                        },
-
-                                        /**
-                                         * Check if the user is authenticated
-                                         *
-                                         * @returns {boolean}
-                                         */
-                                        isAuthenticated: function () {
-                                            var ret = false;
-                                            var token = localStorageService.get("access_token");
-                                            if (token) ret = true;
-                                            return ret;
-                                        },
-
-                                        logout: function () {
-                                            localStorageService.remove("access_token");
-                                            localStorageService.remove("refresh_token");
-                                            localStorageService.remove("user");
-                                        },
-
-                                        /**
-                                         * Attempt to authenticate the user
-                                         */
-                                        login: function (username, password) {
-                                            var q = $q.defer();
-
-                                            var args = {
-                                                client_id:     OAUTH_CLIENT_ID,
-                                                client_secret: OAUTH_CLIENT_SECRET,
-                                                grant_type:    "password",
-                                                username:      username,
-                                                password:      password,
-                                                scope:         "*"
-                                            };
-
-                                            var url = AUTH_URL + "/oauth/token";
-                                            $http.post(url, args).then(
-                                                function success(response) {
-                                                    console.log("Doing it here");
-                                                    var access_token = response.data.access_token;
-                                                    var refresh_token = response.data.refresh_token;
-                                                    localStorageService.set("access_token", access_token);
-                                                    localStorageService.set("refresh_token", refresh_token);
-                                                    UserService.profile();
-                                                    q.resolve();
-                                                },
-                                                function error(a) {
-                                                    q.reject();
-                                                });
-
-                                            return q.promise;
-                                        },
-
-                                        register: function (data) {
-                                            var q = $q.defer();
-                                            $http.post(API_URL + "/user/register", {data: data}).then(
-                                                function success(response) {
-                                                    q.resolve(response.data);
-                                                },
-                                                function failure(error) {
-                                                    q.reject(error);
-                                                });
-                                            return q.promise;
-                                        },
-
-                                        validateEmail: function (value) {
-                                            var q = $q.defer();
-                                            $http.post(API_URL + "/user/validate-email", {email: value}).then(
-                                                function success(response) {
-                                                    if (response.data === 0) q.resolve();
-                                                    else q.reject();
-                                                },
-                                                function failure(error) {
-                                                    q.reject(error);
-                                                });
-                                            return q.promise;
-                                        }
-                                    };
-
-                                    return AuthService;
-                                });
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth", {
-            abstract: true
-        });
-});
 angular.module("yasla").directive("yaslaAbout", function (CordovaService) {
     return {
         templateUrl: "src/states/about/template.html",
@@ -413,6 +334,105 @@ angular.module("yasla").config(function ($stateProvider) {
                     }
                 }
             }
+        });
+});
+angular.module("yasla").service("AuthService", function (API_URL, AUTH_URL, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, $rootScope, $state, $q, $http, localStorageService, UserService) {
+    var AuthService = {
+
+        ping: function () {
+            return $http.get(API_URL + "/ping");
+        },
+
+        /**
+         * Ensure the user is authenticated, redirect to login otherwise
+         */
+        ensureAuthenticated: function () {
+            if (AuthService.isAuthenticated()) return;
+            $state.go("shopping.auth.intro");
+        },
+
+        /**
+         * Check if the user is authenticated
+         *
+         * @returns {boolean}
+         */
+        isAuthenticated: function () {
+            var ret = false;
+            var token = localStorageService.get("access_token");
+            if (token) ret = true;
+            return ret;
+        },
+
+        logout: function () {
+            localStorageService.remove("access_token");
+            localStorageService.remove("refresh_token");
+            localStorageService.remove("user");
+        },
+
+        /**
+         * Attempt to authenticate the user
+         */
+        login: function (username, password) {
+            var q = $q.defer();
+
+            var args = {
+                client_id:     OAUTH_CLIENT_ID,
+                client_secret: OAUTH_CLIENT_SECRET,
+                grant_type:    "password",
+                username:      username,
+                password:      password,
+                scope:         "*"
+            };
+
+            var url = AUTH_URL + "/oauth/token";
+            $http.post(url, args).then(
+                function success(response) {
+                    var access_token = response.data.access_token;
+                    var refresh_token = response.data.refresh_token;
+                    localStorageService.set("access_token", access_token);
+                    localStorageService.set("refresh_token", refresh_token);
+                    UserService.profile();
+                    q.resolve();
+                },
+                function error(a) {
+                    q.reject();
+                });
+
+            return q.promise;
+        },
+
+        register: function (data) {
+            var q = $q.defer();
+            $http.post(API_URL + "/user/register", {data: data}).then(
+                function success(response) {
+                    q.resolve(response.data);
+                },
+                function failure(error) {
+                    q.reject(error);
+                });
+            return q.promise;
+        },
+
+        validateEmail: function (value) {
+            var q = $q.defer();
+            $http.post(API_URL + "/user/validate-email", {email: value}).then(
+                function success(response) {
+                    if (response.data === 0) q.resolve();
+                    else q.reject();
+                },
+                function failure(error) {
+                    q.reject(error);
+                });
+            return q.promise;
+        }
+    };
+
+    return AuthService;
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth", {
+            abstract: true
         });
 });
 angular.module("yasla").service("api", function (API_URL, $http, $q) {
@@ -732,23 +752,51 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
-angular.module("yasla").service("UserService",
-function ($http, $q, localStorageService, API_URL) {
+angular.module("yasla").directive("yaslaSettings", function () {
     return {
-        profile: function () {
+        templateUrl: "src/states/settings/template.html"
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.settings", {
+            url:   "^/settings",
+            views: {
+                "main@": {
+                    template: "<yasla-settings></yasla-settings>",
+                    controller: function(ToolbarService) {
+                        ToolbarService.title.set("Settings");
+                    }
+                }
+            }
+        });
+});
+angular.module("yasla").service("UserService", function ($http, $q, localStorageService, API_URL, $rootScope) {
+    return {
+        settings: {
+            update: function (setting_name, setting_value) {
+                var args = {
+                    name:  setting_name,
+                    value: setting_value
+                };
+                return $http.post(API_URL + "/settings/update", args);
+            }
+        },
+        profile:  function () {
             var q = $q.defer();
-
-            console.log("UserService::profile");
-            console.log("API: [%s]", API_URL);
 
             if (localStorageService.get("user")) {
                 q.resolve(localStorageService.get("user"));
             }
             else {
-                var url = API_URL + "/user";
-                console.log(url);
-                $http.get(API_URL + "/user").then(function (response) {
-                    localStorageService.set("user", response.data);
+                $http.get(API_URL + "/settings").then(function (response) {
+                    var profile = response.data;
+                    var settings = profile.user_settings;
+                    delete profile.user_settings;
+                    localStorageService.set("user", profile);
+                    localStorageService.set("settings", settings);
+
+                    $rootScope.theme = settings.theme || "theme02";
                     q.resolve(response.data);
                 });
             }
@@ -820,9 +868,6 @@ angular.module("yasla").directive("yaslaBtnAddProduct", function ($stateParams) 
 angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
     return {
         templateUrl: "src/states/common/btn-add-shopping-list/template.html",
-        controller:  function ($scope) {
-
-        },
         link:        function ($scope) {
             $(".btn-add-shopping-list").detach().appendTo("body");
             $scope.$on("$destroy", function () {
@@ -972,6 +1017,49 @@ angular.module("yasla").directive("yaslaListsSbright", function () {
         controller:  function ($scope) {
         }
     };
+});
+angular.module("yasla").directive("yaslaSettingsUi", function ($rootScope, UserService) {
+    return {
+        templateUrl: "src/states/settings/ui/template.html",
+
+        controller:  function ($scope) {
+            $scope.data = {
+                theme:  null,
+                themes: [
+                    {theme: "theme01", name: "Red"},
+                    {theme: "theme02", name: "Pink"},
+                    {theme: "theme03", name: "Purple"},
+                    {theme: "theme04", name: "Deep purple"},
+                    {theme: "theme05", name: "Indigo"},
+                    {theme: "theme06", name: "Blue"},
+                    {theme: "theme07", name: "Light blue"},
+                    {theme: "theme08", name: "Cyan"},
+                    {theme: "theme09", name: "Teal"},
+                    {theme: "theme10", name: "Green"}
+                ]
+            };
+            $scope.ui = {
+                applyTheme: function () {
+                    $rootScope.theme = $scope.data.theme;
+                    UserService.settings.update("theme", $scope.data.theme);
+                }
+            };
+        }
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.settings.ui", {
+            url:   "^/settings/ui",
+            views: {
+                "main@": {
+                    template: "<yasla-settings-ui></yasla-settings-ui>",
+                    controller: function(ToolbarService) {
+                        ToolbarService.title.set("User interface");
+                    }
+                }
+            }
+        });
 });
 angular.module("yasla").directive("yaslaAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
     return {

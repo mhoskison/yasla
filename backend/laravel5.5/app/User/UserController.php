@@ -9,6 +9,8 @@ use \App\User\UserService;
 
 class UserController extends Controller
 {
+    use \App\AuthenticatedApiRoute;
+
     /**
      * @var \App\User\UserService
      */
@@ -68,4 +70,6 @@ class UserController extends Controller
     {
         return $this->model->validateEmail($data);
     }
+
+
 }

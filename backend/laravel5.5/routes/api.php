@@ -6,6 +6,7 @@ Route::middleware(["auth:api"])->group(function () {
     new \App\Lists\Router();
     new \App\Search\Router();
     new \App\Product\Router();
+    new \App\UserSettings\Routes();
 
     Route::get("/user", function (Request $request) {
         return $request->user();
@@ -14,4 +15,4 @@ Route::middleware(["auth:api"])->group(function () {
 
 // ---- Unauthenticated routes
 //
-new \App\User\Router();
+new \App\User\UnauthenticatedRoutes();

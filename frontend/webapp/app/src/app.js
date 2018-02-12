@@ -52,6 +52,23 @@ angular.module("yasla", [
         });
     })
 
+    .config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme("theme01").primaryPalette("red");
+        $mdThemingProvider.theme("theme02").primaryPalette("pink");
+        $mdThemingProvider.theme("theme03").primaryPalette("purple");
+        $mdThemingProvider.theme("theme04").primaryPalette("deep-purple");
+        $mdThemingProvider.theme("theme05").primaryPalette("indigo");
+        $mdThemingProvider.theme("theme06").primaryPalette("blue");
+        $mdThemingProvider.theme("theme07").primaryPalette("light-blue");
+        $mdThemingProvider.theme("theme08").primaryPalette("cyan");
+        $mdThemingProvider.theme("theme09").primaryPalette("teal");
+        $mdThemingProvider.theme("theme10").primaryPalette("green");
+        $mdThemingProvider.alwaysWatchTheme(true);
+    })
+    .run(function($rootScope) {
+        $rootScope.theme = "theme10";
+    })
+
     /**
      * Listen for state change events to ensure protected states remain protected
      */

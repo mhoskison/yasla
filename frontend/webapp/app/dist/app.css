@@ -19507,36 +19507,6 @@ md-tabs-wrapper md-next-button ng-md-icon {
   transform: translate3d(-50%, -50%, 0) rotate(180deg);
 }
 
-body {
-  font-family: 'Alegreya Sans', sans-serif;
-}
-.tile {
-  border: 1px solid #ccc;
-  background: #eee;
-}
-p {
-  color: red;
-}
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
-}
-.menu:before {
-  content: "[";
-}
-.menu:after {
-  content: "]";
-}
-.menu > li {
-  display: inline;
-}
-.menu > li + li:before {
-  content: "|";
-  padding-right: 0.3em;
-}
-
 .app-sidebar {
   min-width: 280px !important;
   max-width: 280px !important;
@@ -19545,21 +19515,16 @@ p {
 .app-sidebar .header {
   background: transparent;
 }
-.app-sidebar .header .top-line {
-  color: #000;
-}
 .app-sidebar .header .top-line .title {
   font-weight: 700;
 }
 .app-sidebar .header .top-line .version {
   font-weight: 500;
   font-size: 0.9em;
-  color: #333;
 }
 .app-sidebar .header .bottom-line {
   outline: 0;
   border: none;
-  color: #555;
   font-size: 80%;
   padding-bottom: 0;
 }
@@ -19582,7 +19547,6 @@ p {
   padding: 0;
   margin: 0;
   font-size: 1.3em;
-  color: #333;
   font-weight: 300;
   margin-bottom: 0.3em;
 }
@@ -19594,15 +19558,12 @@ p {
   text-align: left;
   text-transform: none;
   margin: 0;
-  color: #555;
 }
 .app-sidebar .sidenav-body .material-icons {
   margin-top: -4px;
-  color: #555;
   margin-right: 0.6em;
 }
 .sidebar-theme-01 .header {
-  background: #cacee8;
   box-shadow: 0px 0 20px 3px #193954;
 }
 
@@ -19682,6 +19643,7 @@ p {
   margin: auto auto 1em;
 }
 
+
 .logo {
   background-image: url("/dist/assets/logo.jpg");
   width: 150px;
@@ -19734,13 +19696,18 @@ p {
   margin: 0;
   text-transform: none;
   font-size: 1em;
+}
+
+.btn-add-shopping-list {
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .state-lists-edit .item .quantity {
   text-align: right;
 }
 .state-lists-edit .item .price {
-  color: red;
   text-align: right;
 }
 
@@ -19752,16 +19719,13 @@ p {
   margin-top: 0.6em;
 }
 .state-lists-edit .custom-card .item-name {
-  color: #000;
   font-weight: 700;
   margin-bottom: 8px;
 }
 .state-lists-edit .custom-card .item-cost {
-  color: #555;
   margin-bottom: 8px;
 }
 .state-lists-edit .custom-card .item-weight {
-  color: #555;
   margin-bottom: 8px;
 }
 .state-lists-edit .custom-card .item-pic {
@@ -19770,7 +19734,6 @@ p {
 }
 .state-lists-edit .custom-card .quantity-container {
   border: 1px solid #aaa;
-  background: #eee;
 }
 .state-lists-edit .custom-card .quantity-container .label {
   margin: 8px;
@@ -19792,7 +19755,6 @@ p {
   text-align: right;
 }
 .state-lists-edit .item .price {
-  color: red;
   text-align: right;
 }
 
@@ -19800,9 +19762,9 @@ p {
   text-align: right;
 }
 .state-lists-edit .item .price {
-  color: red;
   text-align: right;
 }
+
 
 
 .state-auth-intro .logo-container .logo {
@@ -19861,7 +19823,6 @@ p {
   background: red;
   padding: 1em;
   margin-right: 0;
-  color: black;
   margin-bottom: 0;
 }
 .state-auth-login .form {
@@ -19940,4 +19901,30 @@ p {
   margin: 0;
   text-transform: none;
   font-size: 1em;
+}
+
+body {
+  font-family: 'Alegreya Sans', sans-serif;
+}
+.tile {
+  border: 1px solid #ccc;
+}
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+.menu:before {
+  content: "[";
+}
+.menu:after {
+  content: "]";
+}
+.menu > li {
+  display: inline;
+}
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
 }

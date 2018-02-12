@@ -1,0 +1,24 @@
+<div class="state state-settings" layout-padding>
+
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Interface theme</span>
+                <span class="md-subhead">Customise the user interface colours to your own preference</span>
+            </md-card-title-text>
+        </md-card-title>
+
+        <md-card-content>
+            <div layout="row" layout-padding>
+                <md-input-container layout-fill>
+                    <label>Color scheme:</label>
+                    <md-select ng-model="data.theme" ng-change="ui.applyTheme()">
+                        <md-option ng-repeat="theme in data.themes" ng-value="theme.theme">
+                            {{theme.name}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>
