@@ -1,4 +1,4 @@
-angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION) {
+angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state) {
     return {
         templateUrl: "src/common/app-main-menu/template.html",
         controller:  function ($scope) {
@@ -7,6 +7,11 @@ angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSI
                 version: APP_VERSION
             };
             $scope.sidenav = {
+
+                goto: function (state) {
+                    $scope.sidenav.closeMenu();
+                    $state.go(state);
+                },
 
                 closeMenu:  function () {
                     $mdSidenav("left").close();

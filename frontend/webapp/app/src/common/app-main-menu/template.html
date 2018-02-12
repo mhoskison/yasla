@@ -6,10 +6,9 @@
                 <div class="title">YASLA</div>
                 <div class="version">Version {{state.version}}</div>
             </div>
-            <div class="bottom-line" layout="row" layout-align="space-between center"
-                 ng-click="sidenav.switchMode()">
+            <div class="bottom-line" layout="row" layout-align="space-between center" ng-click="sidenav.switchMode()">
                 <div flex>
-                    <div class="profile-name">Matt Hoskison</div>
+                    <div class="profile-name md-hue-1">Matt Hoskison</div>
                     <div class="profile-email">matt@hoskison.co.uk</div>
                 </div>
                 <div>
@@ -25,7 +24,7 @@
         <div layout-padding ng-show="state.mode==0" layout="column">
             <h2>Main menu</h2>
             <md-divider></md-divider>
-            <md-button ui-sref="shopping.lists">
+            <md-button ng-click="sidenav.goto('shopping.lists')">
                 <md-icon>home</md-icon>
                 Home
             </md-button>
@@ -37,13 +36,26 @@
                 <md-icon>label</md-icon>
                 Option 2
             </md-button>
+
+            <md-divider></md-divider>
+            <md-button ng-click="sidenav.goto('shopping.settings')">
+                <md-icon>settings</md-icon>
+                Settings
+            </md-button>
+
         </div>
 
         <div layout-padding ng-show="state.mode==1" layout="column">
-            <h2>Settings</h2>
+            <h2>Options</h2>
             <md-divider></md-divider>
 
-            <md-button ui-sref="shopping.user.profile">
+            <md-button ng-click="sidenav.goto('shopping.settings')">
+                <md-icon>settings</md-icon>
+                Settings
+            </md-button>
+            <md-divider></md-divider>
+
+            <md-button ng-click="sidenav.goto('shopping.user.profile')">
                 <md-icon>menu</md-icon>
                 Profile
             </md-button>
@@ -51,7 +63,10 @@
                 <md-icon>security</md-icon>
                 Change password
             </md-button>
-            <md-button ui-sref="shopping.auth.logout">
+
+            <md-divider></md-divider>
+
+            <md-button ng-click="sidenav.goto('shopping.auth.logout')">
                 <md-icon>exit_to_app</md-icon>
                 Log out
             </md-button>
