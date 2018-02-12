@@ -23,12 +23,10 @@ angular.module("yasla", [
                 main: {
                     template:   "<yasla-lists></yasla-lists>",
                     controller: function ($scope) {
-                        console.log("In route controller");
                     }
                 }
             }
         });
-        console.log("Initial routing configured");
     })
 
     /**
@@ -289,103 +287,100 @@ angular.module("yasla").directive("tiles2", function () {
     };
 });
 angular.module("yasla").service("AuthService",
-function (API_URL, AUTH_URL, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, $rootScope, $state, $q, $http, localStorageService, UserService) {
-    var AuthService = {
+                                function (API_URL, AUTH_URL, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, $rootScope, $state, $q, $http, localStorageService, UserService) {
+                                    var AuthService = {
 
-        ping: function () {
-            return $http.get(API_URL + "/ping");
-        },
+                                        ping: function () {
+                                            return $http.get(API_URL + "/ping");
+                                        },
 
-        /**
-         * Ensure the user is authenticated, redirect to login otherwise
-         */
-        ensureAuthenticated: function () {
-            if (AuthService.isAuthenticated()) return;
-            $state.go("shopping.auth.intro");
-        },
+                                        /**
+                                         * Ensure the user is authenticated, redirect to login otherwise
+                                         */
+                                        ensureAuthenticated: function () {
+                                            if (AuthService.isAuthenticated()) return;
+                                            $state.go("shopping.auth.intro");
+                                        },
 
-        /**
-         * Check if the user is authenticated
-         *
-         * @returns {boolean}
-         */
-        isAuthenticated: function () {
-            var ret = false;
-            var token = localStorageService.get("access_token");
+                                        /**
+                                         * Check if the user is authenticated
+                                         *
+                                         * @returns {boolean}
+                                         */
+                                        isAuthenticated: function () {
+                                            var ret = false;
+                                            var token = localStorageService.get("access_token");
+                                            if (token) ret = true;
+                                            return ret;
+                                        },
 
-            if (token) ret = true;
+                                        logout: function () {
+                                            localStorageService.remove("access_token");
+                                            localStorageService.remove("refresh_token");
+                                            localStorageService.remove("user");
+                                        },
 
-            console.log("Is user authenticated? [%s]", ret);
-            return ret;
-        },
+                                        /**
+                                         * Attempt to authenticate the user
+                                         */
+                                        login: function (username, password) {
+                                            var q = $q.defer();
 
-        logout: function () {
-            localStorageService.remove("access_token");
-            localStorageService.remove("refresh_token");
-            localStorageService.remove("user");
-        },
+                                            var args = {
+                                                client_id:     OAUTH_CLIENT_ID,
+                                                client_secret: OAUTH_CLIENT_SECRET,
+                                                grant_type:    "password",
+                                                username:      username,
+                                                password:      password,
+                                                scope:         "*"
+                                            };
 
-        /**
-         * Attempt to authenticate the user
-         */
-        login: function (username, password) {
-            var q = $q.defer();
+                                            var url = AUTH_URL + "/oauth/token";
+                                            $http.post(url, args).then(
+                                                function success(response) {
+                                                    console.log("Doing it here");
+                                                    var access_token = response.data.access_token;
+                                                    var refresh_token = response.data.refresh_token;
+                                                    localStorageService.set("access_token", access_token);
+                                                    localStorageService.set("refresh_token", refresh_token);
+                                                    UserService.profile();
+                                                    q.resolve();
+                                                },
+                                                function error(a) {
+                                                    q.reject();
+                                                });
 
-            var args = {
-                client_id:     OAUTH_CLIENT_ID,
-                client_secret: OAUTH_CLIENT_SECRET,
-                grant_type:    "password",
-                username:      username,
-                password:      password,
-                scope:         "*"
-            };
+                                            return q.promise;
+                                        },
 
-            var url = AUTH_URL + "/oauth/token";
-            $http.post(url, args).then(
-                function success(response) {
-                    console.log("Doing it here");
-                    var access_token = response.data.access_token;
-                    var refresh_token = response.data.refresh_token;
-                    localStorageService.set("access_token", access_token);
-                    localStorageService.set("refresh_token", refresh_token);
-                    UserService.profile();
-                    q.resolve();
-                },
-                function error(a) {
-                    q.reject();
-                });
+                                        register: function (data) {
+                                            var q = $q.defer();
+                                            $http.post(API_URL + "/user/register", {data: data}).then(
+                                                function success(response) {
+                                                    q.resolve(response.data);
+                                                },
+                                                function failure(error) {
+                                                    q.reject(error);
+                                                });
+                                            return q.promise;
+                                        },
 
-            return q.promise;
-        },
+                                        validateEmail: function (value) {
+                                            var q = $q.defer();
+                                            $http.post(API_URL + "/user/validate-email", {email: value}).then(
+                                                function success(response) {
+                                                    if (response.data === 0) q.resolve();
+                                                    else q.reject();
+                                                },
+                                                function failure(error) {
+                                                    q.reject(error);
+                                                });
+                                            return q.promise;
+                                        }
+                                    };
 
-        register: function (data) {
-            var q = $q.defer();
-            $http.post(API_URL + "/user/register", {data: data}).then(
-                function success(response) {
-                    q.resolve(response.data);
-                },
-                function failure(error) {
-                    q.reject(error);
-                });
-            return q.promise;
-        },
-
-        validateEmail: function (value) {
-            var q = $q.defer();
-            $http.post(API_URL + "/user/validate-email", {email: value}).then(
-                function success(response) {
-                    if (response.data === 0) q.resolve();
-                    else q.reject();
-                },
-                function failure(error) {
-                    q.reject(error);
-                });
-            return q.promise;
-        }
-    };
-
-    return AuthService;
-});
+                                    return AuthService;
+                                });
 angular.module("yasla").config(function ($stateProvider) {
     $stateProvider
         .state("shopping.auth", {
@@ -768,6 +763,23 @@ angular.module("yasla").config(function ($stateProvider) {
             abstract: true
         });
 });
+angular.module("yasla").directive("yaslaAuthLoggedOut", function () {
+    return {
+        templateUrl: "src/states/auth/loggedout/template.html"
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth.loggedout", {
+            unauthenticated: true,
+            url:             "^/auth/loggedout",
+            views:           {
+                "main@": {
+                    template: "<yasla-auth-logged-out></yasla-auth-logged-out>"
+                }
+            }
+        });
+});
 angular.module("yasla").directive("yaslaAuthLogout", function ($state, AuthService) {
     return {
         templateUrl: "src/states/auth/logout/template.html",
@@ -788,23 +800,6 @@ angular.module("yasla").config(function ($stateProvider) {
                     template:   "<yasla-auth-logout></yasla-auth-logout>",
                     controller: function ($scope) {
                     }
-                }
-            }
-        });
-});
-angular.module("yasla").directive("yaslaAuthLoggedOut", function () {
-    return {
-        templateUrl: "src/states/auth/loggedout/template.html"
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth.loggedout", {
-            unauthenticated: true,
-            url:             "^/auth/loggedout",
-            views:           {
-                "main@": {
-                    template: "<yasla-auth-logged-out></yasla-auth-logged-out>"
                 }
             }
         });
@@ -836,14 +831,9 @@ angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
         }
     };
 });
-angular.module("yasla").directive("yaslaLists", function ($state) {
+angular.module("yasla").directive("yaslaLists", function () {
     return {
-        templateUrl: "src/states/lists/lists.default/template.html",
-        controller:  function ($scope) {
-            console.log("In directive controller");
-        },
-        link:        function ($scope) {
-        }
+        templateUrl: "src/states/lists/lists.default/template.html"
     };
 });
 angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {

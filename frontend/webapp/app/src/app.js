@@ -23,12 +23,10 @@ angular.module("yasla", [
                 main: {
                     template:   "<yasla-lists></yasla-lists>",
                     controller: function ($scope) {
-                        console.log("In route controller");
                     }
                 }
             }
         });
-        console.log("Initial routing configured");
     })
 
     /**

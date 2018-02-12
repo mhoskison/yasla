@@ -19537,78 +19537,6 @@ p {
   padding-right: 0.3em;
 }
 
-
-
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
-}
-
-
-.state-search .search-card {
-  margin-top: 0px;
-  -webkit-transition: width 2s, height 4s;
-  /* For Safari 3.1 to 6.0 */
-  transition: width 2s, height 4s;
-}
-.state-search .search-card .mini-search-button {
-  display: none;
-}
-.state-search .search-card .search-input {
-  width: auto;
-}
-.state-search .search-card.rolledup {
-  background: #fff;
-  z-index: 20;
-  height: 70px !important;
-  overflow: hidden;
-  position: fixed;
-  left: 16px;
-  right: 16px;
-  top: 56px;
-}
-.state-search .search-card.rolledup .mini-search-button {
-  display: block;
-}
-.state-search .search-card.rolledup .card-header {
-  display: none;
-}
-.state-search .search-card.rolledup .search-card-text {
-  display: none;
-}
-.state-search .search-card.rolledup .search-input {
-  margin-top: 0px;
-}
-.state-search .results-card.first {
-  margin-top: 70px;
-}
-.state-search .results-card {
-  width: 90%;
-  margin: auto auto 1em;
-}
-
 .app-sidebar {
   min-width: 280px !important;
   max-width: 280px !important;
@@ -19682,12 +19610,130 @@ p {
 
 
 
-.state-lists-edit .item .quantity {
-  text-align: right;
+
+
+
+.logo {
+  background-image: url("/dist/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
 }
-.state-lists-edit .item .price {
-  color: red;
-  text-align: right;
+.menu ul {
+  margin: 0;
+  padding: 1em;
+}
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  margin-left: 0.6em;
+}
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
+}
+
+.state-search .search-card {
+  margin-top: 0px;
+  -webkit-transition: width 2s, height 4s;
+  /* For Safari 3.1 to 6.0 */
+  transition: width 2s, height 4s;
+}
+.state-search .search-card .mini-search-button {
+  display: none;
+}
+.state-search .search-card .search-input {
+  width: auto;
+}
+.state-search .search-card.rolledup {
+  background: #fff;
+  z-index: 20;
+  height: 70px !important;
+  overflow: hidden;
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  top: 56px;
+}
+.state-search .search-card.rolledup .mini-search-button {
+  display: block;
+}
+.state-search .search-card.rolledup .card-header {
+  display: none;
+}
+.state-search .search-card.rolledup .search-card-text {
+  display: none;
+}
+.state-search .search-card.rolledup .search-input {
+  margin-top: 0px;
+}
+.state-search .results-card.first {
+  margin-top: 70px;
+}
+.state-search .results-card {
+  width: 90%;
+  margin: auto auto 1em;
+}
+
+.logo {
+  background-image: url("/dist/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.menu ul {
+  margin: 0;
+  padding: 1em;
+}
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  margin-left: 0.6em;
+}
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
+}
+
+.logo {
+  background-image: url("/dist/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+.menu ul {
+  margin: 0;
+  padding: 1em;
+}
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+  margin-left: 0.6em;
+}
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
 }
 
 .state-lists-edit .item .quantity {
@@ -19742,6 +19788,14 @@ p {
   line-height: 32px;
   margin-left: 0.6em;
 }
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  color: red;
+  text-align: right;
+}
+
 .state-lists-edit .item .quantity {
   text-align: right;
 }
@@ -19859,60 +19913,6 @@ p {
 }
 .state-register .strength-meter .bar-red {
   background: red;
-}
-
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
-}
-
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
 }
 
 .logo {

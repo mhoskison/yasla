@@ -1,10 +1,5 @@
-angular.module("yasla").directive("yaslaLists", function ($state) {
+angular.module("yasla").directive("yaslaLists", function () {
     return {
-        templateUrl: "src/states/lists/lists.default/template.html",
-        controller:  function ($scope) {
-            console.log("In directive controller");
-        },
-        link:        function ($scope) {
-        }
+        templateUrl: "src/states/lists/lists.default/template.html"
     };
 });
