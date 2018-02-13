@@ -225,6 +225,20 @@ angular.module("yasla").directive("appToolbar", function ($mdSidenav, AuthServic
         }
     };
 });
+angular.module("yasla").directive("fabBottomRight", function () {
+    return {
+        link: function ($scope, $element) {
+            $($element)
+                .addClass("md-fab md-mini md-primary btn-fab-bottom-right")
+                .detach()
+                .appendTo("body");
+
+            $scope.$on("$destroy", function () {
+                $($element).remove();
+            });
+        }
+    };
+});
 angular.module("yasla").directive("infoMediaSize", function ($mdMedia) {
     return {
         templateUrl: "src/common/info-media-size/template.html",
@@ -849,74 +863,20 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
-angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
-    return {
-        templateUrl: "src/states/common/btn-add-shopping-list/template.html",
-        controller:  function ($scope) {
-
-        },
-        link:        function ($scope) {
-            $(".btn-add-shopping-list").detach().appendTo("body");
-            $scope.$on("$destroy", function () {
-                $(".btn-add-shopping-list").remove();
-            });
-        }
-    };
-});
 angular.module("yasla").directive("yaslaBtnAddProduct", function ($stateParams) {
     return {
-        templateUrl: "src/states/common/btn-add-product/template.html",
-        controller:  function ($scope) {
-        },
-        link:        function ($scope) {
-            $(".btn-add-product").detach().appendTo("body");
-            $scope.$on("$destroy", function () {
-                $(".btn-add-product").remove();
-            });
-        }
+        templateUrl: "src/states/common/btn-add-product/template.html"
+    };
+});
+angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
+    return {
+        templateUrl: "src/states/common/btn-add-shopping-list/template.html"
     };
 });
 angular.module("yasla").directive("yaslaLists", function () {
     return {
         templateUrl: "src/states/lists/lists.default/template.html"
     };
-});
-angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
-    return {
-        templateUrl: "src/states/lists/lists.delete/template.html",
-        controller:  function ($scope) {
-            $scope.ui = {
-                confirm: function() {
-                    ListsService.delete($scope.data.id);
-                    $state.go("shopping.lists");
-                },
-                cancel: function() {
-                    $state.go("shopping.lists");
-                }
-            }
-        }
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.lists.delete", {
-            url:   "/delete/{id}",
-            views: {
-                "main@": {
-                    template: "<yasla-lists-delete></yasla-lists-delete>",
-
-                    controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
-                        var id = $stateParams.id;
-                        if (!id) $state.go("shopping.lists");
-
-                        ToolbarService.title.set("Delete shopping list");
-                        ListsService.basicInfo(id).then(function (data) {
-                            $scope.data = data;
-                        });
-                    }
-                }
-            }
-        });
 });
 angular.module("yasla").directive("yaslaListsNew", function (ListsService, $state, $timeout) {
     return {
@@ -1017,6 +977,43 @@ angular.module("yasla").directive("yaslaListsSbright", function () {
         controller:  function ($scope) {
         }
     };
+});
+angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
+    return {
+        templateUrl: "src/states/lists/lists.delete/template.html",
+        controller:  function ($scope) {
+            $scope.ui = {
+                confirm: function() {
+                    ListsService.delete($scope.data.id);
+                    $state.go("shopping.lists");
+                },
+                cancel: function() {
+                    $state.go("shopping.lists");
+                }
+            }
+        }
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.lists.delete", {
+            url:   "/delete/{id}",
+            views: {
+                "main@": {
+                    template: "<yasla-lists-delete></yasla-lists-delete>",
+
+                    controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
+                        var id = $stateParams.id;
+                        if (!id) $state.go("shopping.lists");
+
+                        ToolbarService.title.set("Delete shopping list");
+                        ListsService.basicInfo(id).then(function (data) {
+                            $scope.data = data;
+                        });
+                    }
+                }
+            }
+        });
 });
 angular.module("yasla").directive("yaslaSettingsUi", function ($rootScope, UserService) {
     return {
