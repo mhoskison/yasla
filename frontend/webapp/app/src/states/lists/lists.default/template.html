@@ -14,7 +14,7 @@
                     <div layout="row" layout-align="space-between center">
                         <div layout="column" layout-align="start start">
                             <span class="md-title">{{item.label}}</span>
-                            <span class="md-subhead">Last used {{item.lastused|date}}</span>
+                            <span ng-if="0" class="md-subhead">Last used {{item.lastused|date}}</span>
                             <span class="md-subhead">{{item.products.length||0}} product{{item.products.length==0||item.products.length>1?"s":""}} in shopping list</span>
                         </div>
                         <div layout="row" layout-align="end center">
@@ -24,10 +24,14 @@
                 </md-card-header-text>
             </md-card-header>
 
-            <md-card-actions layout="row" layout="space-between center">
+            <md-card-actions ng-if="0" layout="row" layout="space-between center">
+                <!-- For the next version
                 <md-button ui-sref="shopping.lists.edit({id:item.id})" class="md-raised md-primary">Edit</md-button>
+                -->
                 <div flex></div>
+                <!-- For the next version
                 <md-button ui-sref="shopping.lists.go(item.id)" class="md-raised md-accent">Go</md-button>
+                -->
             </md-card-actions>
         </md-card>
     </div>

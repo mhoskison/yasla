@@ -6,7 +6,7 @@ angular.module("yasla").service("ListsDialogService", function ($mdDialog, $http
                 $mdDialog.show(
                     {
                         controller:          ListDialogService.ShoppingListSelector.controller,
-                        templateUrl:         "states/lists/dialogShoppingListSelector.html",
+                        templateUrl:         "src/states/lists/dialogShoppingListSelector.html",
                         parent:              angular.element(document.body),
                         targetEvent:         null,
                         clickOutsideToClose: true,

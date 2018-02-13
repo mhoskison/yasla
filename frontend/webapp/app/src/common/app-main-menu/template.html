@@ -8,8 +8,8 @@
             </div>
             <div class="bottom-line" layout="row" layout-align="space-between center" ng-click="sidenav.switchMode()">
                 <div flex>
-                    <div class="profile-name md-hue-1">Matt Hoskison</div>
-                    <div class="profile-email">matt@hoskison.co.uk</div>
+                    <div class="profile-name md-hue-1">{{state.user.user_name}}</div>
+                    <div class="profile-email">{{state.user.user_email}}</div>
                 </div>
                 <div>
                     <md-button class="md-fab md-mini">
@@ -27,14 +27,6 @@
             <md-button ng-click="sidenav.goto('shopping.lists')">
                 <md-icon>home</md-icon>
                 Home
-            </md-button>
-            <md-button>
-                <md-icon>grade</md-icon>
-                Option 1
-            </md-button>
-            <md-button>
-                <md-icon>label</md-icon>
-                Option 2
             </md-button>
 
             <md-divider></md-divider>
@@ -59,7 +51,7 @@
                 <md-icon>menu</md-icon>
                 Profile
             </md-button>
-            <md-button>
+            <md-button ng-if="0">
                 <md-icon>security</md-icon>
                 Change password
             </md-button>

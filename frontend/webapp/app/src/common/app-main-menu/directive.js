@@ -1,10 +1,11 @@
-angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state) {
+angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state, localStorageService) {
     return {
         templateUrl: "src/common/app-main-menu/template.html",
         controller:  function ($scope) {
             $scope.state = {
                 mode:    0,
-                version: APP_VERSION
+                version: APP_VERSION,
+                user:    localStorageService.get("user")
             };
             $scope.sidenav = {
 
