@@ -16,9 +16,9 @@ angular.module("yasla", [
      * Configure initial routing
      */
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise("/home");
         $stateProvider.state("shopping", {
-            url:   "/",
+            url:   "/abstract",
             views: {
                 main: {
                     template:   "<yasla-lists></yasla-lists>",
@@ -516,9 +516,9 @@ angular.module("yasla").config(function ($stateProvider) {
             auth:  true,
             views: {
                 "main@": {
-                    template: "<yasla-home></yasla-home>",
-                    controller: function(ToolbarService) {
-                        ToolbarService.title.set("Home");
+                    template:   "",
+                    controller: function ($state) {
+                        $state.go("shopping.lists");
                     }
                 }
             }
@@ -849,19 +849,6 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
-angular.module("yasla").directive("yaslaBtnAddProduct", function ($stateParams) {
-    return {
-        templateUrl: "src/states/common/btn-add-product/template.html",
-        controller:  function ($scope) {
-        },
-        link:        function ($scope) {
-            $(".btn-add-product").detach().appendTo("body");
-            $scope.$on("$destroy", function () {
-                $(".btn-add-product").remove();
-            });
-        }
-    };
-});
 angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
     return {
         templateUrl: "src/states/common/btn-add-shopping-list/template.html",
@@ -876,66 +863,23 @@ angular.module("yasla").directive("yaslaBtnAddShoppingList", function () {
         }
     };
 });
+angular.module("yasla").directive("yaslaBtnAddProduct", function ($stateParams) {
+    return {
+        templateUrl: "src/states/common/btn-add-product/template.html",
+        controller:  function ($scope) {
+        },
+        link:        function ($scope) {
+            $(".btn-add-product").detach().appendTo("body");
+            $scope.$on("$destroy", function () {
+                $(".btn-add-product").remove();
+            });
+        }
+    };
+});
 angular.module("yasla").directive("yaslaLists", function () {
     return {
         templateUrl: "src/states/lists/lists.default/template.html"
     };
-});
-angular.module("yasla").directive("yaslaListsEdit", function (ListsService) {
-    return {
-        templateUrl: "src/states/lists/lists.edit/template.html",
-        controller:  function ($scope) {
-        },
-        link:        function ($scope) {
-            $scope.ui = {
-                calculate: function (do_toast) {
-                    var total = 0;
-                    angular.forEach($scope.data.products, function (item) {
-                        total += item.price * item.quantity;
-                    });
-                    $scope.data.total = total;
-                    if (do_toast) $scope.ui.toast();
-                },
-                toast:     function () {
-                },
-                quantity:  {
-                    up: function (item) {
-                        item.quantity++;
-                        $scope.ui.calculate(true);
-                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
-                    },
-                    dn: function (item) {
-                        item.quantity--;
-                        $scope.ui.calculate(true);
-                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
-                    }
-                }
-            };
-            $scope.ui.calculate();
-        }
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.lists.edit", {
-            url:     "/edit/{id}",
-            views:   {
-                "main@": {
-                    template:   "<yasla-lists-edit></yasla-lists-edit>",
-                    controller: function ($scope, ToolbarService, $stateParams, $state, listinfo) {
-                        var id = $stateParams.id;
-                        if (!id) $state.go("shopping.lists");
-                        ToolbarService.title.set("Edit shopping list");
-                        $scope.data = listinfo;
-                    }
-                }
-            },
-            resolve: {
-                listinfo: function (ListsService, $stateParams) {
-                    return ListsService.info($stateParams.id);
-                }
-            }
-        });
 });
 angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
     return {
@@ -1007,6 +951,62 @@ angular.module("yasla").config(function ($stateProvider) {
                     controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
                         ToolbarService.title.set("Create shopping list");
                     }
+                }
+            }
+        });
+});
+angular.module("yasla").directive("yaslaListsEdit", function (ListsService) {
+    return {
+        templateUrl: "src/states/lists/lists.edit/template.html",
+        controller:  function ($scope) {
+        },
+        link:        function ($scope) {
+            $scope.ui = {
+                calculate: function (do_toast) {
+                    var total = 0;
+                    angular.forEach($scope.data.products, function (item) {
+                        total += item.price * item.quantity;
+                    });
+                    $scope.data.total = total;
+                    if (do_toast) $scope.ui.toast();
+                },
+                toast:     function () {
+                },
+                quantity:  {
+                    up: function (item) {
+                        item.quantity++;
+                        $scope.ui.calculate(true);
+                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
+                    },
+                    dn: function (item) {
+                        item.quantity--;
+                        $scope.ui.calculate(true);
+                        ListsService.product.updateQuantity($scope.data.list.id, item.id, item.quantity);
+                    }
+                }
+            };
+            $scope.ui.calculate();
+        }
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.lists.edit", {
+            url:     "/edit/{id}",
+            views:   {
+                "main@": {
+                    template:   "<yasla-lists-edit></yasla-lists-edit>",
+                    controller: function ($scope, ToolbarService, $stateParams, $state, listinfo) {
+                        var id = $stateParams.id;
+                        if (!id) $state.go("shopping.lists");
+                        ToolbarService.title.set("Edit shopping list");
+                        $scope.data = listinfo;
+                    }
+                }
+            },
+            resolve: {
+                listinfo: function (ListsService, $stateParams) {
+                    return ListsService.info($stateParams.id);
                 }
             }
         });

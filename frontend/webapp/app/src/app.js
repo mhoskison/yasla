@@ -16,9 +16,9 @@ angular.module("yasla", [
      * Configure initial routing
      */
     .config(function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise("/");
+        $urlRouterProvider.otherwise("/home");
         $stateProvider.state("shopping", {
-            url:   "/",
+            url:   "/abstract",
             views: {
                 main: {
                     template:   "<yasla-lists></yasla-lists>",

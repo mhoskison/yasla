@@ -5,9 +5,9 @@ angular.module("yasla").config(function ($stateProvider) {
             auth:  true,
             views: {
                 "main@": {
-                    template: "<yasla-home></yasla-home>",
-                    controller: function(ToolbarService) {
-                        ToolbarService.title.set("Home");
+                    template:   "",
+                    controller: function ($state) {
+                        $state.go("shopping.lists");
                     }
                 }
             }

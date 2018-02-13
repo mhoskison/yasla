@@ -19729,14 +19729,6 @@ body {
   font-size: 1em;
 }
 
-
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  text-align: right;
-}
-
 .state-lists-edit .custom-card {
   background: #fff;
   margin: 8px;
@@ -19784,6 +19776,12 @@ body {
   text-align: right;
 }
 
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  text-align: right;
+}
 
 .state-lists-edit .item .quantity {
   text-align: right;
@@ -19791,6 +19789,7 @@ body {
 .state-lists-edit .item .price {
   text-align: right;
 }
+
 
 
 .state-auth-intro .logo-container .logo {
