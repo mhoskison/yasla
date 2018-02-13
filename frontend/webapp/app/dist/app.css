@@ -19507,6 +19507,37 @@ md-tabs-wrapper md-next-button ng-md-icon {
   transform: translate3d(-50%, -50%, 0) rotate(180deg);
 }
 
+body {
+  font-family: 'Alegreya Sans', sans-serif;
+}
+.tile {
+  border: 1px solid #ccc;
+}
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+.menu:before {
+  content: "[";
+}
+.menu:after {
+  content: "]";
+}
+.menu > li {
+  display: inline;
+}
+.menu > li + li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+.btn-fab-bottom-right {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
 .app-sidebar {
   min-width: 280px !important;
   max-width: 280px !important;
@@ -19698,11 +19729,6 @@ md-tabs-wrapper md-next-button ng-md-icon {
   font-size: 1em;
 }
 
-.btn-add-shopping-list {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
 
 .state-lists-edit .item .quantity {
   text-align: right;
@@ -19758,13 +19784,13 @@ md-tabs-wrapper md-next-button ng-md-icon {
   text-align: right;
 }
 
+
 .state-lists-edit .item .quantity {
   text-align: right;
 }
 .state-lists-edit .item .price {
   text-align: right;
 }
-
 
 
 .state-auth-intro .logo-container .logo {
@@ -19901,30 +19927,4 @@ md-tabs-wrapper md-next-button ng-md-icon {
   margin: 0;
   text-transform: none;
   font-size: 1em;
-}
-
-body {
-  font-family: 'Alegreya Sans', sans-serif;
-}
-.tile {
-  border: 1px solid #ccc;
-}
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
-}
-.menu:before {
-  content: "[";
-}
-.menu:after {
-  content: "]";
-}
-.menu > li {
-  display: inline;
-}
-.menu > li + li:before {
-  content: "|";
-  padding-right: 0.3em;
 }
