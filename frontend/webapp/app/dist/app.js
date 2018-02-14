@@ -502,6 +502,115 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
+angular.module("yasla").service("SearchService", function (API_URL, $http, $q, ListsService, ListsDialogService) {
+    return {
+
+        search: function (term) {
+            var q = $q.defer();
+            $http.post(API_URL + "/search", {term: term}).then(function (response) {
+                q.resolve(response.data);
+            });
+            return q.promise;
+        },
+
+        addToList: function (list_id, product) {
+            var q = $q.defer();
+
+            // ---- If no list_id, we need to determine which shopping list to add the product to.
+            //      If there's only one list, add it to that
+            //          otherwise, show the list selection dialog and let the use choose
+            //
+            if (!list_id) {
+                ListsService.get().then(function (lists) {
+                    if (lists.length === 1) {
+                        list_id = lists[0].id;
+                        console.log("Only one list, so using list ID [%s]", list_id);
+                        ListsService.product.add(list_id, product);
+                        q.resolve(list_id);
+                        console.log("Got here 1");
+                    }
+                    else {
+                        ListsDialogService.ShoppingListSelector.show().then(function (foo) {
+                            var list_id = foo.list_id;
+                            var set_default = foo.set_default;
+                            console.log("Going to use list ID [%s] from the dialog", list_id);
+                            ListsService.product.add(list_id, product);
+                            q.resolve(list_id);
+                            console.log("Got here 2");
+                        });
+                    }
+                });
+            }
+            else {
+                console.log("Using user specified list [%s]", list_id);
+                ListsService.product.add(list_id, product);
+                q.resolve(list_id);
+                console.log("Got here 3");
+            }
+
+            return q.promise;
+
+        }
+    };
+});
+angular.module("yasla").directive("yaslaSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
+    return {
+        templateUrl: "src/states/search/template.html",
+        controller:  function ($scope) {
+
+            $scope.ui = {
+                search: function () {
+                    var term = $scope.data.term;
+                    $scope.data.results = [];
+                    $scope.data.awaiting_results = true;
+                    SearchService.search(term).then(function (results) {
+                        $scope.data.awaiting_results = false;
+                        $(".search-card").addClass("rolledup");
+                        $scope.data.results = results;
+                    });
+                },
+
+                add: function (product) {
+                    SearchService.addToList($scope.data.list_id, product).then(
+                        function (list_id) {
+                            console.log("Got back from SearchService");
+                            $timeout(function() {
+                                $state.go("shopping.lists.edit", {id: list_id}, {reload: true});
+                            }, 550);
+                        });
+                }
+            };
+        },
+        link:        function ($scope) {
+            $timeout(function () {
+                $(".autofocus").focus();
+            }, 100);
+        }
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.search", {
+            url:    "^/search",
+            params: {
+                list_id: null
+            },
+            views:  {
+                "main@": {
+                    template:   "<yasla-search></yasla-search>",
+                    controller: function (ToolbarService, $stateParams, $scope) {
+                        $scope.data = {
+                            list_id:          $stateParams.list_id,
+                            term:             null,
+                            awaiting_results: false,
+                            results:          []
+                        };
+                        ToolbarService.title.set("Search for products");
+                    }
+                }
+            }
+        });
+});
 angular.module("yasla").service("ListsDialogService", function ($mdDialog, $http, $q) {
     var ListDialogService = {
         ShoppingListSelector: {
@@ -621,115 +730,6 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
-angular.module("yasla").service("SearchService", function (API_URL, $http, $q, ListsService, ListsDialogService) {
-    return {
-
-        search: function (term) {
-            var q = $q.defer();
-            $http.post(API_URL + "/search", {term: term}).then(function (response) {
-                q.resolve(response.data);
-            });
-            return q.promise;
-        },
-
-        addToList: function (list_id, product) {
-            var q = $q.defer();
-
-            // ---- If no list_id, we need to determine which shopping list to add the product to.
-            //      If there's only one list, add it to that
-            //          otherwise, show the list selection dialog and let the use choose
-            //
-            if (!list_id) {
-                ListsService.get().then(function (lists) {
-                    if (lists.length === 1) {
-                        list_id = lists[0].id;
-                        console.log("Only one list, so using list ID [%s]", list_id);
-                        ListsService.product.add(list_id, product);
-                        q.resolve(list_id);
-                        console.log("Got here 1");
-                    }
-                    else {
-                        ListsDialogService.ShoppingListSelector.show().then(function (foo) {
-                            var list_id = foo.list_id;
-                            var set_default = foo.set_default;
-                            console.log("Going to use list ID [%s] from the dialog", list_id);
-                            ListsService.product.add(list_id, product);
-                            q.resolve(list_id);
-                            console.log("Got here 2");
-                        });
-                    }
-                });
-            }
-            else {
-                console.log("Using user specified list [%s]", list_id);
-                ListsService.product.add(list_id, product);
-                q.resolve(list_id);
-                console.log("Got here 3");
-            }
-
-            return q.promise;
-
-        }
-    };
-});
-angular.module("yasla").directive("yaslaSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
-    return {
-        templateUrl: "src/states/search/template.html",
-        controller:  function ($scope) {
-
-            $scope.ui = {
-                search: function () {
-                    var term = $scope.data.term;
-                    $scope.data.results = [];
-                    $scope.data.awaiting_results = true;
-                    SearchService.search(term).then(function (results) {
-                        $scope.data.awaiting_results = false;
-                        $(".search-card").addClass("rolledup");
-                        $scope.data.results = results;
-                    });
-                },
-
-                add: function (product) {
-                    SearchService.addToList($scope.data.list_id, product).then(
-                        function (list_id) {
-                            console.log("Got back from SearchService");
-                            $timeout(function() {
-                                $state.go("shopping.lists.edit", {id: list_id}, {reload: true});
-                            }, 550);
-                        });
-                }
-            };
-        },
-        link:        function ($scope) {
-            $timeout(function () {
-                $(".autofocus").focus();
-            }, 100);
-        }
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.search", {
-            url:    "^/search",
-            params: {
-                list_id: null
-            },
-            views:  {
-                "main@": {
-                    template:   "<yasla-search></yasla-search>",
-                    controller: function (ToolbarService, $stateParams, $scope) {
-                        $scope.data = {
-                            list_id:          $stateParams.list_id,
-                            term:             null,
-                            awaiting_results: false,
-                            results:          []
-                        };
-                        ToolbarService.title.set("Search for products");
-                    }
-                }
-            }
-        });
-});
 angular.module("yasla").directive("yaslaSettings", function () {
     return {
         templateUrl: "src/states/settings/template.html"
@@ -786,6 +786,23 @@ angular.module("yasla").config(function ($stateProvider) {
             abstract: true
         });
 });
+angular.module("yasla").directive("yaslaAuthLoggedOut", function () {
+    return {
+        templateUrl: "src/states/auth/loggedout/template.html"
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth.loggedout", {
+            unauthenticated: true,
+            url:             "^/auth/loggedout",
+            views:           {
+                "main@": {
+                    template: "<yasla-auth-logged-out></yasla-auth-logged-out>"
+                }
+            }
+        });
+});
 angular.module("yasla").directive("yaslaAuthLogout", function ($state, AuthService) {
     return {
         templateUrl: "src/states/auth/logout/template.html",
@@ -806,23 +823,6 @@ angular.module("yasla").config(function ($stateProvider) {
                     template:   "<yasla-auth-logout></yasla-auth-logout>",
                     controller: function ($scope) {
                     }
-                }
-            }
-        });
-});
-angular.module("yasla").directive("yaslaAuthLoggedOut", function () {
-    return {
-        templateUrl: "src/states/auth/loggedout/template.html"
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth.loggedout", {
-            unauthenticated: true,
-            url:             "^/auth/loggedout",
-            views:           {
-                "main@": {
-                    template: "<yasla-auth-logged-out></yasla-auth-logged-out>"
                 }
             }
         });
@@ -935,13 +935,6 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
-angular.module("yasla").directive("yaslaListsSbright", function () {
-    return {
-        templateUrl: "src/states/lists/sb-right/template.html",
-        controller:  function ($scope) {
-        }
-    };
-});
 angular.module("yasla").directive("yaslaListsNew", function (ListsService, $state, $timeout) {
     return {
         templateUrl: "src/states/lists/lists.new/template.html",
@@ -978,6 +971,13 @@ angular.module("yasla").config(function ($stateProvider) {
                 }
             }
         });
+});
+angular.module("yasla").directive("yaslaListsSbright", function () {
+    return {
+        templateUrl: "src/states/lists/sb-right/template.html",
+        controller:  function ($scope) {
+        }
+    };
 });
 angular.module("yasla").directive("yaslaSettingsUi", function ($rootScope, UserService) {
     return {

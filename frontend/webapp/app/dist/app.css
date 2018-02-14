@@ -19541,7 +19541,6 @@ md-content {
   bottom: 0;
 }
 
-
 .app-sidebar {
   min-width: 280px !important;
   max-width: 280px !important;
@@ -19601,6 +19600,7 @@ md-content {
 .sidebar-theme-01 .header {
   box-shadow: 0px 0 20px 3px #193954;
 }
+
 
 
 
@@ -19737,7 +19737,6 @@ md-content {
   text-align: right;
 }
 
-
 .state-lists-edit .custom-card {
   background: #fff;
   margin: 8px;
@@ -19806,43 +19805,6 @@ md-content {
   line-height: 76px;
 }
 
-.state-register .form {
-  margin-top: 0em;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 12px;
-  background: #fff;
-  margin-bottom: 200px;
-}
-.state-register .error {
-  color: red;
-  background: #ffdada;
-  padding: 12px;
-  border: 1px solid red;
-  border-radius: 3px;
-  margin-top: 0;
-  margin-bottom: 1em;
-}
-.state-register .strength-meter .bar {
-  height: 15px;
-  margin: 3px;
-}
-.state-register .strength-meter .bar-outline-red {
-  border: 3px solid red;
-}
-.state-register .strength-meter .bar-outline-green {
-  border: 3px solid green;
-}
-.state-register .strength-meter .bar-grey {
-  background: #ccc;
-}
-.state-register .strength-meter .bar-green {
-  background: green;
-}
-.state-register .strength-meter .bar-red {
-  background: red;
-}
-
 .state-auth-login .waiting {
   position: absolute;
   left: 10%;
@@ -19902,6 +19864,43 @@ md-content {
   margin-bottom: 12px;
 }
 
+.state-register .form {
+  margin-top: 0em;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  background: #fff;
+  margin-bottom: 200px;
+}
+.state-register .error {
+  color: red;
+  background: #ffdada;
+  padding: 12px;
+  border: 1px solid red;
+  border-radius: 3px;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+.state-register .strength-meter .bar {
+  height: 15px;
+  margin: 3px;
+}
+.state-register .strength-meter .bar-outline-red {
+  border: 3px solid red;
+}
+.state-register .strength-meter .bar-outline-green {
+  border: 3px solid green;
+}
+.state-register .strength-meter .bar-grey {
+  background: #ccc;
+}
+.state-register .strength-meter .bar-green {
+  background: green;
+}
+.state-register .strength-meter .bar-red {
+  background: red;
+}
+
 .logo {
   background-image: url("/dist/assets/logo.jpg");
   width: 150px;
@@ -19928,3 +19927,4 @@ md-content {
   text-transform: none;
   font-size: 1em;
 }
+
