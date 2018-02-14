@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaSettingsUi", function ($rootScope, UserService) {
     return {
-        templateUrl: "src/states/settings/ui/template.html",
+        templateUrl: "states/settings/ui/template.html",
 
         controller:  function ($scope) {
             $scope.data = {

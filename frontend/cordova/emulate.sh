@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
 # Clean up the build environment
+cd ../cordova
 rm -rf www
 
 # Go into the wepapp directory and do a production build
-#cd ../webapp/ &&  ./node_modules/gulp/bin/gulp.js build-dev && cd ../cordova
+cd ../webapp/ && gulp build && cd ../cordova
 
-# Copy the webapp source, but delete our copy of node_modules since that confuses Gradle immensely.
-cp -r ../webapp/app www
+# Copy the ready-to-be-deployed source
+mkdir www
+cp -r ../webapp/app/deploy/* ./www
 
 # DoIt (tm)
 cordova emulate android
-#cp platforms/android/app/build/outputs/apk/debug/app-debug.apk ../webapp/yasla.apk

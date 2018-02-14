@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaAbout", function (CordovaService) {
     return {
-        templateUrl: "src/states/about/template.html",
+        templateUrl: "states/about/template.html",
         controller:  function ($scope) {
             $scope.data = {
                 version: null

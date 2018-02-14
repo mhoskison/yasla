@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaListsEdit", function (ListsService) {
     return {
-        templateUrl: "src/states/lists/lists.edit/template.html",
+        templateUrl: "states/lists/lists.edit/template.html",
         controller:  function ($scope) {
         },
         link:        function ($scope) {

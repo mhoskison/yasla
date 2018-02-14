@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaSearch", function (SearchService, ListsDialogService, ListsService, $mdToast, $state, $timeout) {
     return {
-        templateUrl: "src/states/search/template.html",
+        templateUrl: "states/search/template.html",
         controller:  function ($scope) {
 
             $scope.ui = {

@@ -1,7 +1,7 @@
 angular.module("yasla").directive("appToolbar", function ($mdSidenav, AuthService) {
 
     return {
-        templateUrl: "src/common/app-toolbar/template.html",
+        templateUrl: "common/app-toolbar/template.html",
         scope:       {},
         link:        function ($scope) {
             $scope.sidenav = {

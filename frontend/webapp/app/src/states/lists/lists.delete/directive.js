@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
     return {
-        templateUrl: "src/states/lists/lists.delete/template.html",
+        templateUrl: "states/lists/lists.delete/template.html",
         controller:  function ($scope) {
             $scope.ui = {
                 confirm: function() {

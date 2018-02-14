@@ -1,6 +1,6 @@
 angular.module("yasla").directive("infoMediaSize", function ($mdMedia) {
     return {
-        templateUrl: "src/common/info-media-size/template.html",
+        templateUrl: "common/info-media-size/template.html",
         controller:  function ($scope) {
         },
         link:        function ($scope) {

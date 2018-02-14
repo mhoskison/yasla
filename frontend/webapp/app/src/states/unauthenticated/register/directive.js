@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaUserRegister", function (AuthService, $state) {
     return {
-        templateUrl: "src/states/unauthenticated/register/template.html",
+        templateUrl: "states/unauthenticated/register/template.html",
         controller:  function ($scope) {
 
             $scope.data = {

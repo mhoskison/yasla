@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
     return {
-        templateUrl: "src/states/unauthenticated/login/template.html",
+        templateUrl: "states/unauthenticated/login/template.html",
         controller:  function ($scope) {
             $scope.data = {
                 state:    0,

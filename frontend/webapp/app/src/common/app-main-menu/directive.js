@@ -1,6 +1,6 @@
 angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state, localStorageService) {
     return {
-        templateUrl: "src/common/app-main-menu/template.html",
+        templateUrl: "common/app-main-menu/template.html",
         controller:  function ($scope) {
             $scope.state = {
                 mode:    0,

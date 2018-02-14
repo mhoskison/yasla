@@ -15,6 +15,7 @@ angular.module("yasla").config(function ($stateProvider) {
                         }
                         else {
                             ToolbarService.title.set("Login");
+
                         }
                     }
                 }

@@ -6,7 +6,7 @@ angular.module("yasla").config(function ($stateProvider) {
                 "main@": {
                     template: "<yasla-about></yasla-about>",
                     controller: function(ToolbarService) {
-                        ToolbarService.title.set("About");
+                        ToolbarService.title.set("About!!");
                     }
                 }
             }

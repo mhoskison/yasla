@@ -1,6 +1,6 @@
 angular.module("yasla").directive("yaslaListsNew", function (ListsService, $state, $timeout) {
     return {
-        templateUrl: "src/states/lists/lists.new/template.html",
+        templateUrl: "states/lists/lists.new/template.html",
         controller:  function ($scope) {
             $scope.data = {
                 list_name: ""
