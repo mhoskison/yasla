@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['unauthenticated',['unauthenticated',['../class_tests_1_1_unit_1_1_lists_1_1create___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\create_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1get___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\get_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1get__all___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\get_all_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1add__product___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\add_product_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1update__quantity___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\update_quantity_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1get__products___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\get_products_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1get__info___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\get_info_Test\unauthenticated()'],['../class_tests_1_1_unit_1_1_lists_1_1delete___test.html#a5c6f9e3385ac5dd8a270493fcb81ac9a',1,'Tests\Unit\Lists\delete_Test\unauthenticated()']]],
+  ['unauthenticatedroutes',['UnauthenticatedRoutes',['../class_app_1_1_user_1_1_unauthenticated_routes.html',1,'App::User']]],
+  ['unauthenticatedroutes_2ephp',['UnauthenticatedRoutes.php',['../_unauthenticated_routes_8php.html',1,'']]],
+  ['unique',['unique',['../class_tests_1_1_unit_1_1_user_1_1validate_email_test.html#a4687cd60c977d2d7171628bc42c81129',1,'Tests::Unit::User::validateEmailTest']]],
+  ['update',['update',['../class_tests_1_1_unit_1_1_user_settings_1_1settings__update___test.html#a842e4774e3b3601a005b995c02f7e883',1,'Tests::Unit::UserSettings::settings_update_Test']]],
+  ['update_5fquantity_5ftest',['update_quantity_Test',['../class_tests_1_1_unit_1_1_lists_1_1update__quantity___test.html',1,'Tests::Unit::Lists']]],
+  ['update_5fsettings',['update_settings',['../class_app_1_1_user_settings_1_1_user_settings_model.html#a7cf3f6ea8c9784b765e115b384bddbe5',1,'App::UserSettings::UserSettingsModel']]],
+  ['user',['User',['../class_app_1_1_user.html',1,'App']]],
+  ['user_2ephp',['User.php',['../_user_8php.html',1,'']]],
+  ['user_5fid',['user_id',['../class_app_1_1_util.html#ad6836fab4db2f15d0766e6e375626e14',1,'App::Util']]],
+  ['usercontroller',['UserController',['../class_app_1_1_http_1_1_controllers_1_1_user_controller.html',1,'App::Http::Controllers']]],
+  ['usercontroller_2ephp',['UserController.php',['../_user_controller_8php.html',1,'']]],
+  ['userregistered',['UserRegistered',['../class_app_1_1_user_1_1_events_1_1_user_registered.html',1,'App::User::Events']]],
+  ['userregistered_2ephp',['UserRegistered.php',['../_user_registered_8php.html',1,'']]],
+  ['userservice',['UserService',['../class_app_1_1_user_1_1_user_service.html',1,'App::User']]],
+  ['userservice_2ephp',['UserService.php',['../_user_service_8php.html',1,'']]],
+  ['usersettingsmodel',['UserSettingsModel',['../class_app_1_1_user_settings_1_1_user_settings_model.html',1,'App::UserSettings']]],
+  ['util',['Util',['../class_app_1_1_util.html',1,'App']]],
+  ['util_2ephp',['Util.php',['../_util_8php.html',1,'']]]
+];

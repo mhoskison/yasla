@@ -1,0 +1,17 @@
+digraph "Graphical Class Hierarchy"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node61 [label="ServiceProvider",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node61 -> Node0 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node0 [label="AppServiceProvider",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_app_1_1_providers_1_1_app_service_provider.html"];
+  Node61 -> Node63 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node63 [label="AuthServiceProvider",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_app_1_1_providers_1_1_auth_service_provider.html"];
+  Node61 -> Node64 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node64 [label="BroadcastServiceProvider",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_app_1_1_providers_1_1_broadcast_service_provider.html"];
+  Node61 -> Node65 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node65 [label="EventServiceProvider",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_app_1_1_providers_1_1_event_service_provider.html"];
+  Node61 -> Node66 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node66 [label="RouteServiceProvider",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_app_1_1_providers_1_1_route_service_provider.html"];
+}
