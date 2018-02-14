@@ -1,7 +1,6 @@
 <?php namespace Tests\Unit\Lists;
 
-
-class getInfoTest extends \Tests\ControllerTest
+class get_info_Test extends \Tests\ControllerTest
 {
     /**
      * @test getting the products on a shopping list
@@ -10,7 +9,7 @@ class getInfoTest extends \Tests\ControllerTest
     {
         \Auth::loginUsingId(1);
 
-        $controller = new \App\Lists\Controller();
+        $controller = new \App\Lists\ListController();
         $d          = $controller->get_info(1);
 
         $this->assertInstanceOf("\Illuminate\Support\Collection", $d);
@@ -22,7 +21,7 @@ class getInfoTest extends \Tests\ControllerTest
      */
     public function unauthenticated()
     {
-        $controller = new \App\Lists\Controller();
+        $controller = new \App\Lists\ListController();
         $controller->get_info(1);
     }
 }

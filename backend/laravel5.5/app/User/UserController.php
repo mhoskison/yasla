@@ -54,7 +54,7 @@ class UserController extends Controller
 
         // ---- Create an empty default shopping list
         //
-        $listController = new \App\Lists\Controller();
+        $listController = new \App\Lists\ListController();
         $listController->create("Default");
 
         // ---- Let anyone interested know about the new user

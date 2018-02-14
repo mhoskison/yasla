@@ -1,7 +1,7 @@
 <?php namespace Tests\Unit\User;
 
 use \App\Http\Controllers\ListsController;
-use App\Lists\ListService;
+use App\Lists\MySql;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 

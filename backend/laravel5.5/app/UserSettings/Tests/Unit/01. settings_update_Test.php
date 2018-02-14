@@ -1,7 +1,7 @@
 <?php namespace Tests\Unit\UserSettings;
 
 use \App\Http\Controllers\ListsController;
-use App\Lists\ListService;
+use App\Lists\MySql;
 use Tests\TestCase;
 
 class settings_update_Test extends \Tests\TransactionTest

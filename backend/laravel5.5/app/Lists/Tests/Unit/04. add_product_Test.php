@@ -1,27 +1,34 @@
 <?php namespace Tests\Unit\Lists;
 
-
 use App\Product\ProductDescription;
 
-class addProductTest extends \Tests\ControllerTest
+class add_product_Test extends \Tests\ControllerTest
 {
     /**
      * @test getting the products on a shopping list
      */
     public function success()
     {
+        // ---- Set up the environment
+        //
         \Auth::loginUsingId(1);
-
+        $controller           = new \App\Lists\ListController();
         $product              = new ProductDescription();
         $product->price       = 0.25;
         $product->description = "Tin of beans";
         $product->name        = "Heinz Beans";
 
-        $controller = new \App\Lists\Controller();
-        $result     = $controller->add_product(1, $product);
+        $lists =$controller->get_all();
 
-        dd($result);
+            // ---- Perform the test
+            //
 
+        $result = $controller->products_add(1, $product);
+        $this->assertGreaterThan(0, $result);
+
+        // ---- Do a low level test on the DB
+        //
+        $sql = "SELECT * FROM ";
     }
 
     /**
@@ -30,7 +37,7 @@ class addProductTest extends \Tests\ControllerTest
      */
     public function unauthenticated()
     {
-        $controller = new \App\Lists\Controller();
-        $controller->add_product(1, new ProductDescription());
+        $controller = new \App\Lists\ListController();
+        $controller->products_add(1, new ProductDescription());
     }
 }

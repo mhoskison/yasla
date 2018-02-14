@@ -1,7 +1,7 @@
 <?php namespace Tests\Unit\Search;
 
 use \App\Http\Controllers\ListsController;
-use App\Lists\ListService;
+use App\Lists\MySql;
 use Tests\TestCase;
 
 class searchTest extends \Tests\TransactionTest

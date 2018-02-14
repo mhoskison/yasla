@@ -9,4 +9,5 @@ class ProductDescription
     public $promotion;
     public $image;
     public $price;
+    public $id;
 }

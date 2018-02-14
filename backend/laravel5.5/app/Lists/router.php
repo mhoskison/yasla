@@ -3,14 +3,14 @@
 class Router extends \App\RouterBase
 {
     /**
-     * @var \App\Lists\Controller
+     * @var \App\Lists\ListController
      */
     private $controller;
 
     public function __construct()
     {
         $container        = app();
-        $this->controller = $container->make(\App\Lists\Controller::class);
+        $this->controller = $container->make(\App\Lists\ListController::class);
 
         /**
          * Create a new shopping list
@@ -27,7 +27,7 @@ class Router extends \App\RouterBase
          * Return a list of shopping lists
          */
         \Route::get("lists/get", function () {
-            $ret = $this->controller->get_list();
+            $ret = $this->controller->get_all();
             return response()->json($ret);
         });
 
@@ -35,7 +35,7 @@ class Router extends \App\RouterBase
          * Return the products on a shopping list
          */
         \Route::get("lists/{list_id}/products", function ($list_id) {
-            $ret = $this->controller->get_products($list_id);
+            $ret = $this->controller->products_get($list_id);
             return response()->json($ret);
         });
 
@@ -59,7 +59,7 @@ class Router extends \App\RouterBase
          * Update the quantity of a product on a shopping list
          */
         \Route::post("list/{list_id}/product/{product_id}/update-quantity/{quantity}", function ($list_id, $product_id, $quantity) {
-            $ret = $this->controller->update_quantity($list_id, $product_id, $quantity);
+            $ret = $this->controller->products_update($list_id, $product_id, $quantity);
             return response()->json($ret);
         });
 

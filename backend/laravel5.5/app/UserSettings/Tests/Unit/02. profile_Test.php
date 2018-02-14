@@ -1,19 +1,19 @@
 <?php namespace Tests\Unit\UserSettings;
 
-use \App\Http\Controllers\ListsController;
-use App\Lists\ListService;
-use Tests\TestCase;
-
 class profile_Test extends \Tests\TransactionTest
 {
     /**
-     * @test updating a user's settings
+     * @test getting a user's profile
      */
     public function profile()
     {
         \Auth::loginUsingId(1);
         $ctrl = new \App\UserSettings\Controller();
         $d    = $ctrl->profile();
-        dd($d);
+
+        $this->assertInternalType("array", $d);
+        $this->assertArrayHasKey("user_id", $d);
+        $this->assertArrayHasKey("user_email", $d);
+        $this->assertArrayHasKey("user_name", $d);
     }
 }

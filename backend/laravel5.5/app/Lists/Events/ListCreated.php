@@ -19,7 +19,7 @@ class ListCreated
      *
      * @return void
      */
-    public function __construct(\App\Lists\ListService $obj)
+    public function __construct(\App\Lists\MySql $obj)
     {
         //
         \Log::debug("User ID [{$obj->user_id}] created a new shopping list named [{$obj->label}]");
