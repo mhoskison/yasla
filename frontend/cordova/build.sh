@@ -4,7 +4,7 @@
 rm -rf www
 
 # Go into the wepapp directory and do a production build
-cd ../webapp/ && gulp build-demo && cd ../cordova
+cd ../webapp/ && gulp && cd ../cordova
 
 # Copy the webapp source
 cp -r ../webapp/ www

@@ -54,8 +54,8 @@ var replacements = {
     "live": {
         api_url:             "https://api.yasla.co.uk/api",
         auth_url:            "https://api.yasla.co.uk",
-        oauth_client_id:     2,
-        oauth_client_secret: "HhqX7ofnL7XWYW5ROIELXnL7BTSvZ5KB6RGQ7YUW"
+        oauth_client_id:     1,
+        oauth_client_secret: "TQF7BYvWUWdCw3DOB0w1govvYfpO6riuKl20luK9"
     }
 };
 
@@ -149,8 +149,8 @@ gulp.task("deploy-templates", function (done) {
         .pipe(gulp.dest(deploy_path));
 });
 gulp.task("deploy-assets", function (done) {
-    return gulp.src("app/dist/assets/**")
-        .pipe(copy(deploy_path, {prefix: 2}))
+    return gulp.src("app/src/assets/**")
+        .pipe(copy(deploy_path, {prefix:2}))
         .pipe(gulp.dest(deploy_path));
 });
 gulp.task("bump-build-number", function (done) {

@@ -19606,32 +19606,6 @@ md-content {
 
 
 
-.logo {
-  background-image: url("/dist/assets/logo.jpg");
-  width: 150px;
-  height: 100px;
-  -webkit-background-size: cover;
-  background-size: cover;
-}
-.menu ul {
-  margin: 0;
-  padding: 1em;
-}
-.menu ul li {
-  background: rgba(255, 255, 255, 0.5);
-  list-style-type: none;
-  display: inline-block;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  border-radius: 12px;
-  margin-left: 0.6em;
-}
-.menu ul li a {
-  padding: 0;
-  margin: 0;
-  text-transform: none;
-  font-size: 1em;
-}
 
 .state-search .search-card {
   margin-top: 0px;
@@ -19675,9 +19649,8 @@ md-content {
   margin: auto auto 1em;
 }
 
-
 .logo {
-  background-image: url("/dist/assets/logo.jpg");
+  background-image: url("/assets/logo.jpg");
   width: 150px;
   height: 100px;
   -webkit-background-size: cover;
@@ -19704,7 +19677,7 @@ md-content {
 }
 
 .logo {
-  background-image: url("/dist/assets/logo.jpg");
+  background-image: url("/assets/logo.jpg");
   width: 150px;
   height: 100px;
   -webkit-background-size: cover;
@@ -19730,65 +19703,31 @@ md-content {
   font-size: 1em;
 }
 
-.state-lists-edit .item .quantity {
-  text-align: right;
+.logo {
+  background-image: url("/assets/logo.jpg");
+  width: 150px;
+  height: 100px;
+  -webkit-background-size: cover;
+  background-size: cover;
 }
-.state-lists-edit .item .price {
-  text-align: right;
-}
-
-.state-lists-edit .custom-card {
-  background: #fff;
-  margin: 8px;
+.menu ul {
+  margin: 0;
   padding: 1em;
-  margin-bottom: 0.6em;
-  margin-top: 0.6em;
 }
-.state-lists-edit .custom-card .item-name {
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-.state-lists-edit .custom-card .item-cost {
-  margin-bottom: 8px;
-}
-.state-lists-edit .custom-card .item-weight {
-  margin-bottom: 8px;
-}
-.state-lists-edit .custom-card .item-pic {
-  max-width: 90px;
-  margin-right: 1em;
-}
-.state-lists-edit .custom-card .quantity-container {
-  border: 1px solid #aaa;
-}
-.state-lists-edit .custom-card .quantity-container .label {
-  margin: 8px;
-}
-.state-lists-edit .custom-card .quantity-container .btn-small {
-  max-width: 32px;
-  width: 32px;
-  min-width: 32px;
-}
-.state-lists-edit .custom-card .quantity-container .input-quantity {
-  max-width: 75px;
-  text-align: center;
-  border: none;
-  height: 32px;
-  line-height: 32px;
+.menu ul li {
+  background: rgba(255, 255, 255, 0.5);
+  list-style-type: none;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
   margin-left: 0.6em;
 }
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  text-align: right;
-}
-
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  text-align: right;
+.menu ul li a {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+  font-size: 1em;
 }
 
 
@@ -19901,8 +19840,70 @@ md-content {
   background: red;
 }
 
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  text-align: right;
+}
+
+.state-lists-edit .custom-card {
+  background: #fff;
+  margin: 8px;
+  padding: 1em;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+}
+.state-lists-edit .custom-card .item-name {
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.state-lists-edit .custom-card .item-cost {
+  margin-bottom: 8px;
+}
+.state-lists-edit .custom-card .item-weight {
+  margin-bottom: 8px;
+}
+.state-lists-edit .custom-card .item-pic {
+  max-width: 90px;
+  margin-right: 1em;
+}
+.state-lists-edit .custom-card .quantity-container {
+  border: 1px solid #aaa;
+}
+.state-lists-edit .custom-card .quantity-container .label {
+  margin: 8px;
+}
+.state-lists-edit .custom-card .quantity-container .btn-small {
+  max-width: 32px;
+  width: 32px;
+  min-width: 32px;
+}
+.state-lists-edit .custom-card .quantity-container .input-quantity {
+  max-width: 75px;
+  text-align: center;
+  border: none;
+  height: 32px;
+  line-height: 32px;
+  margin-left: 0.6em;
+}
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  text-align: right;
+}
+
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  text-align: right;
+}
+
+
 .logo {
-  background-image: url("/dist/assets/logo.jpg");
+  background-image: url("/assets/logo.jpg");
   width: 150px;
   height: 100px;
   -webkit-background-size: cover;
@@ -19927,4 +19928,3 @@ md-content {
   text-transform: none;
   font-size: 1em;
 }
-
