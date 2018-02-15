@@ -15,6 +15,19 @@ but you can also add your own freetext items.
 YASLA is still undergoing active development and has just reached V0.1. 
 Don't expect it to revolutionise your shopping experience ... just yet!
 
+### Development workflow
+
+####    Installation
+```
+git clone https://github.com/mhoskison/yasla.git yasla
+cd yasla
+./install.sh
+```
+
+#### ```npm run gulp```
+
+Starts the main 
+
 
 ## Licence
     This program is free software: you can redistribute it and/or modify

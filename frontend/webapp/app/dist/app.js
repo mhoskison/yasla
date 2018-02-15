@@ -6,7 +6,7 @@ angular.module("yasla", [
 /**
  * Configure constants
  */
-    .value("APP_VERSION", "0.2.2-83")
+    .value("APP_VERSION", "0.2.2-85")
     .value("API_URL", "http://dev.api.yasla.co.uk/api")
     .value("AUTH_URL", "http://dev.api.yasla.co.uk")
     .value("OAUTH_CLIENT_ID", "2")
@@ -842,6 +842,43 @@ angular.module("yasla").directive("yaslaLists", function () {
         templateUrl: "states/lists/lists.default/template.html"
     };
 });
+angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
+    return {
+        templateUrl: "states/lists/lists.delete/template.html",
+        controller:  function ($scope) {
+            $scope.ui = {
+                confirm: function() {
+                    ListsService.delete($scope.data.id);
+                    $state.go("shopping.lists");
+                },
+                cancel: function() {
+                    $state.go("shopping.lists");
+                }
+            }
+        }
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.lists.delete", {
+            url:   "/delete/{id}",
+            views: {
+                "main@": {
+                    template: "<yasla-lists-delete></yasla-lists-delete>",
+
+                    controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
+                        var id = $stateParams.id;
+                        if (!id) $state.go("shopping.lists");
+
+                        ToolbarService.title.set("Delete shopping list");
+                        ListsService.basicInfo(id).then(function (data) {
+                            $scope.data = data;
+                        });
+                    }
+                }
+            }
+        });
+});
 angular.module("yasla").directive("yaslaListsEdit", function (ListsService) {
     return {
         templateUrl: "states/lists/lists.edit/template.html",
@@ -894,43 +931,6 @@ angular.module("yasla").config(function ($stateProvider) {
             resolve: {
                 listinfo: function (ListsService, $stateParams) {
                     return ListsService.info($stateParams.id);
-                }
-            }
-        });
-});
-angular.module("yasla").directive("yaslaListsDelete", function ($state, ListsService) {
-    return {
-        templateUrl: "states/lists/lists.delete/template.html",
-        controller:  function ($scope) {
-            $scope.ui = {
-                confirm: function() {
-                    ListsService.delete($scope.data.id);
-                    $state.go("shopping.lists");
-                },
-                cancel: function() {
-                    $state.go("shopping.lists");
-                }
-            }
-        }
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.lists.delete", {
-            url:   "/delete/{id}",
-            views: {
-                "main@": {
-                    template: "<yasla-lists-delete></yasla-lists-delete>",
-
-                    controller: function ($scope, ListsService, ToolbarService, $stateParams, $state) {
-                        var id = $stateParams.id;
-                        if (!id) $state.go("shopping.lists");
-
-                        ToolbarService.title.set("Delete shopping list");
-                        ListsService.basicInfo(id).then(function (data) {
-                            $scope.data = data;
-                        });
-                    }
                 }
             }
         });
@@ -1022,6 +1022,91 @@ angular.module("yasla").config(function ($stateProvider) {
             }
         });
 });
+angular.module("yasla").directive("yaslaAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
+    return {
+        templateUrl: "states/unauthenticated/intro/template.html",
+        controller:  function ($scope) {
+            $scope.data = {
+                state:    0,
+                username: "",
+                password: "",
+                error:    0
+            };
+            $scope.ui = {
+                goto:  {
+                    intro:    function () {
+                        ToolbarService.title.set("YASLA");
+                        $scope.data.state = 0;
+                    },
+                    login:    function () {
+                        ToolbarService.title.set("Login");
+                        $scope.data.state = 1;
+                    },
+                    register: function () {
+                        ToolbarService.title.set("Register");
+                        $scope.data.state = 2;
+                    }
+                },
+                reset: function () {
+                    if ($scope.data.error) {
+                        $scope.data.password = null;
+                        $scope.data.error = 0;
+                    }
+                },
+                login: function () {
+                    AuthService.login($scope.data.username, $scope.data.password).then(
+                        function success() {
+                            $state.go("shopping.home");
+                        },
+                        function error() {
+                            $scope.data.error = 1;
+                        }
+                    );
+                }
+            };
+
+
+            // ---- Get the Cordova version number
+            //
+            CordovaService.version().then(function (version) {
+                $scope.data.version = version;
+            });
+        }
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.auth.intro", {
+            unauthenticated: true,
+            url:             "^/auth/intro",
+            views:           {
+                "main@": {
+                    template:   "<yasla-auth-intro></yasla-auth-intro>",
+                    controller: function ($scope, ToolbarService, AuthService, $state) {
+
+                        // ---- Ensure the API is talking to us
+                        //
+                        AuthService.ping().then(
+                            function () {
+                            },
+                            function () {
+                                $scope.data.error = 2;
+                            }
+                        );
+
+                        // ---- Check if the user is already authenticated
+                        //
+                        if (AuthService.isAuthenticated()) {
+                            $state.go("shopping.home");
+                        }
+                        else {
+                            ToolbarService.title.set("YASLA");
+                        }
+                    }
+                }
+            }
+        });
+});
 angular.module("yasla").directive("yaslaAuthLogin", function (AuthService, $state, CordovaService, ToolbarService, $timeout) {
     return {
         templateUrl: "states/unauthenticated/login/template.html",
@@ -1108,91 +1193,6 @@ angular.module("yasla").config(function ($stateProvider) {
                         else {
                             ToolbarService.title.set("Login");
 
-                        }
-                    }
-                }
-            }
-        });
-});
-angular.module("yasla").directive("yaslaAuthIntro", function (AuthService, $state, CordovaService, ToolbarService) {
-    return {
-        templateUrl: "states/unauthenticated/intro/template.html",
-        controller:  function ($scope) {
-            $scope.data = {
-                state:    0,
-                username: "",
-                password: "",
-                error:    0
-            };
-            $scope.ui = {
-                goto:  {
-                    intro:    function () {
-                        ToolbarService.title.set("YASLA");
-                        $scope.data.state = 0;
-                    },
-                    login:    function () {
-                        ToolbarService.title.set("Login");
-                        $scope.data.state = 1;
-                    },
-                    register: function () {
-                        ToolbarService.title.set("Register");
-                        $scope.data.state = 2;
-                    }
-                },
-                reset: function () {
-                    if ($scope.data.error) {
-                        $scope.data.password = null;
-                        $scope.data.error = 0;
-                    }
-                },
-                login: function () {
-                    AuthService.login($scope.data.username, $scope.data.password).then(
-                        function success() {
-                            $state.go("shopping.home");
-                        },
-                        function error() {
-                            $scope.data.error = 1;
-                        }
-                    );
-                }
-            };
-
-
-            // ---- Get the Cordova version number
-            //
-            CordovaService.version().then(function (version) {
-                $scope.data.version = version;
-            });
-        }
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.auth.intro", {
-            unauthenticated: true,
-            url:             "^/auth/intro",
-            views:           {
-                "main@": {
-                    template:   "<yasla-auth-intro></yasla-auth-intro>",
-                    controller: function ($scope, ToolbarService, AuthService, $state) {
-
-                        // ---- Ensure the API is talking to us
-                        //
-                        AuthService.ping().then(
-                            function () {
-                            },
-                            function () {
-                                $scope.data.error = 2;
-                            }
-                        );
-
-                        // ---- Check if the user is already authenticated
-                        //
-                        if (AuthService.isAuthenticated()) {
-                            $state.go("shopping.home");
-                        }
-                        else {
-                            ToolbarService.title.set("YASLA");
                         }
                     }
                 }

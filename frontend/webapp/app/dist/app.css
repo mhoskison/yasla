@@ -19541,8 +19541,6 @@ md-content {
   bottom: 0;
 }
 
-
-
 .app-sidebar {
   min-width: 280px !important;
   max-width: 280px !important;
@@ -19606,6 +19604,8 @@ md-content {
 
 
 
+
+
 .logo {
   background-image: url("/assets/logo.png");
   width: 150px;
@@ -19632,7 +19632,6 @@ md-content {
   text-transform: none;
   font-size: 1em;
 }
-
 
 .state-search .search-card {
   margin-top: 0px;
@@ -19675,6 +19674,7 @@ md-content {
   width: 90%;
   margin: auto auto 1em;
 }
+
 
 .logo {
   background-image: url("assets/logo.jpg");
@@ -19737,13 +19737,6 @@ md-content {
   text-align: right;
 }
 
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  text-align: right;
-}
-
 .state-lists-edit .custom-card {
   background: #fff;
   margin: 8px;
@@ -19784,6 +19777,13 @@ md-content {
   line-height: 32px;
   margin-left: 0.6em;
 }
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  text-align: right;
+}
+
 .state-lists-edit .item .quantity {
   text-align: right;
 }

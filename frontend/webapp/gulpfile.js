@@ -73,6 +73,24 @@ var replacements = {
  */
 gulp.task("default", sequence("common-bower", "common-css", "dev-code"));
 gulp.task("watch", sequence("default", ["watch-code", "watch-css"]));
+gulp.task("build", sequence(["common-css", "minify-css"], ["deploy-code", "deploy-html", "deploy-templates", "deploy-assets"]));
+
+/***********************************************************************************************************************
+ * Version management
+ */
+gulp.task("bump-build-number", sequence("real-bump-build-number", "default"));
+gulp.task("real-bump-build-number", function (done) {
+    console.log("*** Starting bump-version");
+    gulp.src(["./package.json"])
+        .pipe(bump({type: "prerelease"}))
+        .pipe(gulp.dest("./"));
+    console.log("*** Finished bump-version");
+
+    var p = require("./package.json");
+    console.log("*** New version: [%s]", p.version);
+
+    done();
+});
 
 /***********************************************************************************************************************
  * File watchers
@@ -117,7 +135,6 @@ gulp.task("dev-code", function (done) {
 /***********************************************************************************************************************
  * Deployment tasks
  */
-gulp.task("build", sequence(["common-css", "minify-css"], ["deploy-code", "deploy-html", "deploy-templates", "deploy-assets"]));
 gulp.task("minify-css", function (done) {
     return gulp.src(paths.dist + "/app.css")
         .pipe(minify_css())
@@ -162,16 +179,6 @@ gulp.task("deploy-assets", function (done) {
     return gulp.src(paths.assets)
         .pipe(copy(paths.deploy, {prefix: 2}));
 });
-gulp.task("bump-build-number", function (done) {
-    console.log("*** Starting bump-version");
-    gulp.src(["./package.json"])
-        .pipe(bump({type: "prerelease"}))
-        .pipe(gulp.dest("./"));
-    console.log("*** Finished bump-version");
 
-    var p = require("./package.json");
-    console.log("*** New version: [%s]", p.version);
-    done();
-});
 
 
