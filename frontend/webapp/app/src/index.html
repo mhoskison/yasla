@@ -26,6 +26,16 @@
 <body layout-fill layout="column" md-theme="{{$root.theme}}">
     <app-toolbar></app-toolbar>
     <app-main-menu></app-main-menu>
-    <md-content ui-view="main"></md-content>
+
+    <div layout="column" hide-gt-xs>
+        <md-content ui-view="main"></md-content>
+    </div>
+    <div layout="row" show-gt-xs hide-xs layout-wrap>
+        <div flex></div>
+        <div layout="column" flex="50" style="max-width:500px">
+            <md-content ui-view="main"></md-content>
+        </div>
+        <div flex></div>
+    </div>
 </body>
 </html>

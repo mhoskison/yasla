@@ -6,7 +6,7 @@ angular.module("yasla", [
 /**
  * Configure constants
  */
-    .value("APP_VERSION", "0.2.2-85")
+    .value("APP_VERSION", "0.2.2-86")
     .value("API_URL", "http://dev.api.yasla.co.uk/api")
     .value("AUTH_URL", "http://dev.api.yasla.co.uk")
     .value("OAUTH_CLIENT_ID", "2")
@@ -160,132 +160,6 @@ angular.module("yasla", [
                 });
         };
     });
-angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state, localStorageService) {
-    return {
-        templateUrl: "common/app-main-menu/template.html",
-        controller:  function ($scope) {
-            $scope.state = {
-                mode:    0,
-                version: APP_VERSION,
-                user:    localStorageService.get("user")
-            };
-            $scope.sidenav = {
-
-                goto: function (state) {
-                    $scope.sidenav.closeMenu();
-                    $state.go(state);
-                },
-
-                closeMenu:  function () {
-                    $mdSidenav("left").close();
-                },
-                switchMode: function () {
-
-                    if ($scope.state.mode === 0) {
-                        $scope.state.mode = 1;
-                        $(".state-btn").addClass("rotated");
-                    }
-                    else {
-                        $scope.state.mode = 0;
-                        $(".state-btn").removeClass("rotated");
-                    }
-                }
-            };
-        },
-        link:        function ($scope) {
-
-        }
-    };
-});
-angular.module("yasla").service("ToolbarService", function ($rootScope) {
-    return {
-        title: {
-            set: function (label) {
-                $rootScope.title = label;
-            }
-        }
-    };
-});
-angular.module("yasla").directive("appToolbar", function ($mdSidenav, AuthService) {
-
-    return {
-        templateUrl: "common/app-toolbar/template.html",
-        scope:       {},
-        link:        function ($scope) {
-            $scope.sidenav = {
-                authenticated: AuthService.isAuthenticated(),
-                openMenu:      function () {
-                    $mdSidenav("left").open();
-                }
-            };
-        },
-        controller:  function ($scope) {
-            $scope.isAuthenticated = function () {
-                return AuthService.isAuthenticated();
-            };
-        }
-    };
-});
-angular.module("yasla").directive("fabBottomRight", function () {
-    return {
-        link: function ($scope, $element) {
-            $($element)
-                .addClass("md-fab md-mini md-primary btn-fab-bottom-right")
-                .detach()
-                .appendTo("body");
-
-            $scope.$on("$destroy", function () {
-                $($element).remove();
-            });
-        }
-    };
-});
-angular.module("yasla").directive("infoMediaSize", function ($mdMedia) {
-    return {
-        templateUrl: "common/info-media-size/template.html",
-        controller:  function ($scope) {
-        },
-        link:        function ($scope) {
-            $scope.$watch(function () {
-                return $mdMedia("lg");
-            }, function (d) {
-                $scope.lg = d;
-            });
-
-            $scope.$watch(function () {
-                return $mdMedia("md");
-            }, function (d) {
-                $scope.md = d;
-            });
-
-            $scope.$watch(function () {
-                return $mdMedia("sm");
-            }, function (d) {
-                $scope.sm = d;
-            });
-
-            $scope.$watch(function () {
-                return $mdMedia("xs");
-            }, function (d) {
-                $scope.xs = d;
-            });
-
-            $scope.$watch(function () {
-                return $mdMedia("xl");
-            }, function (d) {
-                $scope.xl = d;
-            });
-        }
-    };
-});
-angular.module("yasla").directive("sticky", function ($mdSticky) {
-    return {
-        restrict: "A",
-        link:     function ($scope, $element) {
-            $mdSticky($scope, $element);
-        }
-    };
-});
 angular.module("yasla").directive("yaslaAbout", function (CordovaService) {
     return {
         templateUrl: "states/about/template.html",
@@ -482,26 +356,6 @@ angular.module("yasla").controller("SidenavCtrl", function ($scope, $timeout, $m
         };
     });
 
-angular.module("yasla").directive("yaslaHome", function () {
-    return {
-        templateUrl: "states/home/template.html"
-    };
-});
-angular.module("yasla").config(function ($stateProvider) {
-    $stateProvider
-        .state("shopping.home", {
-            url:   "^/home",
-            auth:  true,
-            views: {
-                "main@": {
-                    template:   "",
-                    controller: function ($state) {
-                        $state.go("shopping.lists");
-                    }
-                }
-            }
-        });
-});
 angular.module("yasla").service("ListsDialogService", function ($mdDialog, $http, $q) {
     var ListDialogService = {
         ShoppingListSelector: {
@@ -617,6 +471,26 @@ angular.module("yasla").config(function ($stateProvider) {
                 },
                 "sbRight@": {
                     template: "<yasla-lists-sbright></yasla-lists-sbright>"
+                }
+            }
+        });
+});
+angular.module("yasla").directive("yaslaHome", function () {
+    return {
+        templateUrl: "states/home/template.html"
+    };
+});
+angular.module("yasla").config(function ($stateProvider) {
+    $stateProvider
+        .state("shopping.home", {
+            url:   "^/home",
+            auth:  true,
+            views: {
+                "main@": {
+                    template:   "",
+                    controller: function ($state) {
+                        $state.go("shopping.lists");
+                    }
                 }
             }
         });
@@ -785,6 +659,132 @@ angular.module("yasla").config(function ($stateProvider) {
             url:      "^/user",
             abstract: true
         });
+});
+angular.module("yasla").directive("appMainMenu", function ($mdSidenav, APP_VERSION, $state, localStorageService) {
+    return {
+        templateUrl: "common/app-main-menu/template.html",
+        controller:  function ($scope) {
+            $scope.state = {
+                mode:    0,
+                version: APP_VERSION,
+                user:    localStorageService.get("user")
+            };
+            $scope.sidenav = {
+
+                goto: function (state) {
+                    $scope.sidenav.closeMenu();
+                    $state.go(state);
+                },
+
+                closeMenu:  function () {
+                    $mdSidenav("left").close();
+                },
+                switchMode: function () {
+
+                    if ($scope.state.mode === 0) {
+                        $scope.state.mode = 1;
+                        $(".state-btn").addClass("rotated");
+                    }
+                    else {
+                        $scope.state.mode = 0;
+                        $(".state-btn").removeClass("rotated");
+                    }
+                }
+            };
+        },
+        link:        function ($scope) {
+
+        }
+    };
+});
+angular.module("yasla").service("ToolbarService", function ($rootScope) {
+    return {
+        title: {
+            set: function (label) {
+                $rootScope.title = label;
+            }
+        }
+    };
+});
+angular.module("yasla").directive("appToolbar", function ($mdSidenav, AuthService) {
+
+    return {
+        templateUrl: "common/app-toolbar/template.html",
+        scope:       {},
+        link:        function ($scope) {
+            $scope.sidenav = {
+                authenticated: AuthService.isAuthenticated(),
+                openMenu:      function () {
+                    $mdSidenav("left").open();
+                }
+            };
+        },
+        controller:  function ($scope) {
+            $scope.isAuthenticated = function () {
+                return AuthService.isAuthenticated();
+            };
+        }
+    };
+});
+angular.module("yasla").directive("fabBottomRight", function () {
+    return {
+        link: function ($scope, $element) {
+            $($element)
+                .addClass("md-fab md-mini md-primary btn-fab-bottom-right")
+                .detach()
+                .appendTo("body");
+
+            $scope.$on("$destroy", function () {
+                $($element).remove();
+            });
+        }
+    };
+});
+angular.module("yasla").directive("infoMediaSize", function ($mdMedia) {
+    return {
+        templateUrl: "common/info-media-size/template.html",
+        controller:  function ($scope) {
+        },
+        link:        function ($scope) {
+            $scope.$watch(function () {
+                return $mdMedia("lg");
+            }, function (d) {
+                $scope.lg = d;
+            });
+
+            $scope.$watch(function () {
+                return $mdMedia("md");
+            }, function (d) {
+                $scope.md = d;
+            });
+
+            $scope.$watch(function () {
+                return $mdMedia("sm");
+            }, function (d) {
+                $scope.sm = d;
+            });
+
+            $scope.$watch(function () {
+                return $mdMedia("xs");
+            }, function (d) {
+                $scope.xs = d;
+            });
+
+            $scope.$watch(function () {
+                return $mdMedia("xl");
+            }, function (d) {
+                $scope.xl = d;
+            });
+        }
+    };
+});
+angular.module("yasla").directive("sticky", function ($mdSticky) {
+    return {
+        restrict: "A",
+        link:     function ($scope, $element) {
+            $mdSticky($scope, $element);
+        }
+    };
 });
 angular.module("yasla").directive("yaslaAuthLoggedOut", function () {
     return {
