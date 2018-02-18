@@ -19737,6 +19737,13 @@ md-content {
   text-align: right;
 }
 
+.state-lists-edit .item .quantity {
+  text-align: right;
+}
+.state-lists-edit .item .price {
+  text-align: right;
+}
+
 .state-lists-edit .custom-card {
   background: #fff;
   margin: 8px;
@@ -19777,13 +19784,6 @@ md-content {
   line-height: 32px;
   margin-left: 0.6em;
 }
-.state-lists-edit .item .quantity {
-  text-align: right;
-}
-.state-lists-edit .item .price {
-  text-align: right;
-}
-
 .state-lists-edit .item .quantity {
   text-align: right;
 }
